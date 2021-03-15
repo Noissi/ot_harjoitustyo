@@ -2,6 +2,6 @@
 ## Tehtävät
 ### Viikko 1
 
-[gitlog.txt](http://github.com/Noissi/ot_harjoitustyo/laskarit/viikko1/gitlog.txt)
+[gitlog.txt](https://github.com/Noissi/ot_harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
 
-[komentorivi.txt](http://github.com/Noissi/ot_harjoitustyo/laskarit/viikko1/komentorivi.txt)
+[komentorivi.txt](https://github.com/Noissi/ot_harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
