@@ -1,0 +1,95 @@
+commit b7e91207623c95178a5eb0e8aad5b594047f1138
+Author: Peruna <noora.matilainen@helsinki.fi>
+Date:   Mon Mar 15 20:21:11 2021 +0200
+
+    muutoksia
+
+ tiedostoja/file1             | 0
+ tiedostoja/{file2 => file22} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 5bb99d1c978f9bb8d8490f07a681d59e9ef015fa
+Author: Peruna <noora.matilainen@helsinki.fi>
+Date:   Mon Mar 15 20:13:04 2021 +0200
+
+    uusia tiedostoja
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 58d5cfd176e92b1e25ec28688ec32fb90a556240
+Author: Peruna <noora.matilainen@helsinki.fi>
+Date:   Mon Mar 15 20:06:03 2021 +0200
+
+    viesti
+
+ eka.txt    | 2 +-
+ kolmas.txt | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 385b1dacd73454ead8e93aa3aa6325dedcc378da
+Author: Peruna <noora.matilainen@helsinki.fi>
+Date:   Mon Mar 15 20:03:43 2021 +0200
+
+    nimettiin uudelleen
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 30989189094a2c1e40e934ae52c963d54c3ccd94
+Author: Peruna <noora.matilainen@helsinki.fi>
+Date:   Mon Mar 15 20:02:19 2021 +0200
+
+    toinen poistettu
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 4a15bbef4eda19c4b382d48cd15d1e867374fef5
+Author: Peruna <noora.matilainen@helsinki.fi>
+Date:   Mon Mar 15 19:57:36 2021 +0200
+
+    stuff lisätty
+
+ stuff/jokintiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 42e7e8d32deaa5cf6f7bf529341134a4ffeacd7d
+Author: Peruna <noora.matilainen@helsinki.fi>
+Date:   Mon Mar 15 19:56:40 2021 +0200
+
+    muokkauksia
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 5d32dc8e423ebcb7f9fd428201255649836afbd1
+Author: Peruna <noora.matilainen@helsinki.fi>
+Date:   Mon Mar 15 19:55:21 2021 +0200
+
+    kolmas tiedosto
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 57593b34fb77b066d0209ec61c3d512c8395fb62
+Author: Peruna <noora.matilainen@helsinki.fi>
+Date:   Mon Mar 15 19:52:23 2021 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit 7e5c3be9850ff75f831c824cc69849905756fa0e
+Author: Peruna <noora.matilainen@helsinki.fi>
+Date:   Mon Mar 15 19:49:05 2021 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
