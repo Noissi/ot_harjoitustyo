@@ -62,17 +62,17 @@ class UI(QWidget):
         self._hide_current_view()
         self._current_view = GameView(self._show_main_view, self._show_card_view)
         
-    def _show_card_view(self):
+    def _show_card_view(self, card):
         #self._hide_current_view()
-        self._card_view = CardView(self._show_game_view, self._show_edit_card_view)
+        self._card_view = CardView(card, self._show_game_view, self._show_edit_card_view)
         self.current_view = self._card_view
         self._stacked_layout.addWidget(self._card_view)
         self._stacked_layout.setCurrentWidget(self._card_view)
         print('card ui')
         
-    def _show_edit_card_view(self):
+    def _show_edit_card_view(self, card):
         #self._hide_current_view()
-        self._edit_card_view = EditCardView(self._show_game_view, self._show_card_view)
+        self._edit_card_view = EditCardView(card, self._show_game_view, self._show_card_view)
         self.current_view = self._edit_card_view
         self._stacked_layout.addWidget(self._edit_card_view)
         self._stacked_layout.setCurrentWidget(self._edit_card_view)

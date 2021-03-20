@@ -89,7 +89,7 @@ class Card:
     ## Get
     def get_card_colour(self):
         if self.multicolour:
-            return "Gold"
+            return "Kulta"
         return self.colour[0]
         
     def get_colour(self):

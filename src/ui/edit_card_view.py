@@ -5,12 +5,12 @@ from ui.window import Window
 from entities.card_creature import Creature
 
 class EditCardView(Window):
-    def __init__(self, handle_show_game_view, handle_show_card_view):
+    def __init__(self, card, handle_show_game_view, handle_show_card_view):
         super().__init__()
         self._handle_show_card_view = handle_show_card_view
         self._handle_show_game_view = handle_show_game_view
         
-        self._card = Creature("Puu")
+        self._card = card
         
         self._card_frame = QPixmap("img/bluecard.png")
         
@@ -61,7 +61,7 @@ class EditCardView(Window):
         #self._bottom_layout = QHBoxLayout()
         btn_edit = QPushButton('Tallenna')
         btn_edit.setMaximumWidth(100)
-        btn_edit.clicked.connect(self._handle_show_card_view)
+        btn_edit.clicked.connect(lambda: self._handle_show_card_view(self._card))
         self._bottom_layout.addWidget(btn_edit)
         
     def _set_card_layout(self):
@@ -97,6 +97,7 @@ class EditCardView(Window):
         type_combo.addItem("Sorcery")
         type_combo.addItem("Planeswalker")
         self._left_layout.addRow("Tyyppi:", type_combo)
+        #self._card.set_maintype()
         self._left_layout.addRow("Alatyyppi:", QLineEdit())
         
         # Draw colour checkboxes
@@ -135,7 +136,7 @@ class EditCardView(Window):
         feature_reach_box = QCheckBox("Reach")
         feature_indestructible_box = QCheckBox("Indestructible")
         feature_flash_box = QCheckBox("Flash")        
-        self._right_layout.addRow("Feature:", feature_flying_box)
+        self._right_layout.addRow("Ominaisuus:", feature_flying_box)
         self._right_layout.addRow(feature_vigilance_box, feature_haste_box)
         self._right_layout.addRow(feature_deathtouch_box, feature_trample_box)
         self._right_layout.addRow(feature_firststrike_box, feature_doublestrike_box)        
@@ -159,9 +160,9 @@ class EditCardView(Window):
         feature_flash_box.stateChanged.connect(lambda: self._set_feature(feature_flash_box))
         
         ruletext_line = QLineEdit()
-        self._right_layout.addRow("Ruletext:", ruletext_line)
+        self._right_layout.addRow("Sääntöteksti:", ruletext_line)
         self._card.set_ruletext(ruletext_line.text())
-        self._right_layout.addRow("Teksti:", QLineEdit())
+        self._right_layout.addRow("Tarina:", QLineEdit())
         self._right_layout.addRow("Tekijä:", QLineEdit())
         
         print("ruletext")
@@ -196,7 +197,7 @@ class EditCardView(Window):
             self._card_frame = QPixmap("img/blackcard.png")
         elif self._card.get_card_colour() == "Väritön":
             self._card_frame = QPixmap("img/colourlesscard.png")
-        elif self._card.get_card_colour() == "Gold":
+        elif self._card.get_card_colour() == "Kulta":
             self._card_frame = QPixmap("img/goldcard.png")
              
         self._update_layout()

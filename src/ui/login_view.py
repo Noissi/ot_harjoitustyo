@@ -18,8 +18,7 @@ class LoginView(QWidget):
         self.width=1500
         self.height=1000        
         
-        #self.card = None
-        #self.card = Creature('Teemu Kerppu')
+        self._card = Creature('Teemu Kerppu')
         
         self._initialise()
         
@@ -71,7 +70,7 @@ class LoginView(QWidget):
         layout.setRowMinimumHeight(2, 10)
         
         button_skip2 = QPushButton('Skip')
-        button_skip2.clicked.connect(self._handle_show_main_view)
+        button_skip2.clicked.connect(lambda: self._handle_show_main_view(self._card))
         layout.addWidget(button_skip2, 4, 0, 1, 2)
         layout.setRowMinimumHeight(1, 10)
         

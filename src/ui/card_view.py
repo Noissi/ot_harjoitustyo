@@ -5,12 +5,12 @@ from ui.window import Window
 from entities.card_creature import Creature
 
 class CardView(Window):
-    def __init__(self, handle_show_game_view, handle_show_edit_card_view):
+    def __init__(self, card, handle_show_game_view, handle_show_edit_card_view):
         super().__init__()
         self._handle_show_edit_card_view = handle_show_edit_card_view
         self._handle_show_game_view = handle_show_game_view
         
-        self._card = Creature("Teemu Kerppu")
+        self._card = card
         self._card_frame = QPixmap("img/bluecard.png")
         
         self._outer_layout = self.get_outer_layout()
@@ -58,7 +58,7 @@ class CardView(Window):
         # Draw bottom edit box
         btn_edit = QPushButton('Muokkaa')
         btn_edit.setMaximumWidth(100)
-        btn_edit.clicked.connect(self._handle_show_edit_card_view)
+        btn_edit.clicked.connect(lambda: self._handle_show_edit_card_view(self._card))
         self._bottom_layout.addWidget(btn_edit)
         
     def _set_card_layout(self):
@@ -80,7 +80,7 @@ class CardView(Window):
         self._left_layout.addRow("Name", QLabel("Kiljukuikka"))
         #self._left_layout.addRow("Type:", QLabel(self._card.maintype))
         #self._left_layout.addRow("Subtype:", QLabel(self._card.subtype))
-        #self._left_layout.addRow("Colour:", QLabel(self._name.get_colour()))
+        self._left_layout.addRow("Colour:", QLabel(self._card.get_colour()))
         
     def _set_rightpanel_layout(self):
         # Set the right side panel
