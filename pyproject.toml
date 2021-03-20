@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "ot_harjoitustyo"
+version = "0.1.0"
+description = ""
+authors = ["Peruna <noora.matilainen@helsinki.fi>"]
+
+[tool.poetry.dependencies]
+python = ">=3.6 <3.10"
+invoke = "^1.5.0"
+PySide6 = "^6.0.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.2"
+coverage = "^5.5"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
