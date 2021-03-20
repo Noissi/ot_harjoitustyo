@@ -12,8 +12,11 @@ class EditCardView(Window):
         self._card_frame = QPixmap("img/bluecard.png")
         
         self._outer_layout = self.get_outer_layout()
-        self._middle_layout = QGridLayout()        
-        self._bottom_layout = QHBoxLayout()        
+        self._middle_layout = QGridLayout()
+        self._bottom_layout = QHBoxLayout()
+        
+        self._left_layout = QFormLayout()
+        self._right_layout = QFormLayout()
         
         self._initialise()
         
@@ -41,29 +44,39 @@ class EditCardView(Window):
         outer_layout.setRowStretch(2, 1)
         '''
         
-    def _set_card_layout(self):
-        card_layout = QGridLayout()
+    def _set_middle_layout(self):
+        # Add to middle layout
+        self._middle_layout.addLayout(self._left_layout, 0, 0)
+        self._middle_layout.addLayout(self._card_layout, 0, 1)
+        self._middle_layout.addLayout(self._right_layout, 0, 3)
         
+    def _set_bottom_layout(self):
+        # Draw bottom edit box
+        btn_edit = QPushButton('Tallenna')
+        btn_edit.setMaximumWidth(100)
+        btn_edit.clicked.connect(self._handle_show_card_view)
+        self._bottom_layout.addWidget(btn_edit)
+        
+    def _set_card_layout(self):
+        self._card_layout = QGridLayout()
+        print(self._card_frame)
         # Draw card frame
         card_frame_scaled = self._card_frame.scaledToWidth(self.width-1000)
         card_frame_label = QLabel(alignment=Qt.AlignCenter)
         card_frame_label.setPixmap(card_frame_scaled)
-        card_layout.addWidget(card_frame_label)
+        self._card_layout.addWidget(card_frame_label)
         
         # Write card name
         name_label = QLabel()
         name_label.setText('<font color="red", font size="4"> Kiljukuikka </font>')
         name_label.move(500,-200)
-        card_layout.addWidget(name_label)
-        
-        return card_layout
+        self._card_layout.addWidget(name_label)
         
     def _set_leftpanel_layout(self):
         # Draw left side panel
-        left_layout = QFormLayout()
         
         # Draw card name edit box
-        left_layout.addRow("Nimi:", QLineEdit())
+        self._left_layout.addRow("Nimi:", QLineEdit())
         
         # Draw card type selection
         type_combo = QComboBox()
@@ -74,36 +87,31 @@ class EditCardView(Window):
         type_combo.addItem("Instant")
         type_combo.addItem("Sorcery")
         type_combo.addItem("Planeswalker")
-        left_layout.addRow("Tyyppi:", type_combo)
-        left_layout.addRow("Alatyyppi:", QLineEdit())
+        self._left_layout.addRow("Tyyppi:", type_combo)
+        self._left_layout.addRow("Alatyyppi:", QLineEdit())
         
         # Draw color checkboxes
         color_red_box = QCheckBox("Punainen")
-        color_red_box.setChecked(True)
         color_blue_box = QCheckBox("Sininen")
         color_green_box = QCheckBox("Vihreä")
         color_white_box = QCheckBox("Valkoinen")
         color_black_box = QCheckBox("Musta")
         color_colorless_box = QCheckBox("Väritön")
-        left_layout.addRow("Väri:", color_red_box)
-        left_layout.addRow(color_blue_box)
-        left_layout.addRow(color_green_box)
-        left_layout.addRow(color_white_box)
-        left_layout.addRow(color_black_box)
-        left_layout.addRow(color_colorless_box)
-        color_red_box.stateChanged.connect(self._change_color(color_red_box)) 
-        color_blue_box.stateChanged.connect(self._change_color(color_blue_box)) 
+        self._left_layout.addRow("Väri:", color_red_box)
+        self._left_layout.addRow(color_blue_box)
+        self._left_layout.addRow(color_green_box)
+        self._left_layout.addRow(color_white_box)
+        self._left_layout.addRow(color_black_box)
+        self._left_layout.addRow(color_colorless_box)
+        color_red_box.stateChanged.connect(lambda: self._change_color(color_red_box))
+        color_blue_box.stateChanged.connect(self._change_color(color_blue_box))
         color_green_box.stateChanged.connect(self._change_color(color_green_box))
-        
-        return left_layout
         
     def _set_rightpanel_layout(self):
         # Set the right side panel
-        right_layout = QFormLayout()
-        right_layout.addRow("Sääntö:", QLineEdit())
-        right_layout.addRow("Teksti:", QLineEdit())
-        right_layout.addRow("Tekijä:", QLineEdit())
-        return right_layout
+        self._right_layout.addRow("Sääntö:", QLineEdit())
+        self._right_layout.addRow("Teksti:", QLineEdit())
+        self._right_layout.addRow("Tekijä:", QLineEdit())
         
     def _change_color(self, color):
         print(color.isChecked())
@@ -113,6 +121,7 @@ class EditCardView(Window):
                 print("red")
                 self._card_frame = QPixmap("img/redcard.png")
                 self._set_card_layout()
+                self._set_middle_layout()
                 self._set_layouts()
                 
         
@@ -134,24 +143,12 @@ class EditCardView(Window):
         #top_layout.addWidget(button_back)        
 
      
-        card_layout = self._set_card_layout()
-        left_layout = self._set_leftpanel_layout()
-        right_layout = self._set_rightpanel_layout()
-
+        self._set_card_layout()
+        self._set_leftpanel_layout()
+        self._set_rightpanel_layout()
         
-        # Add to middle layout
-        self._middle_layout.addLayout(left_layout, 0, 0)
-        self._middle_layout.addLayout(card_layout, 0, 1)
-        self._middle_layout.addLayout(right_layout, 0, 3)
-        
-        # Draw bottom edit box
-        btn_edit = QPushButton('Tallenna')
-        btn_edit.setMaximumWidth(100)
-        btn_edit.clicked.connect(self._handle_show_card_view)
-        self._bottom_layout.addWidget(btn_edit)
-
+        self._set_middle_layout()
+        self._set_bottom_layout()
         self._set_layouts()
-        
-        
 
         print('card')
