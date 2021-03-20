@@ -1,5 +1,5 @@
 import sys
-from PySide6.QtWidgets import QApplication, QPushButton, QTextBrowser
+from PySide6.QtWidgets import QApplication, QPushButton, QTextBrowser, QWidget
 from ui.ui import UI
 from ui.login_view import LoginView
 
@@ -11,6 +11,13 @@ def main():
     
     ui = UI()
     ui.start()
+    
+    #widget = QWidget(ui.current_view)
+    #outer_layout = ui.current_view.get_outer_layout()
+    #widget.setLayout(outer_layout)
+    #ui.current_view.setCentralWidget(widget)
+    #ui.current_view.centralWidget().setLayout(outer_layout)
+    ui.current_view.show()
     
     # Run the main Qt loop
     sys.exit(app.exec_())

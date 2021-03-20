@@ -1,7 +1,7 @@
 from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 
-class Window(QMainWindow):
+class Window(QWidget):
     def __init__(self):
         super().__init__()
         

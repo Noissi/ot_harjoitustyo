@@ -2,6 +2,7 @@ from PySide6.QtWidgets import *
 from PySide6.QtGui import QImage, QPalette, QBrush
 from PySide6.QtCore import QSize, QRect, Qt
 from ui.window import Window
+from entities.card_creature import Creature
 
 class LoginView(QWidget):
     def __init__(self, handle_show_create_user_view, handle_show_main_view, handle_end):
@@ -15,7 +16,10 @@ class LoginView(QWidget):
         self.left=10
         self.top=10
         self.width=1500
-        self.height=1000
+        self.height=1000        
+        
+        #self.card = None
+        #self.card = Creature('Teemu Kerppu')
         
         self._initialise()
         
