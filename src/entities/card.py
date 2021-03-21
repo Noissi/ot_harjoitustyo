@@ -90,6 +90,8 @@ class Card:
     def get_card_colour(self):
         if self.multicolour:
             return "Kulta"
+        elif not self.colour:
+            return "Sininen"
         return self.colour[0]
         
     def get_colour(self):
@@ -108,11 +110,15 @@ class Card:
         
     ## Remove    
     def remove_colour(self, colour):
-        self.colour.remove(colour)
+        if colour in self.colour:
+            print("remove colour:")
+            print(self.colour)
+            self.colour.remove(colour)
         self._check_if_multicolour()
         
     def remove_feature(self, feature):
-        self.feature.remove(feature)
+        if feature in self.feature:
+            self.feature.remove(feature)
     
     ## Other
     def _string_to_list(self, string):

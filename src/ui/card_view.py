@@ -11,7 +11,7 @@ class CardView(Window):
         self._handle_show_game_view = handle_show_game_view
         
         self._card = card
-        self._card_frame = QPixmap("img/bluecard.png")
+        self._card_frame = None
         
         self._outer_layout = self.get_outer_layout()
         self._middle_layout = QGridLayout()
@@ -64,6 +64,7 @@ class CardView(Window):
     def _set_card_layout(self):
         self._card_layout = QGridLayout()
         # Draw card frame
+        self._set_card_frame()
         card_frame_scaled = self._card_frame.scaledToWidth(self.width-1000)
         card_frame_label = QLabel(alignment=Qt.AlignCenter)
         card_frame_label.setPixmap(card_frame_scaled)
@@ -87,6 +88,22 @@ class CardView(Window):
         self._right_layout.addRow("Sääntö:", QLabel("When somethind tap everything."))
         self._right_layout.addRow("Teksti:", QLabel("Kuiik kuiik!"))
         self._right_layout.addRow("Tekijä:", QLabel("Peruna"))
+        
+    def _set_card_frame(self):
+        if self._card.get_card_colour() == "Punainen":
+            self._card_frame = QPixmap("img/redcard.png")
+        elif self._card.get_card_colour() == "Sininen":
+            self._card_frame = QPixmap("img/bluecard.png")
+        elif self._card.get_card_colour() == "Vihreä":
+            self._card_frame = QPixmap("img/greencard.png")
+        elif self._card.get_card_colour() == "Valkoinen":
+            self._card_frame = QPixmap("img/whitecard.png")
+        elif self._card.get_card_colour() == "Musta":
+            self._card_frame = QPixmap("img/blackcard.png")
+        elif self._card.get_card_colour() == "Väritön":
+            self._card_frame = QPixmap("img/colourlesscard.png")
+        elif self._card.get_card_colour() == "Kulta":
+            self._card_frame = QPixmap("img/goldcard.png")
                      
     def _initialise(self):        
         # Set background image
