@@ -74,7 +74,8 @@ class EditCardView(Window):
         
         # Write card name
         name_label = QLabel()
-        name_label.setText('<font color="red", font size="4"> Kiljukuikka </font>')
+        #name_label.setText('<font color="red", font size="4"> Kiljukuikka </font>')
+        name_label.setText(self._card.name)
         name_label.move(500,-700)
         self._card_layout.addWidget(name_label)        
         
@@ -85,7 +86,10 @@ class EditCardView(Window):
     def _set_leftpanel_layout(self):
         # Draw left side panel
         # Draw card name edit box
-        self._left_layout.addRow("Nimi:", QLineEdit())
+        name_line = QLineEdit()
+        self._left_layout.addRow("Nimi:", name_line)
+        name_line.textChanged[str].connect(lambda: self._save_name_to_card(name_line))
+        
         
         # Draw card type selection
         type_combo = QComboBox()
@@ -106,13 +110,11 @@ class EditCardView(Window):
         colour_green_box = QCheckBox("Vihreä")
         colour_white_box = QCheckBox("Valkoinen")
         colour_black_box = QCheckBox("Musta")
-        colour_colourless_box = QCheckBox("Väritön")
         colour_boxes = [colour_red_box, colour_blue_box, colour_green_box, \
-                        colour_white_box, colour_black_box, colour_colourless_box]
+                        colour_white_box, colour_black_box]
         self._left_layout.addRow("Väri:", colour_red_box)
         self._left_layout.addRow(colour_blue_box, colour_green_box)
         self._left_layout.addRow(colour_white_box, colour_black_box)
-        self._left_layout.addRow(colour_colourless_box)
         
         self._set_colour_boxes(colour_boxes)
         self._change_colour_state(colour_boxes)
@@ -150,17 +152,24 @@ class EditCardView(Window):
         self._right_layout.addRow(feature_reach_box, feature_indestructible_box)
         self._right_layout.addRow(feature_flash_box)
         
-        self._change_feature_state(feature_boxes)
-        self._set_feature_boxes(feature_boxes)
         
+        self._set_feature_boxes(feature_boxes)
+        self._change_feature_state(feature_boxes)
+        
+        # Rule text
         ruletext_line = QLineEdit()
         self._right_layout.addRow("Sääntöteksti:", ruletext_line)
-        self._card.set_ruletext(ruletext_line.text())
-        self._right_layout.addRow("Tarina:", QLineEdit())
-        self._right_layout.addRow("Tekijä:", QLineEdit())
+        ruletext_line.textChanged[str].connect(lambda: self._save_ruletext_to_card(ruletext_line))
         
-        print("ruletext")
-        print(self._card.ruletext)
+        # Flavour text
+        flavourtext_line = QLineEdit()
+        self._right_layout.addRow("Tarina:", flavourtext_line)
+        flavourtext_line.textChanged[str].connect(lambda: self._save_flavourtext_to_card(flavourtext_line))
+        
+        # Creator
+        creator_line = QLineEdit()
+        self._right_layout.addRow("Tekijä:", creator_line)
+        creator_line.textChanged[str].connect(lambda: self._save_creator_to_card(creator_line))
         
     def _update_layout(self):
         self._set_card_layout()
@@ -174,18 +183,13 @@ class EditCardView(Window):
         self.setLayout(self._outer_layout)
         
     def _set_colour(self, colour_box):
-        print(colour_box.text())
         if colour_box.isChecked() == True:            
             self._card.add_colour(colour_box.text())
-            print("set colour2")
         else:
             if colour_box.text() in self._card.colour:
                 self._card.remove_colour(colour_box.text())
-        self._set_card_frame()
-             
+        self._set_card_frame()             
         self._update_layout()
-        
-        print(self._card.colour) 
     
     def _change_feature_state(self, feature_boxes):
         feature_boxes[0].stateChanged.connect(lambda: self._set_feature(feature_boxes[0]))
@@ -204,22 +208,18 @@ class EditCardView(Window):
         feature_boxes[13].stateChanged.connect(lambda: self._set_feature(feature_boxes[13]))
         
         
-    def _set_feature(self, feature):
-        if feature.isChecked() == True:
-            self._card.add_feature(feature.text())
+    def _set_feature(self, feature_box):
+        if feature_box.isChecked() == True:
+            self._card.add_feature(feature_box.text())
         else:
-            self._card.remove_feature(feature.text())
+            self._card.remove_feature(feature_box.text())
         self._update_layout()
-        
-        print("set feature")
-        print(self._card.feature)
         
     def _set_feature_boxes(self, feature_boxes):
         for feature_box in feature_boxes:
             self._check_if_card_has(feature_box, self._card.feature)
         
     def _set_colour_boxes(self, colour_boxes):
-        print("set colour")
         for colour_box in colour_boxes:            
             self._check_if_card_has(colour_box, self._card.colour)
             
@@ -229,7 +229,6 @@ class EditCardView(Window):
         colour_boxes[2].stateChanged.connect(lambda: self._set_colour(colour_boxes[2]))
         colour_boxes[3].stateChanged.connect(lambda: self._set_colour(colour_boxes[3]))
         colour_boxes[4].stateChanged.connect(lambda: self._set_colour(colour_boxes[4]))
-        colour_boxes[5].stateChanged.connect(lambda: self._set_colour(colour_boxes[5]))
             
     def _set_card_frame(self):
         if self._card.get_card_colour() == "Punainen":
@@ -248,12 +247,20 @@ class EditCardView(Window):
             self._card_frame = QPixmap("img/goldcard.png")
         
     def _check_if_card_has(self, checkbox, cards_list):
-        print("card list")
-        print(cards_list)
         if checkbox.text() in cards_list:
             checkbox.setChecked(True)
         else:
             checkbox.setChecked(False)
+    
+    def _save_name_to_card(self, name_line):
+        self._card.set_name(name_line.text()) 
+    def _save_ruletext_to_card(self, ruletext_line):
+        self._card.set_ruletext(ruletext_line.text())
+    def _save_flavourtext_to_card(self, flavourtext_line):
+        self._card.set_flavourtext(flavourtext_line.text())
+    def _save_creator_to_card(self, creator_line):
+        self._card.set_creator(creator_line.text())
+        
         
     def _clear_layout(self, layout):
         print('before: ' +str(layout.count()))

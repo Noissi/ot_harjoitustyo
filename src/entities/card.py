@@ -51,7 +51,7 @@ class Card:
         self.feature = []
         self.ruletext = ""
         self.flavourtext = ""
-        self.creator = None
+        self.creator = ""
         self.seticon = None
         self.rarity = None
     
@@ -71,7 +71,7 @@ class Card:
     def set_ruletext(self, ruletext):
         self.ruletext = ruletext
         
-    def set_flavourtext(self, flavoutext):
+    def set_flavourtext(self, flavourtext):
         self.flavourtext = flavourtext
         
     def set_creator(self, creator):
@@ -91,11 +91,16 @@ class Card:
         if self.multicolour:
             return "Kulta"
         elif not self.colour:
-            return "Sininen"
+            return "Väritön"
         return self.colour[0]
         
     def get_colour(self):
+        if not self.colour:
+            return "Väritön"
         return ', '.join(self.colour)
+        
+    def get_feature(self):
+        return ', '.join(self.feature)
         
     def get_subtype(self):
         return ', '.join(self.subtype)
@@ -111,8 +116,6 @@ class Card:
     ## Remove    
     def remove_colour(self, colour):
         if colour in self.colour:
-            print("remove colour:")
-            print(self.colour)
             self.colour.remove(colour)
         self._check_if_multicolour()
         

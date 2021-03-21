@@ -72,22 +72,24 @@ class CardView(Window):
         
         # Write card name
         name_label = QLabel()
-        name_label.setText('<font color="red", font size="4"> Kiljukuikka </font>')
+        #name_label.setText('<font color="red", font size="4"> Kiljukuikka </font>')
+        name_label.setText(self._card.name)
         name_label.move(500,-700)
         self._card_layout.addWidget(name_label)
         
     def _set_leftpanel_layout(self):
         # Draw left side panel
-        self._left_layout.addRow("Name", QLabel("Kiljukuikka"))
-        #self._left_layout.addRow("Type:", QLabel(self._card.maintype))
+        self._left_layout.addRow("Nimi", QLabel(self._card.name))
+        self._left_layout.addRow("Tyyppi:", QLabel(self._card.maintype))
         #self._left_layout.addRow("Subtype:", QLabel(self._card.subtype))
-        self._left_layout.addRow("Colour:", QLabel(self._card.get_colour()))
+        self._left_layout.addRow("Väri:", QLabel(self._card.get_colour()))
         
     def _set_rightpanel_layout(self):
-        # Set the right side panel
-        self._right_layout.addRow("Sääntö:", QLabel("When somethind tap everything."))
-        self._right_layout.addRow("Teksti:", QLabel("Kuiik kuiik!"))
-        self._right_layout.addRow("Tekijä:", QLabel("Peruna"))
+        # Set the right side panel        
+        self._right_layout.addRow("Ominaisuus:", QLabel(self._card.get_feature()))
+        self._right_layout.addRow("Sääntöteksti:", QLabel(self._card.ruletext))
+        self._right_layout.addRow("Tarina:", QLabel(self._card.flavourtext))
+        self._right_layout.addRow("Tekijä:", QLabel(self._card.creator))
         
     def _set_card_frame(self):
         if self._card.get_card_colour() == "Punainen":
