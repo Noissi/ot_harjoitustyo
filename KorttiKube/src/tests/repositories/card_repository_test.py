@@ -1,3 +1,4 @@
+'''
 import unittest
 from repositories.card_repository import card_repository
 from entities.card import Card
@@ -8,4 +9,6 @@ class TestCardRepository(Unittest.TestCase):
     	###
     	
     def test_create(self):
+    	pass
         ###
+'''

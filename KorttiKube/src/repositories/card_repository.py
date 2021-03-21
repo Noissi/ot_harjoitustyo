@@ -1,3 +1,4 @@
+'''
 from entities.card import Card
 
 class CardRepository:
@@ -12,5 +13,6 @@ class CardRepository:
         
     def delete_all(self):
         ...
+'''
         
     

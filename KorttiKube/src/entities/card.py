@@ -74,7 +74,7 @@ class Card:
         self.tribal = boolean
     
     def set_subtype(self, subtype):
-        self.subtype = subtype.split(",")        
+        self.subtype = subtype.split(" ")        
         
     def set_ruletext(self, ruletext):
         self.ruletext = ruletext
@@ -121,33 +121,29 @@ class Card:
         return "Ei"
         
     def get_subtype(self):
-        return ', '.join(self.subtype)
+        return ' '.join(self.subtype)
         
     ## Add    
     def add_colour(self, colour):
-        self.colour.append(colour)
-        self._check_if_multicolour()  
+        if colour not in self.colour:
+            self.colour.append(colour)
+            self._check_if_multicolour()  
         
     def add_feature(self, feature):
-        self.feature.append(feature)
+        if feature not in self.feature:
+            self.feature.append(feature)
         
     ## Remove    
     def remove_colour(self, colour):
         if colour in self.colour:
             self.colour.remove(colour)
-        self._check_if_multicolour()
+            self._check_if_multicolour()
         
     def remove_feature(self, feature):
         if feature in self.feature:
             self.feature.remove(feature)
     
-    ## Other
-    def _string_to_list(self, string):
-        list = split(string, ",")
-        return list
-        
-
-        
+    ## Other        
     def _check_if_multicolour(self):
         if len(self.colour) > 1:
             self.multicolour = True
