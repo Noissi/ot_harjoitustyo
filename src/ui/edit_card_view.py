@@ -21,6 +21,9 @@ class EditCardView(Window):
         self._right_layout = QFormLayout() 
         self._card_layout = QGridLayout()
         
+        self._feature_boxes = []
+        
+        self._initialise_feature()
         self._initialise()
         
     def _set_layouts(self):    
@@ -85,24 +88,47 @@ class EditCardView(Window):
         
     def _set_leftpanel_layout(self):
         # Draw left side panel
-        # Draw card name edit box
+        
+        # Draw name edit box
         name_line = QLineEdit()
+        name_line.setText(self._card.name)
         self._left_layout.addRow("Nimi:", name_line)
-        name_line.textChanged[str].connect(lambda: self._save_name_to_card(name_line))
+        name_line.textChanged[str].connect(lambda: self._save_name_to_card(name_line))        
         
+        # Draw maintype selection
+        maintype_combo = QComboBox()
+        maintype_combo.addItem("Creature")
+        maintype_combo.addItem("Artifact")
+        maintype_combo.addItem("Enchantment")
+        maintype_combo.addItem("Land")
+        maintype_combo.addItem("Instant")
+        maintype_combo.addItem("Sorcery")
+        maintype_combo.addItem("Planeswalker")
+        maintype_combo.addItem("Artifact Creature")
+        maintype_combo.addItem("Enchantment Creature")
+        self._left_layout.addRow("Tyyppi:", maintype_combo)
+        self._set_maintype_combo(maintype_combo)
+        maintype_combo.activated.connect(lambda: self._save_maintype_to_card(maintype_combo))
         
-        # Draw card type selection
-        type_combo = QComboBox()
-        type_combo.addItem("Creature")
-        type_combo.addItem("Artifact")
-        type_combo.addItem("Enchantment")
-        type_combo.addItem("Land")
-        type_combo.addItem("Instant")
-        type_combo.addItem("Sorcery")
-        type_combo.addItem("Planeswalker")
-        self._left_layout.addRow("Tyyppi:", type_combo)
-        #self._card.set_maintype()
-        self._left_layout.addRow("Alatyyppi:", QLineEdit())
+        # Legendary
+        legendary_btn = QRadioButton("Legendary")
+        legendary_btn.setAutoExclusive(False)
+        self._left_layout.addRow("Legendary:", legendary_btn)
+        self._set_legendary_btn(legendary_btn)
+        legendary_btn.toggled.connect(lambda: self._set_legendary(legendary_btn))
+        
+        # Tribal
+        tribal_btn = QRadioButton("Tribal")
+        tribal_btn.setAutoExclusive(False)
+        self._left_layout.addRow("Tribal:", tribal_btn)
+        self._set_tribal_btn(tribal_btn)
+        tribal_btn.toggled.connect(lambda: self._set_tribal(tribal_btn))
+        
+        # Subtype
+        subtype_line = QLineEdit()
+        subtype_line.setText(self._card.get_subtype())
+        self._left_layout.addRow("Alatyyppi:", subtype_line)
+        subtype_line.textChanged[str].connect(lambda: self._save_subtype_to_card(subtype_line))
         
         # Draw colour checkboxes
         colour_red_box = QCheckBox("Punainen")
@@ -124,50 +150,33 @@ class EditCardView(Window):
         # Set the right side panel        
         
         # Draw feature checkboxes
-        feature_flying_box = QCheckBox("Flying")
-        feature_vigilance_box = QCheckBox("Vigilance")
-        feature_haste_box = QCheckBox("Haste")
-        feature_deathtouch_box = QCheckBox("Deathtouch")
-        feature_trample_box = QCheckBox("Trample")
-        feature_firststrike_box = QCheckBox("First strike")
-        feature_doublestrike_box = QCheckBox("Double strike")
-        feature_lifelink_box = QCheckBox("Lifelink")
-        feature_menace_box = QCheckBox("Menace")
-        feature_hexproof_box = QCheckBox("Hexproof")
-        feature_defender_box = QCheckBox("Defender")
-        feature_reach_box = QCheckBox("Reach")
-        feature_indestructible_box = QCheckBox("Indestructible")
-        feature_flash_box = QCheckBox("Flash")
-        feature_boxes = [feature_flying_box, feature_vigilance_box, feature_haste_box, \
-                         feature_deathtouch_box, feature_trample_box, feature_firststrike_box, \
-                         feature_doublestrike_box, feature_lifelink_box, feature_menace_box, \
-                         feature_hexproof_box, feature_defender_box, feature_reach_box, \
-                         feature_indestructible_box, feature_flash_box]        
-        self._right_layout.addRow("Ominaisuus:", feature_flying_box)
-        self._right_layout.addRow(feature_vigilance_box, feature_haste_box)
-        self._right_layout.addRow(feature_deathtouch_box, feature_trample_box)
-        self._right_layout.addRow(feature_firststrike_box, feature_doublestrike_box)        
-        self._right_layout.addRow(feature_lifelink_box, feature_menace_box)
-        self._right_layout.addRow(feature_hexproof_box, feature_defender_box)
-        self._right_layout.addRow(feature_reach_box, feature_indestructible_box)
-        self._right_layout.addRow(feature_flash_box)
+        self._right_layout.addRow("Ominaisuus:", self._feature_boxes[0])
+        self._right_layout.addRow(self._feature_boxes[1], self._feature_boxes[2])
+        self._right_layout.addRow(self._feature_boxes[3], self._feature_boxes[4])
+        self._right_layout.addRow(self._feature_boxes[5], self._feature_boxes[6])        
+        self._right_layout.addRow(self._feature_boxes[7], self._feature_boxes[8])
+        self._right_layout.addRow(self._feature_boxes[9], self._feature_boxes[10])
+        self._right_layout.addRow(self._feature_boxes[11], self._feature_boxes[12])
+        self._right_layout.addRow(self._feature_boxes[13])
         
-        
-        self._set_feature_boxes(feature_boxes)
-        self._change_feature_state(feature_boxes)
+        self._set_feature_boxes()
+        self._change_feature_state()
         
         # Rule text
         ruletext_line = QLineEdit()
+        ruletext_line.setText(self._card.ruletext)
         self._right_layout.addRow("Sääntöteksti:", ruletext_line)
         ruletext_line.textChanged[str].connect(lambda: self._save_ruletext_to_card(ruletext_line))
         
         # Flavour text
         flavourtext_line = QLineEdit()
+        flavourtext_line.setText(self._card.flavourtext)
         self._right_layout.addRow("Tarina:", flavourtext_line)
         flavourtext_line.textChanged[str].connect(lambda: self._save_flavourtext_to_card(flavourtext_line))
         
-        # Creator
+        # Creature
         creator_line = QLineEdit()
+        creator_line.setText(self._card.creator)
         self._right_layout.addRow("Tekijä:", creator_line)
         creator_line.textChanged[str].connect(lambda: self._save_creator_to_card(creator_line))
         
@@ -181,7 +190,8 @@ class EditCardView(Window):
         self._set_layouts()        
         
         self.setLayout(self._outer_layout)
-        
+    
+    # Colour
     def _set_colour(self, colour_box):
         if colour_box.isChecked() == True:            
             self._card.add_colour(colour_box.text())
@@ -190,24 +200,19 @@ class EditCardView(Window):
                 self._card.remove_colour(colour_box.text())
         self._set_card_frame()             
         self._update_layout()
+
+    def _set_colour_boxes(self, colour_boxes):
+        for colour_box in colour_boxes:            
+            self._check_if_card_has(colour_box, self._card.colour)
     
-    def _change_feature_state(self, feature_boxes):
-        feature_boxes[0].stateChanged.connect(lambda: self._set_feature(feature_boxes[0]))
-        feature_boxes[1].stateChanged.connect(lambda: self._set_feature(feature_boxes[1]))
-        feature_boxes[2].stateChanged.connect(lambda: self._set_feature(feature_boxes[2]))
-        feature_boxes[3].stateChanged.connect(lambda: self._set_feature(feature_boxes[3]))
-        feature_boxes[4].stateChanged.connect(lambda: self._set_feature(feature_boxes[4]))
-        feature_boxes[5].stateChanged.connect(lambda: self._set_feature(feature_boxes[5]))
-        feature_boxes[6].stateChanged.connect(lambda: self._set_feature(feature_boxes[6]))
-        feature_boxes[7].stateChanged.connect(lambda: self._set_feature(feature_boxes[7]))
-        feature_boxes[8].stateChanged.connect(lambda: self._set_feature(feature_boxes[8]))
-        feature_boxes[9].stateChanged.connect(lambda: self._set_feature(feature_boxes[9]))
-        feature_boxes[10].stateChanged.connect(lambda: self._set_feature(feature_boxes[10]))
-        feature_boxes[11].stateChanged.connect(lambda: self._set_feature(feature_boxes[11]))
-        feature_boxes[12].stateChanged.connect(lambda: self._set_feature(feature_boxes[12]))
-        feature_boxes[13].stateChanged.connect(lambda: self._set_feature(feature_boxes[13]))
-        
-        
+    def _change_colour_state(self, colour_boxes):
+        colour_boxes[0].stateChanged.connect(lambda: self._set_colour(colour_boxes[0]))
+        colour_boxes[1].stateChanged.connect(lambda: self._set_colour(colour_boxes[1]))
+        colour_boxes[2].stateChanged.connect(lambda: self._set_colour(colour_boxes[2]))
+        colour_boxes[3].stateChanged.connect(lambda: self._set_colour(colour_boxes[3]))
+        colour_boxes[4].stateChanged.connect(lambda: self._set_colour(colour_boxes[4]))
+    
+    # Feature    
     def _set_feature(self, feature_box):
         if feature_box.isChecked() == True:
             self._card.add_feature(feature_box.text())
@@ -215,20 +220,57 @@ class EditCardView(Window):
             self._card.remove_feature(feature_box.text())
         self._update_layout()
         
-    def _set_feature_boxes(self, feature_boxes):
-        for feature_box in feature_boxes:
+    def _set_feature_boxes(self):
+        for feature_box in self._feature_boxes:
             self._check_if_card_has(feature_box, self._card.feature)
-        
-    def _set_colour_boxes(self, colour_boxes):
-        for colour_box in colour_boxes:            
-            self._check_if_card_has(colour_box, self._card.colour)
             
-    def _change_colour_state(self, colour_boxes):
-        colour_boxes[0].stateChanged.connect(lambda: self._set_colour(colour_boxes[0]))        
-        colour_boxes[1].stateChanged.connect(lambda: self._set_colour(colour_boxes[1]))
-        colour_boxes[2].stateChanged.connect(lambda: self._set_colour(colour_boxes[2]))
-        colour_boxes[3].stateChanged.connect(lambda: self._set_colour(colour_boxes[3]))
-        colour_boxes[4].stateChanged.connect(lambda: self._set_colour(colour_boxes[4]))
+    def _change_feature_state(self):
+        self._feature_boxes[0].stateChanged.connect(lambda: self._set_feature(self._feature_boxes[0]))
+        self._feature_boxes[1].stateChanged.connect(lambda: self._set_feature(self._feature_boxes[1]))
+        self._feature_boxes[2].stateChanged.connect(lambda: self._set_feature(self._feature_boxes[2]))
+        self._feature_boxes[3].stateChanged.connect(lambda: self._set_feature(self._feature_boxes[3]))
+        self._feature_boxes[4].stateChanged.connect(lambda: self._set_feature(self._feature_boxes[4]))
+        self._feature_boxes[5].stateChanged.connect(lambda: self._set_feature(self._feature_boxes[5]))
+        self._feature_boxes[6].stateChanged.connect(lambda: self._set_feature(self._feature_boxes[6]))
+        self._feature_boxes[7].stateChanged.connect(lambda: self._set_feature(self._feature_boxes[7]))
+        self._feature_boxes[8].stateChanged.connect(lambda: self._set_feature(self._feature_boxes[8]))
+        self._feature_boxes[9].stateChanged.connect(lambda: self._set_feature(self._feature_boxes[9]))
+        self._feature_boxes[10].stateChanged.connect(lambda: self._set_feature(self._feature_boxes[10]))
+        self._feature_boxes[11].stateChanged.connect(lambda: self._set_feature(self._feature_boxes[11]))
+        self._feature_boxes[12].stateChanged.connect(lambda: self._set_feature(self._feature_boxes[12]))
+        self._feature_boxes[13].stateChanged.connect(lambda: self._set_feature(self._feature_boxes[13]))
+    
+    # Maintype
+    def _set_maintype_combo(self, maintype_combo):
+        index = maintype_combo.findText(self._card.maintype)  # finds the index of the item you want
+        maintype_combo.setCurrentIndex(index)
+        self._disable_boxes(self._feature_boxes)
+        
+    # Legendary
+    def _set_legendary(self, legendary_btn):
+        if legendary_btn.isChecked() == True:            
+            self._card.set_legendary(True)
+        else:
+            self._card.set_legendary(False)
+            
+    def _set_legendary_btn(self, legendary_btn):
+        if self._card.legendary == True:
+            legendary_btn.setChecked(True)
+        else:
+            legendary_btn.setChecked(False)
+            
+    # Tribal
+    def _set_tribal(self, tribal_btn):
+        if tribal_btn.isChecked() == True:            
+            self._card.set_tribal(True)
+        else:
+            self._card.set_tribal(False)
+            
+    def _set_tribal_btn(self, tribal_btn):
+        if self._card.tribal == True:
+            tribal_btn.setChecked(True)
+        else:
+            tribal_btn.setChecked(False)
             
     def _set_card_frame(self):
         if self._card.get_card_colour() == "Punainen":
@@ -252,8 +294,21 @@ class EditCardView(Window):
         else:
             checkbox.setChecked(False)
     
+    def _disable_boxes(self, boxes):
+        disable = True
+        if self._card.maintype == "Instant":
+            disable = False
+        for box in boxes:
+            box.setEnabled(disable)
+    
+    # Save to card
     def _save_name_to_card(self, name_line):
-        self._card.set_name(name_line.text()) 
+        self._card.set_name(name_line.text())
+    def _save_maintype_to_card(self, cb):
+        self._card.set_maintype(cb.currentText())
+        self._disable_boxes(self._feature_boxes)
+    def _save_subtype_to_card(self, subtype_line):
+        self._card.set_subtype(subtype_line.text())
     def _save_ruletext_to_card(self, ruletext_line):
         self._card.set_ruletext(ruletext_line.text())
     def _save_flavourtext_to_card(self, flavourtext_line):
@@ -272,6 +327,27 @@ class EditCardView(Window):
                 if widget:
                     widget.setParent(None)
         print('after: ' + str(layout.count()))
+        
+    def _initialise_feature(self):
+        feature_flying_box = QCheckBox("Flying")
+        feature_vigilance_box = QCheckBox("Vigilance")
+        feature_haste_box = QCheckBox("Haste")
+        feature_deathtouch_box = QCheckBox("Deathtouch")
+        feature_trample_box = QCheckBox("Trample")
+        feature_firststrike_box = QCheckBox("First strike")
+        feature_doublestrike_box = QCheckBox("Double strike")
+        feature_lifelink_box = QCheckBox("Lifelink")
+        feature_menace_box = QCheckBox("Menace")
+        feature_hexproof_box = QCheckBox("Hexproof")
+        feature_defender_box = QCheckBox("Defender")
+        feature_reach_box = QCheckBox("Reach")
+        feature_indestructible_box = QCheckBox("Indestructible")
+        feature_flash_box = QCheckBox("Flash")
+        self._feature_boxes = [feature_flying_box, feature_vigilance_box, feature_haste_box, \
+                         feature_deathtouch_box, feature_trample_box, feature_firststrike_box, \
+                         feature_doublestrike_box, feature_lifelink_box, feature_menace_box, \
+                         feature_hexproof_box, feature_defender_box, feature_reach_box, \
+                         feature_indestructible_box, feature_flash_box] 
         
     def _initialise(self):        
         # Set background image

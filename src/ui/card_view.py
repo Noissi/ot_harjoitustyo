@@ -81,7 +81,9 @@ class CardView(Window):
         # Draw left side panel
         self._left_layout.addRow("Nimi", QLabel(self._card.name))
         self._left_layout.addRow("Tyyppi:", QLabel(self._card.maintype))
-        #self._left_layout.addRow("Subtype:", QLabel(self._card.subtype))
+        self._left_layout.addRow("Legendary:", QLabel(self._card.get_legendary()))
+        self._left_layout.addRow("Tribal:", QLabel(self._card.get_tribal()))
+        self._left_layout.addRow("Subtype:", QLabel(self._card.get_subtype()))
         self._left_layout.addRow("Väri:", QLabel(self._card.get_colour()))
         
     def _set_rightpanel_layout(self):

@@ -16,6 +16,7 @@ class Creature(Card):
                 ???
         """
         super().__init__(name)
+        self.maintype = "Creature"
         self.manacost = None
         self.power = None
         self.toughness = None

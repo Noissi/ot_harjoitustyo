@@ -46,7 +46,9 @@ class Card:
         self.colour = []
         self.multicolour = False
         self.image = None
-        self.maintype = None
+        self.maintype = ""
+        self.legendary = False        
+        self.tribal = False
         self.subtype = []
         self.feature = []
         self.ruletext = ""
@@ -64,9 +66,15 @@ class Card:
         
     def set_maintype(self, maintype):
         self.maintype = maintype
+        
+    def set_legendary(self, boolean):
+        self.legendary = boolean
+        
+    def set_tribal(self, boolean):
+        self.tribal = boolean
     
     def set_subtype(self, subtype):
-        self.subtype = subtype
+        self.subtype = subtype.split(",")        
         
     def set_ruletext(self, ruletext):
         self.ruletext = ruletext
@@ -101,6 +109,16 @@ class Card:
         
     def get_feature(self):
         return ', '.join(self.feature)
+        
+    def get_legendary(self):
+        if self.legendary:
+            return "Kyllä"
+        return "Ei"
+        
+    def get_tribal(self):
+        if self.tribal:
+            return "Kyllä"
+        return "Ei"
         
     def get_subtype(self):
         return ', '.join(self.subtype)
