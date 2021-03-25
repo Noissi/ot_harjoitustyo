@@ -46,6 +46,8 @@ Sovellus koostuu viidestä päänäkymästä: kirjautumissivu, etusivu, kokoelma
   - Kommentit näkyvät muille peliversion käyttäjille
 - Käyttäjä voi ladata korttitiedot sovelluksesta
 
+####
+
 - Käyttäjä voi kirjautua ulos järjestelmästä
 
 ## Jatkokehitysideoita
