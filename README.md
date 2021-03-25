@@ -16,7 +16,7 @@
 ### Dokumentaatio
 
 <!-- * [Käyttöohje](https://github.com/Noissi/ot_harjoitustyo/blob/master/KorttiKube/dokumentaatio/kayttoohje.md)-->
-* 
+
 * [Vaatimusmäärittely](https://github.com/Noissi/ot_harjoitustyo/blob/master/KorttiKube/dokumentaatio/vaatimusmaarittely.md)
 
 <!-- * [Arkkitehtuurikuvaus](https://github.com/Noissi/ot_harjoitustyo/blob/master/KorttiKube/dokumentaatio/arkkitehtuurikuvaus.md)-->
