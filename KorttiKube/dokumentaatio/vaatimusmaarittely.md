@@ -2,15 +2,15 @@
 
 ## Sovelluksen tarkoitus
 
-Sovelluksen avulla käyttäjät luovat omia versioita MTG-korttipelistä omilla korteilla ja erikoissäännöillä. Sovelluksessa voi luoda useita eri peliversioita, jotka voivat olla yksityisiä tai jaettu muiden käyttäjien kanssa. Sovellus on tarkoitettu helpottamaan pelien kehitystä ja korttien luontia.
+Sovelluksen avulla käyttäjät luovat omia versioita MTG-kortteista. Sovelluksessa voi luoda useita eri korttikokoelmia, jotka voivat olla yksityisiä tai jaettu muiden käyttäjien kanssa. Sovellus on tarkoitettu helpottamaan korttien luontia ja selailua sekä korttikokoelmien hallintaa. Itsetehdyt kortit ovat oivia etenkin cube-muotoiseen pelaamiseen. Lisätietoa [MTG-korteista](https://mtg.fandom.com/wiki/Card_type) ja [cubesta](https://mtg.fandom.com/wiki/Cube_Draft) englanniksi.
 
 ## Käyttöliittymäluonnos
 
-Sovellus koostuu neljästä päänäkymästä: kirjautumissivu, etusivu, peliversiosivu ja korttisivu. Lisäksi on mahdollisia muita näkymiä, kuten tilastot ja info.
+Sovellus koostuu viidestä päänäkymästä: kirjautumissivu, etusivu, kokoelmasivu, korttisivu ja kortinmuokkaussivu. Lisäksi muita mahdollisia näkymiä ovat esimerkiksi tilastot ja info.
 
-## Perusversion tarjoama toiminnallisuus
+## Toiminnallisuudet
 
-### Ennen kirjautumista
+### Kirjautuminen ja käyttäjätunnuksen luonti
 
 - Käyttäjä voi luoda järjestelmään käyttäjätunnuksen
   - Käyttäjätunnuksen täytyy olla uniikki
@@ -20,32 +20,44 @@ Sovellus koostuu neljästä päänäkymästä: kirjautumissivu, etusivu, peliver
 
 ### Kirjautumisen jälkeen
 
-- Käyttäjä näkee luomansa sekä hänelle jaetut peliversiot
-- Käyttäjä voi luoda uuden peliversion
-  - Uusi peliversio voidaan jakaa valituille käyttäjille
-- Käyttäjä voi valita tarkasteltavan peliversion
-  - Käyttäjä voi selata peliversion kortteja
-    - Kortit on jaettu valmiisiin ja luonnoksiin 
-  - Käyttäjä voi hakea kortteja eri ominaisuuksilla
-  - Käyttäjä voi luoda uusia kortteja peliversioon
-  - Käyttäjä voi tuoda taulukossa tiedot uusista korteista ja lisätä ne versioon
-  - Käyttäjä voi muokata ja poistaa kortteja
-  - Käyttäjä voi kommentoida jaettujen peliversioiden kortteja
-    - Kommentit näkyvät muille peliversion käyttäjille
-  - Käyttäjä voi ladata korttitiedot sovelluksesta
+#### Etusivu
+
+- Käyttäjä näkee etusivulla luomansa sekä hänelle jaetut korttikokoelmat
+- Käyttäjä voi luoda uusia korttikokoelmia
+  - Uusi korttikokoelma voidaan jakaa valituille käyttäjille
+- Käyttäjä voi valita tarkasteltavan korttikokoelman
+- Käyttäjä voi hakea kortteja eri ominaisuuksilla
+
+#### Kokoelmasivu
+
+- Käyttäjä voi selata kokoelman kortteja
+  - Kortit on jaettu valmiisiin ja luonnoksiin 
+  - Käyttäjä voi lajitella kortteja valittujen parametrien perusteella
+- Käyttäjä voi hakea kortteja eri ominaisuuksilla
+- Käyttäjä voi luoda uusia kortteja kokoelmaan
+- Käyttäjä voi tuoda taulukossa tiedot uusista korteista ja lisätä ne kokoelmaan
+- Käyttäjä voi valita tarkasteltavan kortin
+
+#### Korttisivu
+
+- Käyttäjä voi tarkastella korttia
+- Käyttäjä voi muokata korttia
+- Käyttäjä voi kommentoida jaettujen peliversioiden kortteja
+  - Kommentit näkyvät muille peliversion käyttäjille
+- Käyttäjä voi ladata korttitiedot sovelluksesta
+
 - Käyttäjä voi kirjautua ulos järjestelmästä
 
 ## Jatkokehitysideoita
 
-Perusversion jälkeen järjestelmää täydennetään ajan salliessa esim. seuraavilla toiminnallisuuksilla:
+Sovellukseen lisätään ajan salliessa esim. seuraavia toiminnallisuuksia:
 
-- Peliversion etusivulla näkyy toimintoja, tilastoja sekä kortit
+- Kokoelmasivulla näkyy toimintoja, tilastoja sekä kortit
 - Korttinäkymää voi vaihtaa haluamakseen (lista/kuvat) 
 - Tarkempien tilastojen tarkastelu
 - Ilmoitukset korttien lisäämisestä ja muokkaamisesta muille käyttäjille
 - Käyttäjä voi "hyväksyä" muiden kortteja
 - Näytä samankaltaisimmat kortit valitulle kortille
-- Järjestä kortit valitulla tavalla (äänestetyimmät, uusimmat, kalleimmat, ...)
-- Peliversion poisto
+- Korttikokoelman poisto
 - Käyttäjätunnuksen poisto
 
