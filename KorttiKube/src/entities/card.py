@@ -42,6 +42,7 @@ class Card:
         """
         
         self._card_id = str(uuid.uuid4())
+        self._cubes = []
         self._name = name
         self._image = ""
         self._colour = []
@@ -65,6 +66,9 @@ class Card:
     ## Set
     def set_id(self, card_id):
         self._card_id = card_id
+        
+    def set_cubes(self, cubes):
+        self._cubes = cubes
     
     def set_name(self, name):
         self._name = name
@@ -147,6 +151,9 @@ class Card:
     ## Get
     def get_id(self):
         return self._card_id
+        
+    def get_cubes(self):
+        return self._cubes
     
     def get_name(self):
         return self._name
@@ -259,6 +266,10 @@ class Card:
         return self._feature2
         
     ## Add
+    def add_cube(self, cube_id):
+        if cube_id not in self._cubes:
+            self._cubes.append(cube_id)
+        
     def add_colour(self, colour):
         if colour not in self._colour:
             self._colour.append(colour)
@@ -273,6 +284,10 @@ class Card:
                     self._feature.append(feature)
         
     ## Remove
+    def remove_cube(self, cube_id):
+        if cube_id in self._cubes:
+            self._cubes.remove(cube_id)
+            
     def remove_colour(self, colour):
         if colour in self._colour:
             self._colour.remove(colour)

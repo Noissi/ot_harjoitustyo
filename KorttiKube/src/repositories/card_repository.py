@@ -1,4 +1,3 @@
-#from entities.card import Card
 from database_connection import get_database_connection
 
 class CardRepository:
@@ -7,8 +6,7 @@ class CardRepository:
         
     def create(self, card):
         """
-        Create a new card into the cards table
-        return: card id
+        Create a new card into the cards table.
         """
         card_sql = (card.get_id(), card.get_name(), card.get_image(), \
                     card.get_maintype(), card.get_legendary(), card.get_tribal(), \
@@ -55,8 +53,7 @@ class CardRepository:
                    
         cursor = self._connection.cursor()
         cursor.execute(sql, card_sql)
-        self._connection.commit()
-        
+        self._connection.commit()        
         
     def save(self, card):
         card_sql = (card.get_id(),);
@@ -68,15 +65,10 @@ class CardRepository:
         else:
             self.update(card)
         
-    def delete_all(self, card):
+    def delete(self, card):
         cursor = self._connection.cursor()
-        cursor.execute('DELETE FROM cards')
+        cursor.execute('DELETE card FROM cards') # Fix this
         self._connection.commit()
-        
-    def find_all(self):
-        cursor = self._connection.cursor()
-        cursor.execute('SELECT * FROM cards WHERE name = ?', (name,))
-        row = cursor.fetchone()
         
     def find_by_cube(self, cube):
         cursor = self._connection.cursor()

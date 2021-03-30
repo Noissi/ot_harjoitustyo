@@ -16,17 +16,8 @@ from repositories.user_repository import user_repository as default_user_reposit
 from repositories.cube_repository import cube_repository as default_cube_repository
 from repositories.card_repository import card_repository as default_card_repository
 
-
-class InvalidCredentialsError(Exception):
-    pass
-
-
-class UsernameExistsError(Exception):
-    pass
-
-
 class KorttikubeService:
-    """Sovelluslogiikasta vastaava luokka."""
+    """ Class responsible for application logic. """
 
     def __init__(
         self,
@@ -34,16 +25,20 @@ class KorttikubeService:
         cube_repository = default_cube_repository,
         user_repository = default_user_repository
     ):
-        """Luokan konstruktori. Luo uuden sovelluslogiikasta vastaavan palvelun.
+        """ Class constructor. Create new application servise.
         Args:
             card_repository:
-                Vapaaehtoinen, oletusarvoltaan CardRepository-olio.
-                Olio, jolla on CardRepository-luokkaa vastaavat metodit.
+                Optional. CardRepository entity.
+            cube_repository:
+                Optional. CubeRepository entity.
             user_repository:
-                Vapaaehtoinen, oletusarvoltaan UserRepository-olio.
-                Olio, jolla on UserRepository-luokkaa vastaavat metodit.
+                Optional. UserRepository entity.
         """
+        
         self._user = None
+        self._cube = None
+        self._card = None
+        
         self._card_repository = card_repository
         self._cube_repository = cube_repository
         self._user_repository = user_repository
@@ -53,23 +48,40 @@ class KorttikubeService:
         Args:
             cardname: [String] The name of the card.
         Returns:
-            Created Card entity.
+            [Card] Created Card entity.
         """
-
+        
         card = Card(cardname)
 
         return self._card_repository.create(card)
         
+    def enter_card(self, card):
+        self._card = card
+    
+    def exit_card(self):
+        self._card = None
+        
     def delete_card(self, card):
-        print('delete')
+        """ Delete an existing card.
+        Args:
+            card: [Card] The Card entity to be deleted from the database.
+        """
+        
+        print('delete card')
         
     def save_to_database(self, card):
+        """ Save card to database.
+        Args:
+            card: [Card] The Card entity to be saved to the database.
+        """
+        
         self._card_repository.save(card)
         
     def change_card_type(self, card, maintype):
-        """ Modifies card's maintype. (Creates a new sub card entity.)
+        """ Modifies card's maintype. (Creates a new Card entity that
+            copies the properties from the old one.)
         Args:
-            card: [card entity] Card that needs to be changed.
+            card: [Card] Card entity that needs to be changed.
             maintype: [String] New maintype for the card.
         """
         
@@ -98,13 +110,14 @@ class KorttikubeService:
     def update_card(self, card, prop, prop_name, add=None):
         """ Modifies card's property that is specified as a parameter.
         Args:
-            card: [Card entity] Card that needs to be modified.
-            prop: [String] New property text to replace the current one.
-                           (e.g. a new name or ruletext for the card)
-            prop_name: [String] Property type (e.g. "name", "ruletext")
+            card: [Card] Card that needs to be modified.
+            prop: [String, Boolean] New property text/boolean to replace the current one.
+                           (e.g. a new name or ruletext for the card).
+            prop_name: [String] Property type (e.g. "name", "ruletext").
             add: [Boolean] Optional. Defines which method to do for 
                            properties with multiple check boxes.
         """
+        
         if prop_name == 'name':
             card.set_name(prop)
         elif prop_name == 'legendary':
@@ -138,46 +151,105 @@ class KorttikubeService:
         elif prop_name == 'rarity':
             card.set_rarity(prop)
             
-    def get_cards_in_cube(self, cube):
-        """ Returns cards in a given collection.
+    def get_cards_in_cube(self, cube_id):
+        """ Returns list of cards in cube.
+        Args:
+            cube_id: [String] Cude entity id.
         Returns:
-            [List Card] List of card entities.
+            [List Card] List of Card entities in cube.
         """
-        if not cube:
+                
+        if not cube_id:
             return []
 
-        cards = self._card_repository.find_by_cube(cube)
+        cards = self._card_repository.find_by_cube(cube_id)
 
         return list(cards)
         
-    '''
-    def get_undone_todos(self):
-        """Palauttaa kirjautuneen käyttäjän tekemättömät tehtävät.
+    def create_cube(self, name):
+        """ Creates a new cube.
+        Args:
+            name: [String] Name of the cser.
         Returns:
-            Palauttaa kirjautuneen käyttäjän tekemättömät tehtävät Todo-olioden listana.
-            Jos kirjautunutta käyttäjää ei ole, palauttaa tyhjän listan.
+            [Cube] Created Cube entity.
         """
 
-        if not self._user:
-            return []
+        cube = self._cube_repository.create(Cube(name, self._user))
+        self._cube = cube
 
-        todos = self._todo_repository.find_by_username(self._user.username)
-        undone_todos = filter(lambda todo: not todo.done, todos)
-
-        return list(undone_todos)
-
+        return cube
     
-
-    def login(self, username, password):
-        """Kirjaa käyttäjän sisään.
+    def enter_cube(self, cube):
+        self._cube = cube
+    
+    def exit_cube(self):
+        self._cube = None
+        
+    def get_users_in_cube(self, cube_id):
+        """ Returns list of users in cube.
         Args:
-            username: Merkkijonoarvo, joka kuvaa kirjautuvan käyttäjän käyttäjätunnusta.
-            password: Merkkijonoarvo, joka kuvaa kirjautuvan käyttäjän salasanaa.
+            cube_id: [String] Cude entity id.
         Returns:
-            Kirjautunut käyttäjä User-olion muodossa.
+            [List User] List of User entities in cube.
+        """
+        
+        return self._cube.get_users()
+        
+    def get_cubes(self):
+        """ Returns list of all cubes.
+        Returns:
+            [List Cube] List of all Cube entities.
+        """
+        
+        return self._cube_repository.find_all()
+        
+    def create_user(self, username, password):
+        """ Creates a new user.
+        Args:
+            username: [String] Username of the user.
+            password: [String] Password of the user.
+        Returns:
+            [User] Created User entity.
+        Raises:
+            UsernameExistsError:
+                Cannot use the selected username. Username already exists.
+        """
+
+        existing_user = self._user_repository.find_by_username(username)
+
+        if existing_user:
+            raise UsernameExistsError(f'Käyttäjätunnus on jo käytössä.')
+
+        user = self._user_repository.create(User(username, password))
+
+        return user
+
+    def get_current_user(self):
+        """ Returns the current user.
+        Returns:
+            [User] User entity of the current user.
+        """
+        
+        return self._user
+
+    def get_users(self):
+        """ Returns list of all users.
+        Returns:
+            [List User] List of all User entities.
+        """
+        
+        return self._user_repository.find_all()
+    
+    def login(self, username, password):
+        """ Log in user.
+        Args:
+            username: [String] Username of the user.
+            password: [String] Password of the user.
+        Returns:
+            [User] User entity that is logged in.
         Raises:
             InvalidCredentialsError:
-                Virhe, joka tapahtuu, kun käyttäjätunnus ja salasana eivät täsmää.
+                Invalid username and/or password.
         """
 
         user = self._user_repository.find_by_username(username)
@@ -188,51 +260,11 @@ class KorttikubeService:
         self._user = user
 
         return user
-
-    def get_current_user(self):
-        """Paluttaa kirjautuunen käyttäjän.
-        Returns:
-            Kirjautunut käyttäjä User-olion muodossa.
-        """
-        return self._user
-
-    def get_users(self):
-        """Palauttaa kaikki käyttäjät.
-        Returns:
-            User-oliota sisältä lista kaikista käyttäjistä.
-        """
-        return self._user_repository.find_all()
-
+        
     def logout(self):
-        """Kirjaa nykyisen käyttäjän ulos.
+        """ Log out current user.
         """
+        
         self._user = None
-
-    def create_user(self, username, password, login=True):
-        """Luo uuden käyttäjän ja tarvittaessa kirjaa sen sisään.
-        Args:
-            username: Merkkijonoarvo, joka kuvastaa käyttäjän käyttäjätunnusta.
-            password: Merkkijonoarvo, joka kuvastaa käyttäjän salasanaa.
-            login:
-                Vapaahtoinen, oletusarvo True.
-                Boolean-arvo, joka kertoo kirjataanko käyttäjä sisään onnistuneen luonnin jälkeen.
-        Raises:
-            UsernameExistsError: Virhe, joka tapahtuu, kun käyttäjätunnus on jo käytössä.
-        Returns:
-            Luotu käyttäjä User-olion muodossa.
-        """
-
-        existing_user = self._user_repository.find_by_username(username)
-
-        if existing_user:
-            raise UsernameExistsError(f'Username {username} already exists')
-
-        user = self._user_repository.create(User(username, password))
-
-        if login:
-            self._user = user
-
-        return user
-    '''
 
 korttikube_service = KorttikubeService()

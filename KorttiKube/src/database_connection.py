@@ -3,7 +3,7 @@ from sqlite3 import Error
 from config import DATABASE_FILE_PATH
 
 """ Create a database connection to the SQLite database
-    specified by db_file
+    specified by DATABASE_FILE_PATH file.
 return: Connection object or None
 """
 
