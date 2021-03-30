@@ -1,9 +1,12 @@
 import sys
+from initialise_database import initialise_database
 from PySide6.QtWidgets import QApplication, QPushButton, QTextBrowser, QWidget
 from ui.ui import UI
-from ui.login_view import LoginView
 
 def main():
+    # Build database if it does not exist
+    initialise_database()
+    
     # Create the Qt Application
     app = QApplication(sys.argv)
     app.setApplicationName("KorttiKube")

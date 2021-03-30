@@ -2,7 +2,6 @@ from PySide6.QtWidgets import *
 from PySide6.QtGui import QImage, QPalette, QBrush
 from PySide6.QtCore import QSize, QRect, Qt
 from ui.window import Window
-from entities.card_creature import Creature
 
 class LoginView(QWidget):
     def __init__(self, handle_show_create_user_view, handle_show_main_view, handle_end):
@@ -16,9 +15,7 @@ class LoginView(QWidget):
         self.left=10
         self.top=10
         self.width=1500
-        self.height=1000        
-        
-        self._card = Creature('Teemu Kerppu')
+        self.height=1000
         
         self._initialise()
         
@@ -70,7 +67,7 @@ class LoginView(QWidget):
         layout.setRowMinimumHeight(2, 10)
         
         button_skip2 = QPushButton('Skip')
-        button_skip2.clicked.connect(lambda: self._handle_show_main_view(self._card))
+        button_skip2.clicked.connect(self._handle_show_main_view)
         layout.addWidget(button_skip2, 4, 0, 1, 2)
         layout.setRowMinimumHeight(1, 10)
         

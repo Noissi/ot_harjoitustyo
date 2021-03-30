@@ -41,114 +41,254 @@ class Card:
                 , joka kuvaa osoitetta kortin kuvaan
         """
         
-        self.name = name        
-        self.card_id = str(uuid.uuid4())
-        self.colour = []
-        self.multicolour = False
-        self.image = None
-        self.maintype = ""
-        self.legendary = False        
-        self.tribal = False
-        self.subtype = []
-        self.feature = []
-        self.ruletext = ""
-        self.flavourtext = ""
-        self.creator = ""
-        self.seticon = None
-        self.rarity = None
+        self._card_id = str(uuid.uuid4())
+        self._name = name
+        self._image = ""
+        self._colour = []
+        self._multicolour = False
+        self._maintype = ""
+        self._legendary = False
+        self._tribal = False
+        self._subtype = []
+        self._manacost = ""
+        self._power = 0
+        self._toughness = 0
+        self._feature = []
+        self._feature2 = []
+        self._ruletext = ""
+        self._flavourtext = ""
+        self._creator = ""
+        self._seticon = ""
+        self._rarity = ""
+        
     
     ## Set
+    def set_id(self, card_id):
+        self._card_id = card_id
+    
     def set_name(self, name):
-        self.name = name
+        self._name = name
         
     def set_image(self, image):
-        self.image = image
+        if image is not None:
+            self._image = image
         
     def set_maintype(self, maintype):
-        self.maintype = maintype
+        self._maintype = maintype
         
     def set_legendary(self, boolean):
-        self.legendary = boolean
+        if boolean is not None:
+            self._legendary = boolean
         
     def set_tribal(self, boolean):
-        self.tribal = boolean
+        if boolean is not None:
+            self._tribal = boolean
     
     def set_subtype(self, subtype):
-        self.subtype = subtype.split(" ")        
+        if subtype is not None:
+            if type(subtype) is list:
+                self._subtype = subtype
+            else:
+                self._subtype = subtype.split(" ")  
+
+    def set_colour(self, colour):
+        if colour is not None:
+            if type(colour) is list:
+                self._colour = colour
+            else:
+                self._colour = colour.split(",")
+            
+    def set_manacost(self, manacost):
+        if manacost is not None:
+            self._manacost = manacost
+            
+    def set_power(self, power):
+        if power is not None:
+            self._power = power
+        
+    def set_toughness(self, toughness):
+        if toughness is not None:
+            self._toughness = toughness
+            
+    def set_feature(self, feature):
+        if feature is not None:
+            if type(feature) is not list:
+                feature = feature.split(",")
+            
+            if self._feature2:
+                for f in feature:
+                    if f in self._feature2:
+                        self.add_feature(f)
+            else:
+                self._feature = feature
+                    
+                
         
     def set_ruletext(self, ruletext):
-        self.ruletext = ruletext
+        if ruletext is not None:
+            self._ruletext = ruletext
         
     def set_flavourtext(self, flavourtext):
-        self.flavourtext = flavourtext
+        if flavourtext is not None:
+            self._flavourtext = flavourtext
         
     def set_creator(self, creator):
-        self.creator = creator
+        if creator is not None:
+            self._creator = creator
         
     def set_seticon(self, seticon):
-        self.seticon = seticon
+        if seticon is not None:
+            self._seticon = seticon
     
     def set_rarity(self, rarity):
-        self.rarity = rarity
-        
-    #def set_(self, ):
-    #    self. = 
+        if rarity is not None:
+            self._rarity = rarity
     
     ## Get
-    def get_card_colour(self):
-        if self.multicolour:
-            return "Kulta"
-        elif not self.colour:
-            return "Väritön"
-        return self.colour[0]
+    def get_id(self):
+        return self._card_id
+    
+    def get_name(self):
+        return self._name
         
-    def get_colour(self):
-        if not self.colour:
-            return "Väritön"
-        return ', '.join(self.colour)
+    def get_image(self):
+        return self._image
         
-    def get_feature(self):
-        return ', '.join(self.feature)
-        
+    def get_maintype(self):
+        return self._maintype
+    
     def get_legendary(self):
-        if self.legendary:
-            return "Kyllä"
-        return "Ei"
-        
+        return self._legendary
+    
     def get_tribal(self):
-        if self.tribal:
-            return "Kyllä"
-        return "Ei"
+        return self._tribal
         
     def get_subtype(self):
-        return ' '.join(self.subtype)
+        return self._subtype
         
-    ## Add    
+    def get_colour(self):
+        return self._colour
+        
+    def get_manacost(self):
+    	return self._manacost 
+    
+    def get_power(self):
+        return self._power
+    
+    def get_toughness(self):
+        return self._toughness
+        
+    def get_feature(self):
+        return self._feature
+        
+    def get_feature2(self):
+        return self._feature2
+        
+    def get_ruletext(self):
+        return self._ruletext
+        
+    def get_flavourtext(self):
+        return self._flavourtext
+        
+    def get_creator(self):
+        return self._creator
+    
+    def get_seticon(self):
+        return self._seticon
+        
+    def get_rarity(self):
+        return self._rarity
+        
+    ## Get print
+    def get_colour_print(self):
+        if not self._colour:
+            return "Väritön"
+        return ', '.join(self._colour)
+    
+    def get_card_colour(self):
+        if self._multicolour:
+            return "Kulta"
+        elif not self._colour:
+            return "Väritön"
+        return self._colour[0]
+        
+    def get_legendary_print(self):
+        if self._legendary:
+            return "Kyllä"
+        return "Ei"
+        
+    def get_tribal_print(self):
+        if self._tribal:
+            return "Kyllä"
+        return "Ei"
+        
+    def get_subtype_print(self):
+        if self._subtype is None:
+            return ""
+        return ' '.join(self._subtype)
+        
+    def get_power_print(self):
+        if self._power is None:
+            return 0
+        return self._power
+        
+    def get_toughness_print(self):
+        if self._toughness is None:
+            return 0
+        return self._toughness
+        
+    def get_feature_print(self):
+        if self._feature is None:
+            return ""
+        return ', '.join(self._feature)
+    
+    ## Get list
+    def get_subtype_list(self):
+        if self._subtype is None:
+            return []
+        return self._subtype
+        
+    def get_feature_list(self):
+        if self._feature is None:
+            return []
+        return self._feature
+        
+    def get_feature2_list(self):
+        if self._feature2 is None:
+            return []
+        return self._feature2
+        
+    ## Add
     def add_colour(self, colour):
-        if colour not in self.colour:
-            self.colour.append(colour)
+        if colour not in self._colour:
+            self._colour.append(colour)
             self._check_if_multicolour()  
         
     def add_feature(self, feature):
-        if feature not in self.feature:
-            self.feature.append(feature)
+        if feature not in self._feature:
+            if not self._feature2:
+                self._feature.append(feature)
+            else:
+                if feature in self._feature2:
+                    self._feature.append(feature)
         
-    ## Remove    
+    ## Remove
     def remove_colour(self, colour):
-        if colour in self.colour:
-            self.colour.remove(colour)
+        if colour in self._colour:
+            self._colour.remove(colour)
             self._check_if_multicolour()
         
     def remove_feature(self, feature):
-        if feature in self.feature:
-            self.feature.remove(feature)
-    
-    ## Other        
+        if self._feature is not None:
+            if feature in self._feature:
+                self._feature.remove(feature)
+        
+    ## Other
     def _check_if_multicolour(self):
-        if len(self.colour) > 1:
-            self.multicolour = True
+        if len(self._colour) > 1:
+            self._multicolour = True
         else:
-            self.multicolour = False
+            self._multicolour = False
         
     def show_card(self):
         print('show card')

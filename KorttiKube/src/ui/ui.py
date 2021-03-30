@@ -2,7 +2,7 @@ import sys
 from ui.login_view import LoginView
 from ui.create_user_view import CreateUserView
 from ui.main_view import MainView
-from ui.game_view import GameView
+from ui.cube_view import CubeView
 from ui.card_view import CardView
 from ui.edit_card_view import EditCardView
 from PySide6.QtWidgets import *
@@ -44,7 +44,7 @@ class UI(QWidget):
         
     def _show_login_view(self):
         #self._hide_current_view()
-        self._login_view = LoginView(self._show_create_user_view, self._show_card_view, self._end)
+        self._login_view = LoginView(self._show_create_user_view, self._show_cube_view, self._end)
         self.current_view = self._login_view
         self._stacked_layout.addWidget(self._login_view)
         self._stacked_layout.setCurrentWidget(self._login_view)
@@ -56,15 +56,18 @@ class UI(QWidget):
         
     def _show_main_view(self):
         self._hide_current_view()
-        self.current_view = MainView(self._show_login_view, self._show_game_view)
+        self.current_view = MainView(self._show_login_view, self._show_cube_view)
         
-    def _show_game_view(self):
-        self._hide_current_view()
-        self._current_view = GameView(self._show_main_view, self._show_card_view)
+    def _show_cube_view(self):
+        #self._hide_current_view()
+        self._cube_view = CubeView(self._show_main_view, self._show_card_view)
+        self.current_view = self._cube_view
+        self._stacked_layout.addWidget(self._cube_view)
+        self._stacked_layout.setCurrentWidget(self._cube_view)
         
     def _show_card_view(self, card):
         #self._hide_current_view()
-        self._card_view = CardView(card, self._show_game_view, self._show_edit_card_view)
+        self._card_view = CardView(card, self._show_cube_view, self._show_edit_card_view)
         self.current_view = self._card_view
         self._stacked_layout.addWidget(self._card_view)
         self._stacked_layout.setCurrentWidget(self._card_view)
@@ -72,7 +75,7 @@ class UI(QWidget):
         
     def _show_edit_card_view(self, card):
         #self._hide_current_view()
-        self._edit_card_view = EditCardView(card, self._show_game_view, self._show_card_view)
+        self._edit_card_view = EditCardView(card, self._show_cube_view, self._show_card_view)
         self.current_view = self._edit_card_view
         self._stacked_layout.addWidget(self._edit_card_view)
         self._stacked_layout.setCurrentWidget(self._edit_card_view)

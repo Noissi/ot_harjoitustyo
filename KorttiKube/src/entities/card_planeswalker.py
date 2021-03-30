@@ -1,6 +1,6 @@
 from entities.card import Card
 
-class Creature(Card):
+class Planeswalker(Card):
     """Luokka joka kuvaa yksittaista korttia
     
     Attributes:
@@ -15,7 +15,7 @@ class Creature(Card):
                 ???
         """
         super().__init__(name)
-        self._maintype = "Creature"
+        self._maintype = "Planeswalker"
         self._tribal = None
         
     def copy(self, card):

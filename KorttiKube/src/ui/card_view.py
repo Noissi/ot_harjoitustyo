@@ -5,10 +5,10 @@ from ui.window import Window
 from entities.card_creature import Creature
 
 class CardView(Window):
-    def __init__(self, card, handle_show_game_view, handle_show_edit_card_view):
+    def __init__(self, card, handle_show_cube_view, handle_show_edit_card_view):
         super().__init__()
         self._handle_show_edit_card_view = handle_show_edit_card_view
-        self._handle_show_game_view = handle_show_game_view
+        self._handle_show_cube_view = handle_show_cube_view
         
         self._card = card
         self._card_frame = None
@@ -55,6 +55,12 @@ class CardView(Window):
         self._middle_layout.addLayout(self._right_layout, 0, 3)
         
     def _set_bottom_layout(self):
+        # Draw return button
+        btn_back = QPushButton('Takaisin')
+        btn_back.setMaximumWidth(100)
+        btn_back.clicked.connect(self._handle_show_cube_view)
+        self._bottom_layout.addWidget(btn_back)
+        
         # Draw bottom edit box
         btn_edit = QPushButton('Muokkaa')
         btn_edit.setMaximumWidth(100)
@@ -73,25 +79,27 @@ class CardView(Window):
         # Write card name
         name_label = QLabel()
         #name_label.setText('<font color="red", font size="4"> Kiljukuikka </font>')
-        name_label.setText(self._card.name)
+        name_label.setText(self._card.get_name())
         name_label.move(500,-700)
         self._card_layout.addWidget(name_label)
         
     def _set_leftpanel_layout(self):
         # Draw left side panel
-        self._left_layout.addRow("Nimi", QLabel(self._card.name))
-        self._left_layout.addRow("Tyyppi:", QLabel(self._card.maintype))
-        self._left_layout.addRow("Legendary:", QLabel(self._card.get_legendary()))
-        self._left_layout.addRow("Tribal:", QLabel(self._card.get_tribal()))
-        self._left_layout.addRow("Subtype:", QLabel(self._card.get_subtype()))
-        self._left_layout.addRow("Väri:", QLabel(self._card.get_colour()))
+        self._left_layout.addRow("Nimi", QLabel(self._card.get_name()))
+        self._left_layout.addRow("Tyyppi:", QLabel(self._card.get_maintype()))
+        self._left_layout.addRow("Legendary:", QLabel(self._card.get_legendary_print()))
+        self._left_layout.addRow("Tribal:", QLabel(self._card.get_tribal_print()))
+        self._left_layout.addRow("Subtype:", QLabel(self._card.get_subtype_print()))
+        self._left_layout.addRow("Väri:", QLabel(self._card.get_colour_print()))
+        self._left_layout.addRow("Voimakkuus:", QLabel(str(self._card.get_power_print())))        
+        self._left_layout.addRow("Kestävyys:", QLabel(str(self._card.get_toughness_print())))
         
     def _set_rightpanel_layout(self):
         # Set the right side panel        
-        self._right_layout.addRow("Ominaisuus:", QLabel(self._card.get_feature()))
-        self._right_layout.addRow("Sääntöteksti:", QLabel(self._card.ruletext))
-        self._right_layout.addRow("Tarina:", QLabel(self._card.flavourtext))
-        self._right_layout.addRow("Tekijä:", QLabel(self._card.creator))
+        self._right_layout.addRow("Ominaisuus:", QLabel(self._card.get_feature_print()))
+        self._right_layout.addRow("Sääntöteksti:", QLabel(self._card.get_ruletext()))
+        self._right_layout.addRow("Tarina:", QLabel(self._card.get_flavourtext()))
+        self._right_layout.addRow("Tekijä:", QLabel(self._card.get_creator()))
         
     def _set_card_frame(self):
         if self._card.get_card_colour() == "Punainen":
@@ -118,13 +126,7 @@ class CardView(Window):
         self.setPalette(palette)
         
         # Set layouts
-        left2_layout = QStackedLayout()        
-        
-        # Modify layouts
-        button_back = QPushButton('Takaisin peleihin')
-        button_back.clicked.connect(self._handle_show_game_view)
-        #top_layout.addWidget(button_back)        
-
+        left2_layout = QStackedLayout()
      
         self._set_card_layout()
         self._set_leftpanel_layout()
