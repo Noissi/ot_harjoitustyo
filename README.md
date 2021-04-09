@@ -12,6 +12,14 @@
 
 [yksikkötestit](https://github.com/Noissi/ot_harjoitustyo/tree/master/laskarit/viikko2/unicafe/src/tests)
 
+### Viikko 3
+
+[Luokkakaavio (Monopoly)](https://github.com/Noissi/ot_harjoitustyo/blob/master/laskarit/viikko3/monopoli.svg)
+
+[Sekvenssikaavio (Kone)](https://github.com/Noissi/ot_harjoitustyo/tree/master/laskarit/viikko3/kone.png)
+
+[Sekvenssikaavio (HKL)](https://github.com/Noissi/ot_harjoitustyo/tree/master/laskarit/viikko3/hkl.png)
+
 ## Harjoitustyö
 ### Dokumentaatio
 
