@@ -42,15 +42,15 @@ poetry install
 ```
 
 2. Sovelluksen ajaminen
-'''
+```
 poetry run invoke start
-'''
+```
 
 ### Testaus
 Testien suorittaminen
-'''
+```
 poetry run invoke test
-'''
+```
 
 :chicken: 
 
