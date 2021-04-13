@@ -37,9 +37,9 @@
 HUOM! Ohjelma vaatii toimiakseen vähintään Ubuntu 20 käyttöjärjestelmään pohjautuvan käyttöjärjestelmän (esim Cubbli 20) tai vastaavan käyttöjärjestelmän.
 
 1. Riippuvuuksien asenntaminen
-'''
+```
 poetry install
-'''
+```
 
 2. Sovelluksen ajaminen
 '''
