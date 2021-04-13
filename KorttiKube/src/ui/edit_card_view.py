@@ -8,12 +8,12 @@ from services.korttikube_service import korttikube_service as kks
 from entities.card_creature import Creature
 
 class EditCardView(Window):
-    def __init__(self, card, handle_show_game_view, handle_show_card_view):
+    def __init__(self, handle_show_game_view, handle_show_card_view):
         super().__init__()
         self._handle_show_card_view = handle_show_card_view
         self._handle_show_game_view = handle_show_game_view
         
-        self._card = card        
+        self._card = kks.get_card()
         self._card_frame = None
         
         self._outer_layout  = self.get_outer_layout()
@@ -283,13 +283,14 @@ class EditCardView(Window):
         self._maintype_combo.setCurrentIndex(index)        
         self._disable_edit()
         
-    def _change_maintype(self):
+    def _change_maintype(self): # Returns a new Card entity
         self._card = kks.change_card_type(self._card, self._maintype_combo.currentText())        
         self._disable_edit()
         
   
     # Legendary
     def _set_legendary_btn(self):
+        print(self._card.get_legendary())
         is_checked =  self._card.get_legendary()
         if is_checked is not None:
             self._legendary_btn.setChecked(is_checked)
@@ -302,20 +303,7 @@ class EditCardView(Window):
             
     # Set card frame image
     def _set_card_frame(self):
-        if self._card.get_card_colour() == "Punainen":
-            self._card_frame = QPixmap("img/redcard.png")
-        elif self._card.get_card_colour() == "Sininen":
-            self._card_frame = QPixmap("img/bluecard.png")
-        elif self._card.get_card_colour() == "Vihreä":
-            self._card_frame = QPixmap("img/greencard.png")
-        elif self._card.get_card_colour() == "Valkoinen":
-            self._card_frame = QPixmap("img/whitecard.png")
-        elif self._card.get_card_colour() == "Musta":
-            self._card_frame = QPixmap("img/blackcard.png")
-        elif self._card.get_card_colour() == "Väritön":
-            self._card_frame = QPixmap("img/colourlesscard.png")
-        elif self._card.get_card_colour() == "Kulta":
-            self._card_frame = QPixmap("img/goldcard.png")
+        self._card_frame = QPixmap(kks.set_card_frame(self._card))
     
     # Set checkboxes
     def _check_if_card_has(self, checkbox, cards_list):
@@ -365,6 +353,7 @@ class EditCardView(Window):
     
     # Save card to database and return to card view
     def _save_and_return(self):
+        print(self._card)
         kks.save_to_database(self._card)
         self._handle_show_card_view(self._card)
         

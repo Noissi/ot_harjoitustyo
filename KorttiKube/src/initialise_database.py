@@ -23,15 +23,16 @@ def create_tables(conn):
     sql_create_cards_table = """ CREATE TABLE IF NOT EXISTS cards (
                                         id text PRIMARY KEY,
                                         name text NOT NULL,
-                                        colour text,
+                                        cubes text,
                                         image text,
                                         maintype text,
-                                        legendary text,
-                                        tribal text,
+                                        legendary boolean,
+                                        tribal boolean,
                                         subtype text,
+                                        colour text,
+                                        manacost text,
                                         power integer,
                                         toughness integer,
-                                        manacost text,
                                         feature text,
                                         ruletext text,
                                         flavourtext text,
@@ -47,14 +48,15 @@ def create_tables(conn):
                                     card_id text NOT NULL,
                                     FOREIGN KEY (card_id) REFERENCES cards (id)
                                 );"""
-                                
+                              
     sql_create_users_table = """CREATE TABLE IF NOT EXISTS users (
                                     id text PRIMARY KEY,
                                     username text NOT NULL,
                                     password text NOT NULL,
+                                    cube_id text,
                                     FOREIGN KEY (cube_id) REFERENCES cubes (id)
                                 );"""
-
+    
     # Create tables
     if conn is not None:
         # Create cards table

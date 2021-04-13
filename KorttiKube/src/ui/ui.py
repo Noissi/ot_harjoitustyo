@@ -6,6 +6,7 @@ from ui.cube_view import CubeView
 from ui.card_view import CardView
 from ui.edit_card_view import EditCardView
 from PySide6.QtWidgets import *
+from services.korttikube_service import korttikube_service as kks
 
 class UI(QWidget):
     def __init__(self):
@@ -60,22 +61,25 @@ class UI(QWidget):
         
     def _show_cube_view(self):
         #self._hide_current_view()
-        self._cube_view = CubeView(self._show_main_view, self._show_card_view)
+        kks.exit_card()
+        self._cube_view = CubeView(self._show_main_view, self._show_card_view, self._show_edit_card_view)
         self.current_view = self._cube_view
         self._stacked_layout.addWidget(self._cube_view)
         self._stacked_layout.setCurrentWidget(self._cube_view)
         
     def _show_card_view(self, card):
-        #self._hide_current_view()
-        self._card_view = CardView(card, self._show_cube_view, self._show_edit_card_view)
+        if not kks.get_card():
+            kks.enter_card(card)
+        self._card_view = CardView(self._show_cube_view, self._show_edit_card_view)
         self.current_view = self._card_view
         self._stacked_layout.addWidget(self._card_view)
         self._stacked_layout.setCurrentWidget(self._card_view)
         print('card ui')
         
-    def _show_edit_card_view(self, card):
-        #self._hide_current_view()
-        self._edit_card_view = EditCardView(card, self._show_cube_view, self._show_card_view)
+    def _show_edit_card_view(self):
+        if not kks.get_card():
+            kks.create_card("Teemu Teekkari")
+        self._edit_card_view = EditCardView(self._show_cube_view, self._show_card_view)
         self.current_view = self._edit_card_view
         self._stacked_layout.addWidget(self._edit_card_view)
         self._stacked_layout.setCurrentWidget(self._edit_card_view)

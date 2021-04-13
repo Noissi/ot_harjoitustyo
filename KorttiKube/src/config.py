@@ -6,3 +6,5 @@ dirname = os.path.dirname(__file__)
 
 DATABASE_FILENAME = "database.db"
 DATABASE_FILE_PATH = os.path.join(dirname, DATABASE_FILENAME)
+
+CARD_RATIO = 7/5

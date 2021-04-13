@@ -8,24 +8,24 @@ class CardRepository:
         """
         Create a new card into the cards table.
         """
-        card_sql = (card.get_id(), card.get_name(), card.get_image(), \
+        card_sql = (card.get_id(), card.get_name(), card.get_cubes_print(), card.get_image(), \
                     card.get_maintype(), card.get_legendary(), card.get_tribal(), \
                     card.get_subtype_print(), card.get_colour_print(), card.get_manacost(), \
                     card.get_power(), card.get_toughness(), card.get_feature_print(), \
                     card.get_ruletext(), card.get_flavourtext(), card.get_creator(), \
                     card.get_seticon(), card.get_rarity());
             
-        sql = ''' INSERT INTO cards(id, name, image, maintype, legendary,
+        sql = ''' INSERT INTO cards(id, name, cubes, image, maintype, legendary,
                   tribal, subtype, colour, manacost, power, toughness, feature,
                   ruletext, flavourtext, creator, seticon, rarity)
-                  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); '''
+                  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); '''
         
         cursor = self._connection.cursor()
         cursor.execute(sql, card_sql)
         self._connection.commit()
         
     def update(self, card):
-        card_sql = (card.get_name(), card.get_image(), card.get_maintype(), \
+        card_sql = (card.get_name(), card.get_cubes_print(), card.get_image(), card.get_maintype(), \
                     card.get_legendary(), card.get_tribal(), card.get_subtype_print(), \
                     card.get_colour_print(), card.get_manacost(), card.get_power(), \
                     card.get_toughness(), card.get_feature_print(), card.get_ruletext(), \
@@ -34,6 +34,7 @@ class CardRepository:
                     
         sql = ''' UPDATE cards
                   SET name = ?,
+                      cubes = ?,
                       image = ?,
                       maintype = ?,
                       legendary = ?,
@@ -52,6 +53,7 @@ class CardRepository:
                    WHERE id = ?; '''
                    
         cursor = self._connection.cursor()
+        print(card_sql)
         cursor.execute(sql, card_sql)
         self._connection.commit()        
         

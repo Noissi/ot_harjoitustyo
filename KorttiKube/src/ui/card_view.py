@@ -3,14 +3,15 @@ from PySide6.QtGui import *
 from PySide6.QtCore import *
 from ui.window import Window
 from entities.card_creature import Creature
+from services.korttikube_service import korttikube_service as kks
 
 class CardView(Window):
-    def __init__(self, card, handle_show_cube_view, handle_show_edit_card_view):
+    def __init__(self, handle_show_cube_view, handle_show_edit_card_view):
         super().__init__()
         self._handle_show_edit_card_view = handle_show_edit_card_view
         self._handle_show_cube_view = handle_show_cube_view
         
-        self._card = card
+        self._card = kks.get_card()
         self._card_frame = None
         
         self._outer_layout = self.get_outer_layout()
@@ -64,7 +65,7 @@ class CardView(Window):
         # Draw bottom edit box
         btn_edit = QPushButton('Muokkaa')
         btn_edit.setMaximumWidth(100)
-        btn_edit.clicked.connect(lambda: self._handle_show_edit_card_view(self._card))
+        btn_edit.clicked.connect(self._handle_show_edit_card_view)
         self._bottom_layout.addWidget(btn_edit)
         
     def _set_card_layout(self):
@@ -102,20 +103,7 @@ class CardView(Window):
         self._right_layout.addRow("Tekijä:", QLabel(self._card.get_creator()))
         
     def _set_card_frame(self):
-        if self._card.get_card_colour() == "Punainen":
-            self._card_frame = QPixmap("img/redcard.png")
-        elif self._card.get_card_colour() == "Sininen":
-            self._card_frame = QPixmap("img/bluecard.png")
-        elif self._card.get_card_colour() == "Vihreä":
-            self._card_frame = QPixmap("img/greencard.png")
-        elif self._card.get_card_colour() == "Valkoinen":
-            self._card_frame = QPixmap("img/whitecard.png")
-        elif self._card.get_card_colour() == "Musta":
-            self._card_frame = QPixmap("img/blackcard.png")
-        elif self._card.get_card_colour() == "Väritön":
-            self._card_frame = QPixmap("img/colourlesscard.png")
-        elif self._card.get_card_colour() == "Kulta":
-            self._card_frame = QPixmap("img/goldcard.png")
+        self._card_frame = QPixmap(kks.set_card_frame(self._card))
                      
     def _initialise(self):        
         # Set background image

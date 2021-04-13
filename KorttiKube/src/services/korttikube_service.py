@@ -52,11 +52,65 @@ class KorttikubeService:
         """
         
         card = Card(cardname)
-
-        return self._card_repository.create(card)
-        
-    def enter_card(self, card):
         self._card = card
+        
+    def get_card(self):
+        return self._card
+        
+    def set_card(self, card_row):
+        """ Create a Card entity from given database row.
+        Args:
+            card_row: [List Tuple] List of tuples including the parameters
+                       of one card in database.
+        Returns:
+            [Card] Created Card entity.
+        """
+        
+        name = card_row[1]
+        maintype = card_row[4]
+        if maintype == "":
+            card = Card(name)
+        elif maintype == "Creature":
+            card = Creature(name)
+        elif maintype == "Artifact":
+            card = Artifact(name)
+        elif maintype == "Enchantment":
+            card = Enchantment(name)
+        elif maintype == "Land":
+            card = Land(name)
+        elif maintype == "Instant":
+            card = Instant(name)
+        elif maintype == "Sorcery":
+            card = Sorcery(name)
+        elif maintype == "Planeswalker":
+            card = Planeswalker(name)
+        elif maintype == "Artifact Creature":
+            card = ArtifactCreature(name)
+        elif maintype == "Enchantment Creature":
+            card = EnchantmentCreature(name)
+        
+        card.set_id(card_row[0])
+        card.set_cubes(card_row[2])
+        card.set_image(card_row[3])
+        card.set_legendary(card_row[5])        
+        card.set_tribal(card_row[6])
+        card.set_subtype(card_row[7])
+        card.set_colour(card_row[8])
+        card.set_manacost(card_row[9])
+        card.set_power(card_row[10])
+        card.set_toughness(card_row[11])
+        card.set_feature(card_row[12])
+        card.set_ruletext(card_row[13])
+        card.set_flavourtext(card_row[14])
+        card.set_creator(card_row[15])
+        card.set_seticon(card_row[16])
+        card.set_rarity(card_row[17])
+        
+        return card
+        
+    def enter_card(self, card_db):
+        card_entity = self.set_card(card_db)
+        self._card = card_entity
     
     def exit_card(self):
         self._card = None
@@ -75,6 +129,7 @@ class KorttikubeService:
             card: [Card] The Card entity to be saved to the database.
         """
         
+        self._card = card
         self._card_repository.save(card)
         
     def change_card_type(self, card, maintype):
@@ -103,7 +158,7 @@ class KorttikubeService:
             new_card = ArtifactCreature(card.get_name())
         elif maintype == "Enchantment Creature":
             new_card = EnchantmentCreature(card.get_name())
-        new_card.copy(card)        
+        new_card.copy(card)
 
         return new_card
         
@@ -165,6 +220,33 @@ class KorttikubeService:
         cards = self._card_repository.find_by_cube(cube_id)
 
         return list(cards)
+        
+    def set_card_frame(self, card):
+        """ Selects and returns corresponding card frame image.
+        Args:
+            card: [Card] Card entity.
+        Returns:
+            [String] Path to the card frame image.
+        """
+        
+        if type(card) is tuple:
+            card = self.set_card(card)
+        
+        if card.get_card_colour() == "Punainen":
+            card_frame_image = "img/redcard.png"
+        elif card.get_card_colour() == "Sininen":
+            card_frame_image = "img/bluecard.png"
+        elif card.get_card_colour() == "Vihreä":
+            card_frame_image = "img/greencard.png"
+        elif card.get_card_colour() == "Valkoinen":
+            card_frame_image = "img/whitecard.png"
+        elif card.get_card_colour() == "Musta":
+            card_frame_image = "img/blackcard.png"
+        elif card.get_card_colour() == "Väritön":
+            card_frame_image = "img/colourlesscard.png"
+        elif card.get_card_colour() == "Kulta":
+            card_frame_image = "img/goldcard.png"
+        return card_frame_image
         
     def create_cube(self, name):
         """ Creates a new cube.

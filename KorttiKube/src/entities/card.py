@@ -42,15 +42,15 @@ class Card:
         """
         
         self._card_id = str(uuid.uuid4())
+        self._name = name        
         self._cubes = []
-        self._name = name
         self._image = ""
-        self._colour = []
-        self._multicolour = False
         self._maintype = ""
         self._legendary = False
         self._tribal = False
         self._subtype = []
+        self._colour = []
+        self._multicolour = False
         self._manacost = ""
         self._power = 0
         self._toughness = 0
@@ -61,17 +61,16 @@ class Card:
         self._creator = ""
         self._seticon = ""
         self._rarity = ""
-        
     
     ## Set
     def set_id(self, card_id):
         self._card_id = card_id
-        
-    def set_cubes(self, cubes):
-        self._cubes = cubes
     
     def set_name(self, name):
         self._name = name
+        
+    def set_cubes(self, cubes):
+        self._cubes = cubes
         
     def set_image(self, image):
         if image is not None:
@@ -96,11 +95,14 @@ class Card:
                 self._subtype = subtype.split(" ")  
 
     def set_colour(self, colour):
-        if colour is not None:
-            if type(colour) is list:
-                self._colour = colour
+        if type(colour) is list:
+            self._colour = colour
+        else:
+            if colour == "Väritön":
+                self._colour = []
             else:
                 self._colour = colour.split(",")
+        self._check_if_multicolour()
             
     def set_manacost(self, manacost):
         if manacost is not None:
@@ -125,8 +127,6 @@ class Card:
                         self.add_feature(f)
             else:
                 self._feature = feature
-                    
-                
         
     def set_ruletext(self, ruletext):
         if ruletext is not None:
@@ -151,12 +151,12 @@ class Card:
     ## Get
     def get_id(self):
         return self._card_id
-        
-    def get_cubes(self):
-        return self._cubes
     
     def get_name(self):
         return self._name
+        
+    def get_cubes(self):
+        return self._cubes
         
     def get_image(self):
         return self._image
@@ -207,6 +207,11 @@ class Card:
         return self._rarity
         
     ## Get print
+    def get_cubes_print(self):
+        if not self._cubes:
+            return ""
+        return ', '.join(self._cubes)
+        
     def get_colour_print(self):
         if not self._colour:
             return "Väritön"
@@ -235,12 +240,12 @@ class Card:
         return ' '.join(self._subtype)
         
     def get_power_print(self):
-        if self._power is None:
+        if not self._power:
             return 0
         return self._power
         
     def get_toughness_print(self):
-        if self._toughness is None:
+        if not self._toughness:
             return 0
         return self._toughness
         
@@ -273,7 +278,7 @@ class Card:
     def add_colour(self, colour):
         if colour not in self._colour:
             self._colour.append(colour)
-            self._check_if_multicolour()  
+            self._check_if_multicolour()
         
     def add_feature(self, feature):
         if feature not in self._feature:
@@ -308,4 +313,26 @@ class Card:
     def show_card(self):
         print('show card')
         
+    def __str__(self):
+        return "name: " + self._name + ", " + \
+               "image: " + self._image + ", " + \
+               "maintype: " + self._maintype + ", " + \
+               "legendary: " + str(self.get_legendary_print()) + ", " + \
+               "tribal: " + str(self.get_tribal_print()) + ", " + \
+               "subtype: " + self.get_subtype_print() + ", " + \
+               "colour: " + self.get_colour_print() + ", " + \
+               "manacost: " + str(self._manacost) + ", " + \
+               "power: " + str(self.get_power_print()) + ", " + \
+               "toughness: " + str(self.get_toughness_print()) + ", " + \
+               "feature: " + self.get_feature_print() + ", " + \
+               "ruletext: " + self._ruletext + ", " + \
+               "flavourtext: " + self._flavourtext + ", " + \
+               "creator: " + self._creator + ", " + \
+               "seticon: " + self._seticon + ", " + \
+               "rarity: " + self._rarity
+               
+               #"id: " + self._card_id + ", " + \
+               #"cubes: " + self._cubes + ", " + \               
+               #"feature2: " + self._feature2 + ", " + \
         
+       
