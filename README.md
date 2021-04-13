@@ -30,6 +30,10 @@ Testien suorittaminen
 ```
 poetry run invoke test
 ```
+Testikattavuusraportti
+```
+poetry run invoke coverage-report
+```
 
 :chicken: 
 
