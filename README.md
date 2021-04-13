@@ -34,7 +34,7 @@
 * [Työaikakirjanpito](https://github.com/Noissi/ot_harjoitustyo/blob/master/KorttiKube/dokumentaatio/tyoaikakirjanpito.md)
 
 ### Asennus
-HUOM! Ohjelma vaatii toimiakseen vähintään Ubuntu 20 käyttöjärjestelmään pohjautuvan käyttöjärjestelmän (esim Cubbli 20) tai vastaavan käyttöjärjestelmän.
+HUOM! Ohjelma vaatii toimiakseen vähintään Ubuntu 20 -käyttöjärjestelmään pohjautuvan käyttöjärjestelmän (esim Cubbli 20) tai vastaavan käyttöjärjestelmän.
 
 1. Riippuvuuksien asenntaminen
 ```
