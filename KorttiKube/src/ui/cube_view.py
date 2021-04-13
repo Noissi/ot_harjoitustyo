@@ -76,7 +76,7 @@ class CubeView(Window):
     def _initialise(self):        
         
         # Set background image
-        image = QImage("img/card.jpg")
+        image = QImage("img/mtg_puu.jpg")
         image_scaled = image.scaled(QSize(self.width, self.height)) # resize Image to widgets size
         palette = QPalette()
         palette.setBrush(QPalette.Window, QBrush(image_scaled))

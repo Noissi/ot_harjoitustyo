@@ -52,8 +52,10 @@ class UI(QWidget):
         print('login ui')
         
     def _show_create_user_view(self):
-        self._hide_current_view()
-        self.current_view = CreateUserView(self._show_login_view)
+        self._create_user_view = CreateUserView(self._show_login_view)
+        self._current_view = self._create_user_view
+        self._stacked_layout.addWidget(self._create_user_view)
+        self._stacked_layout.setCurrentWidget(self._create_user_view)
         
     def _show_main_view(self):
         self._hide_current_view()
