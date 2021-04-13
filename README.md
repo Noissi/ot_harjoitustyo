@@ -1,26 +1,5 @@
 # Ohjelmistotekniikka, harjoitustyö
-## Tehtävät
-### Viikko 1
 
-[gitlog.txt](https://github.com/Noissi/ot_harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
-
-[komentorivi.txt](https://github.com/Noissi/ot_harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
-
-### Viikko 2
-
-[testikattavuus.png](https://github.com/Noissi/ot_harjoitustyo/blob/master/laskarit/viikko2/testikattavuus.png)
-
-[yksikkötestit](https://github.com/Noissi/ot_harjoitustyo/tree/master/laskarit/viikko2/unicafe/src/tests)
-
-### Viikko 3
-
-[Luokkakaavio (Monopoly)](https://github.com/Noissi/ot_harjoitustyo/blob/master/laskarit/viikko3/monopoli.svg)
-
-[Sekvenssikaavio (Kone)](https://github.com/Noissi/ot_harjoitustyo/tree/master/laskarit/viikko3/kone.png)
-
-[Sekvenssikaavio (HKL)](https://github.com/Noissi/ot_harjoitustyo/tree/master/laskarit/viikko3/hkl.png)
-
-## Harjoitustyö
 ### Dokumentaatio
 
 <!-- * [Käyttöohje](https://github.com/Noissi/ot_harjoitustyo/blob/master/KorttiKube/dokumentaatio/kayttoohje.md)-->
@@ -34,5 +13,27 @@
 * [Työaikakirjanpito](https://github.com/Noissi/ot_harjoitustyo/blob/master/KorttiKube/dokumentaatio/tyoaikakirjanpito.md)
 
 ### Asennus
+HUOM! Ohjelma vaatii toimiakseen vähintään Ubuntu 20 -käyttöjärjestelmään pohjautuvan käyttöjärjestelmän (esim Cubbli 20) tai vastaavan käyttöjärjestelmän.
 
-<!-- 1. Asenna pyqt-->
+1. Riippuvuuksien asenntaminen
+```
+poetry install
+```
+
+2. Sovelluksen ajaminen
+```
+poetry run invoke start
+```
+
+### Testaus
+Testien suorittaminen
+```
+poetry run invoke test
+```
+Testikattavuusraportti
+```
+poetry run invoke coverage-report
+```
+
+:chicken: 
+
