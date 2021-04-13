@@ -34,5 +34,23 @@
 * [Työaikakirjanpito](https://github.com/Noissi/ot_harjoitustyo/blob/master/KorttiKube/dokumentaatio/tyoaikakirjanpito.md)
 
 ### Asennus
+HUOM! Ohjelma vaatii toimiakseen vähintään Ubuntu 20 käyttöjärjestelmään pohjautuvan käyttöjärjestelmän (esim Cubbli 20) tai vastaavan käyttöjärjestelmän.
 
-<!-- 1. Asenna pyqt-->
+1. Riippuvuuksien asenntaminen
+'''
+poetry install
+'''
+
+2. Sovelluksen ajaminen
+'''
+poetry run invoke start
+'''
+
+### Testaus
+Testien suorittaminen
+'''
+poetry run invoke test
+'''
+
+:chicken: 
+
