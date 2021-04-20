@@ -6,7 +6,7 @@
 
 * [Vaatimusmäärittely](https://github.com/Noissi/ot_harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 
-* [Arkkitehtuurikuvaus](https://github.com/Noissi/ot_harjoitustyo/blob/master/dokumentaatio/arkkitehtuurikuvaus.md)
+* [Arkkitehtuurikuvaus](https://github.com/Noissi/ot_harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 
 <!-- * [Testaus](https://github.com/Noissi/ot_harjoitustyo/blob/master/dokumentaatio/testaus.md) -->
 
