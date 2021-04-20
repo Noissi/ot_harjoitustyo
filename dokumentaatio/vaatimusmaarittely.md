@@ -12,21 +12,21 @@ Sovellus koostuu viidestä päänäkymästä: kirjautumissivu, etusivu, kokoelma
 
 ### Kirjautuminen ja käyttäjätunnuksen luonti
 
-- Käyttäjä voi luoda järjestelmään käyttäjätunnuksen
-  - Käyttäjätunnuksen täytyy olla uniikki
-- Käyttäjä voi kirjautua järjestelmään
-  - Kirjautuessa syötetään käyttäjätunnus ja salasana
-  - Virheellisestä sisäänkirjautumisesta tulee ilmoitus käyttäjälle
+- [] Käyttäjä voi luoda järjestelmään käyttäjätunnuksen
+  -  [] Käyttäjätunnuksen täytyy olla uniikki
+- [] Käyttäjä voi kirjautua järjestelmään
+  - [] Kirjautuessa syötetään käyttäjätunnus ja salasana
+  - [x] Virheellisestä sisäänkirjautumisesta tulee ilmoitus käyttäjälle
 
 ### Kirjautumisen jälkeen
 
 #### Etusivu
 
-- Käyttäjä näkee etusivulla luomansa sekä hänelle jaetut korttikokoelmat
-- Käyttäjä voi luoda uusia korttikokoelmia
-  - Uusi korttikokoelma voidaan jakaa valituille käyttäjille
-- Käyttäjä voi valita tarkasteltavan korttikokoelman
-- Käyttäjä voi hakea kortteja eri ominaisuuksilla
+- [] Käyttäjä näkee etusivulla luomansa sekä hänelle jaetut korttikokoelmat
+- [] Käyttäjä voi luoda uusia korttikokoelmia
+  - [] Uusi korttikokoelma voidaan jakaa valituille käyttäjille
+- [] Käyttäjä voi valita tarkasteltavan korttikokoelman
+- [] Käyttäjä voi hakea kortteja eri ominaisuuksilla
 
 #### Kokoelmasivu
 
