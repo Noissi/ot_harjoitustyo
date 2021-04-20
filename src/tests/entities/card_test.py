@@ -19,6 +19,7 @@ class TestCard(unittest.TestCase):
     def set_card(self):    
         self.card.set_id("1234567")
         self.card.set_name("Party Tutor")
+        self.card.set_cubes(["123", "234"])
         self.card.set_image("img/partytutor")
         self.card.set_maintype("Creature")
         self.card.set_legendary(False)
@@ -39,6 +40,7 @@ class TestCard(unittest.TestCase):
         self.set_card()
         self.assertEqual(self.card.get_id(), "1234567")
         self.assertEqual(self.card.get_name(), "Party Tutor")
+        self.assertEqual(self.card.get_cubes(), ["123", "234"])
         self.assertEqual(self.card.get_image(), "img/partytutor")
         self.assertEqual(self.card.get_maintype(), "Creature")
         self.assertEqual(self.card.get_legendary(), False)
@@ -54,6 +56,13 @@ class TestCard(unittest.TestCase):
         self.assertEqual(self.card.get_creator(), "Masa")
         self.assertEqual(self.card.get_seticon(), "img/seticon1")
         self.assertEqual(self.card.get_rarity(), "Common")
+        
+    def test_get_cubes_print(self):
+        self.assertEqual(self.card.get_cubes_print(), "")
+        self.card.set_cubes(["1234", "2345"])
+        self.assertEqual(self.card.get_cubes_print(), "1234, 2345")
+        self.card.set_cubes("9876")
+        self.assertEqual(self.card.get_cubes_print(), "9876")
         
     def test_get_legendary_print(self):
         self.assertEqual(self.card.get_legendary_print(), "Ei")
@@ -83,6 +92,17 @@ class TestCard(unittest.TestCase):
         self.card.set_subtype("Bird")
         self.assertEqual(self.card.get_subtype_list(), ["Bird"])
         
+    def test_add_cube(self):
+        self.assertEqual(self.card.get_cubes(), [])
+        self.card.add_cube("999")
+        self.assertEqual(self.card.get_cubes(), ["999"])
+        self.card.add_cube("777")
+        self.assertEqual(self.card.get_cubes(), ["999", "777"])
+        self.card.add_cube("999")
+        self.assertEqual(self.card.get_cubes(), ["999", "777"])
+        self.card.add_cube("111")
+        self.assertEqual(self.card.get_cubes(), ["999", "777", "111"])
+        
     def test_add_colour(self):
         self.card.add_colour("Punainen")
         self.assertEqual(self.card.get_colour(), ["Punainen"])
@@ -92,6 +112,22 @@ class TestCard(unittest.TestCase):
         self.assertEqual(self.card.get_colour(), ["Punainen", "Valkoinen"])
         self.card.add_colour("Sininen")
         self.assertEqual(self.card.get_colour(), ["Punainen", "Valkoinen", "Sininen"])
+        
+    def test_remove_cube(self):
+        self.card.remove_cube("123")
+        self.assertEqual(self.card.get_cubes(), [])
+        self.card.add_cube("123")
+        self.card.add_cube("4321")
+        self.card.remove_cube("1234")
+        self.assertEqual(self.card.get_cubes(), ["123", "4321"])
+        self.card.remove_cube("123")
+        self.assertEqual(self.card.get_cubes(), ["4321"])
+        self.card.remove_cube("1")
+        self.assertEqual(self.card.get_cubes(), ["4321"])
+        self.card.remove_cube("4321")
+        self.assertEqual(self.card.get_cubes(), [])
+        self.card.remove_cube("4321")
+        self.assertEqual(self.card.get_cubes(), [])
         
     def test_remove_colour(self):
         self.card.add_colour("Punainen")

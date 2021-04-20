@@ -2,43 +2,12 @@ import uuid
 #import User
 
 class Card:
-    """Luokka joka kuvaa yksittaista korttia
-    
-    Attributes:
-        card_id: , kuvaa kortin yksilollista tunnistetta
-        name: Merkkijono, joka kuvaa kortin nimea
-        colour: Merkkijono, joka kuvaa kortin varia
-        manacost: Kokonaisluku, joka kuvaa kortin manahintaa
-        rules: Merkkijono, joka kuvaa kortin saantoja
-        text: Merkkijono, joka kuvaa kortin valinnaista teksia
-        creator: Merkkijono, joka kuvaa kortin tekijaa
-        image: , joka kuvaa osoitetta kortin kuvaan
-    """
+    """ Class that represents a single card. """
     
     def __init__(self, name):
-        """Luokan konstruktori. Luo uuden kortin.
-    
+        """ Class constructor. Create a new card.
         Args:
-            name:
-                Merkkijono, joka kuvaa kortin nimea
-            colour: 
-                Vapaaehtoinen, oletusarvoisesti None.
-                Merkkijono, joka kuvaa kortin varia
-            manacost:
-                Vapaaehtoinen, oletusarvoisesti None.
-                Kokonaisluku, joka kuvaa kortin manahintaa
-            rules:
-                Vapaaehtoinen, oletusarvoisesti None.
-                Merkkijono, joka kuvaa kortin saantoja
-            text:
-                Vapaaehtoinen, oletusarvoisesti None.
-                Merkkijono, joka kuvaa kortin valinnaista teksia
-            creator:
-                Vapaaehtoinen, oletusarvoisesti user.
-                Merkkijono, joka kuvaa kortin tekijaa
-            image:
-                Vapaaehtoinen, oletusarvoisesti None.
-                , joka kuvaa osoitetta kortin kuvaan
+            name: [String] Name of the card.
         """
         
         self._card_id = str(uuid.uuid4())
@@ -61,92 +30,6 @@ class Card:
         self._creator = ""
         self._seticon = ""
         self._rarity = ""
-    
-    ## Set
-    def set_id(self, card_id):
-        self._card_id = card_id
-    
-    def set_name(self, name):
-        self._name = name
-        
-    def set_cubes(self, cubes):
-        self._cubes = cubes
-        
-    def set_image(self, image):
-        if image is not None:
-            self._image = image
-        
-    def set_maintype(self, maintype):
-        self._maintype = maintype
-        
-    def set_legendary(self, boolean):
-        if boolean is not None:
-            self._legendary = boolean
-        
-    def set_tribal(self, boolean):
-        if boolean is not None:
-            self._tribal = boolean
-    
-    def set_subtype(self, subtype):
-        if subtype is not None:
-            if type(subtype) is list:
-                self._subtype = subtype
-            else:
-                self._subtype = subtype.split(" ")  
-
-    def set_colour(self, colour):
-        if type(colour) is list:
-            self._colour = colour
-        else:
-            if colour == "Väritön":
-                self._colour = []
-            else:
-                self._colour = colour.split(",")
-        self._check_if_multicolour()
-            
-    def set_manacost(self, manacost):
-        if manacost is not None:
-            self._manacost = manacost
-            
-    def set_power(self, power):
-        if power is not None:
-            self._power = power
-        
-    def set_toughness(self, toughness):
-        if toughness is not None:
-            self._toughness = toughness
-            
-    def set_feature(self, feature):
-        if feature is not None:
-            if type(feature) is not list:
-                feature = feature.split(",")
-            
-            if self._feature2:
-                for f in feature:
-                    if f in self._feature2:
-                        self.add_feature(f)
-            else:
-                self._feature = feature
-        
-    def set_ruletext(self, ruletext):
-        if ruletext is not None:
-            self._ruletext = ruletext
-        
-    def set_flavourtext(self, flavourtext):
-        if flavourtext is not None:
-            self._flavourtext = flavourtext
-        
-    def set_creator(self, creator):
-        if creator is not None:
-            self._creator = creator
-        
-    def set_seticon(self, seticon):
-        if seticon is not None:
-            self._seticon = seticon
-    
-    def set_rarity(self, rarity):
-        if rarity is not None:
-            self._rarity = rarity
     
     ## Get
     def get_id(self):
@@ -205,6 +88,95 @@ class Card:
         
     def get_rarity(self):
         return self._rarity
+        
+    ## Set
+    def set_id(self, card_id):
+        self._card_id = card_id
+    
+    def set_name(self, name):
+        self._name = name
+        
+    def set_cubes(self, cubes):
+    	if type(cubes) is list:
+    		self._cubes = cubes
+    	else:
+    		self._cubes = cubes.split(",")
+        
+    def set_image(self, image):
+        if image is not None:
+            self._image = image
+        
+    def set_maintype(self, maintype):
+        self._maintype = maintype
+        
+    def set_legendary(self, boolean):
+        if boolean is not None:
+            self._legendary = boolean
+        
+    def set_tribal(self, boolean):
+        if boolean is not None:
+            self._tribal = boolean
+    
+    def set_subtype(self, subtype):
+        if subtype is not None:
+            if type(subtype) is list:
+                self._subtype = subtype
+            else:
+                self._subtype = subtype.split(" ")
+
+    def set_colour(self, colour):
+        if type(colour) is list:
+            self._colour = colour
+        else:
+            if colour == "Väritön":
+                self._colour = []
+            else:
+                self._colour = colour.split(",")
+        self._check_if_multicolour()
+            
+    def set_manacost(self, manacost):
+        if manacost is not None:
+            self._manacost = manacost
+            
+    def set_power(self, power):
+        if power is not None:
+            self._power = power
+        
+    def set_toughness(self, toughness):
+        if toughness is not None:
+            self._toughness = toughness
+            
+    def set_feature(self, feature):
+        if feature is not None:
+            if type(feature) is not list:
+                feature = feature.split(",")
+            
+            if self._feature2:
+                for f in feature:
+                    if f in self._feature2:
+                        self.add_feature(f)
+            else:
+                self._feature = feature
+        
+    def set_ruletext(self, ruletext):
+        if ruletext is not None:
+            self._ruletext = ruletext
+        
+    def set_flavourtext(self, flavourtext):
+        if flavourtext is not None:
+            self._flavourtext = flavourtext
+        
+    def set_creator(self, creator):
+        if creator is not None:
+            self._creator = creator
+        
+    def set_seticon(self, seticon):
+        if seticon is not None:
+            self._seticon = seticon
+    
+    def set_rarity(self, rarity):
+        if rarity is not None:
+            self._rarity = rarity
         
     ## Get print
     def get_cubes_print(self):
