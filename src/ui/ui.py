@@ -45,7 +45,7 @@ class UI(QWidget):
         
     def _show_login_view(self):
         #self._hide_current_view()
-        self._login_view = LoginView(self._show_create_user_view, self._show_cube_view, self._end)
+        self._login_view = LoginView(self._show_create_user_view, self._show_main_view, self._end)
         self.current_view = self._login_view
         self._stacked_layout.addWidget(self._login_view)
         self._stacked_layout.setCurrentWidget(self._login_view)
@@ -58,8 +58,10 @@ class UI(QWidget):
         self._stacked_layout.setCurrentWidget(self._create_user_view)
         
     def _show_main_view(self):
-        self._hide_current_view()
-        self.current_view = MainView(self._show_login_view, self._show_cube_view)
+        self._main_view = MainView(self._show_login_view, self._show_cube_view)
+        self.current_view = self._main_view
+        self._stacked_layout.addWidget(self._main_view)
+        self._stacked_layout.setCurrentWidget(self._main_view)
         
     def _show_cube_view(self):
         #self._hide_current_view()
@@ -69,7 +71,7 @@ class UI(QWidget):
         self._stacked_layout.addWidget(self._cube_view)
         self._stacked_layout.setCurrentWidget(self._cube_view)
         
-    def _show_card_view(self, card):
+    def _show_card_view(self, card = None):
         if not kks.get_card():
             kks.enter_card(card)
         self._card_view = CardView(self._show_cube_view, self._show_edit_card_view)
@@ -78,10 +80,10 @@ class UI(QWidget):
         self._stacked_layout.setCurrentWidget(self._card_view)
         print('card ui')
         
-    def _show_edit_card_view(self):
+    def _show_edit_card_view(self, new_card = False):
         if not kks.get_card():
             kks.create_card("Teemu Teekkari")
-        self._edit_card_view = EditCardView(self._show_cube_view, self._show_card_view)
+        self._edit_card_view = EditCardView(self._show_cube_view, self._show_card_view, new_card)
         self.current_view = self._edit_card_view
         self._stacked_layout.addWidget(self._edit_card_view)
         self._stacked_layout.setCurrentWidget(self._edit_card_view)

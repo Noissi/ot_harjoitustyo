@@ -37,7 +37,7 @@ class CubeView(Window):
         # Upper layout
         btn_new = QPushButton('Uusi kortti')        
         btn_new.setMaximumWidth(100)
-        btn_new.clicked.connect(self._handle_show_edit_card_view)
+        btn_new.clicked.connect(lambda: self._handle_show_edit_card_view(True))
         self._upper_layout.addWidget(btn_new)
         
     def _set_collection_layout(self):
@@ -56,6 +56,8 @@ class CubeView(Window):
             btn_card.setMaximumSize(card_width, card_width * CARD_RATIO)
             card_frame_image = kks.set_card_frame(card)
             hover_image = "img/bluecard.png"
+            # changing font and size of text
+            btn_card.setFont(QFont('Times', 10))
             btn_card.setStyleSheet("QPushButton{border-image: url("+card_frame_image+")}"
                                    "QPushButton:hover{color: red}"
                                    "QPushButton{text-align: top left}")

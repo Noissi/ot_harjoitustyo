@@ -2,18 +2,18 @@ from PySide6.QtWidgets import *
 from PySide6.QtGui import *
 from PySide6.QtCore import *
 from ui.window import Window
-
+import copy
 from services.korttikube_service import korttikube_service as kks
-
 from entities.card_creature import Creature
 
 class EditCardView(Window):
-    def __init__(self, handle_show_game_view, handle_show_card_view):
+    def __init__(self, handle_show_cube_view, handle_show_card_view, new_card = False):
         super().__init__()
         self._handle_show_card_view = handle_show_card_view
-        self._handle_show_game_view = handle_show_game_view
+        self._handle_show_cube_view = handle_show_cube_view
         
-        self._card = kks.get_card()
+        self._card = copy.deepcopy(kks.get_card())
+        self._new_card = new_card
         self._card_frame = None
         
         self._outer_layout  = self.get_outer_layout()
@@ -67,18 +67,22 @@ class EditCardView(Window):
         
     def _set_middle_layout(self):
         # Add to middle layout
-        #self._middle_layout = QGridLayout()
         self._middle_layout.addLayout(self._left_layout, 0, 0)
         self._middle_layout.addLayout(self._card_layout, 0, 1)
         self._middle_layout.addLayout(self._right_layout, 0, 3)
         
     def _set_bottom_layout(self):
-        # Draw bottom edit box        
-        #self._bottom_layout = QHBoxLayout()
-        btn_edit = QPushButton('Tallenna')
-        btn_edit.setMaximumWidth(100)
-        btn_edit.clicked.connect(self._save_and_return)
-        self._bottom_layout.addWidget(btn_edit)
+        # Draw bottom to save the card
+        btn_save = QPushButton('Tallenna')
+        btn_save.setMaximumWidth(100)
+        btn_save.clicked.connect(self._save_and_return)
+        self._bottom_layout.addWidget(btn_save)
+        
+        # Draw button to return without changes
+        btn_return = QPushButton('Takaisin')
+        btn_return.setMaximumWidth(100)
+        btn_return.clicked.connect(self._return)
+        self._bottom_layout.addWidget(btn_return)
         
     def _set_card_layout(self):
         self._card_layout = QGridLayout()
@@ -355,7 +359,13 @@ class EditCardView(Window):
     def _save_and_return(self):
         print(self._card)
         kks.save_to_database(self._card)
-        self._handle_show_card_view(self._card)
+        self._handle_show_card_view()
+        
+    def _return(self):
+        if self._new_card:
+            self._handle_show_cube_view()
+        else:
+            self._handle_show_card_view()
         
     # Other
     def _clear_layout(self, layout):
@@ -399,12 +409,7 @@ class EditCardView(Window):
         self.setPalette(palette)
         
         # Set layouts
-        left2_layout = QStackedLayout()        
-        
-        # Modify layouts
-        button_back = QPushButton('Takaisin peleihin')
-        button_back.clicked.connect(self._handle_show_game_view)
-        #top_layout.addWidget(button_back)   
+        left2_layout = QStackedLayout() 
      
         self._set_card_layout()
         self._set_leftpanel_layout()
