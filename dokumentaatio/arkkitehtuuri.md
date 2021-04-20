@@ -1,4 +1,4 @@
 Alustava luokkakaavio:
-![Pakkausrakenne](./kuvat/luokkakaavio.svg)
+![Luokka](./kuvat/luokkakaavio.svg)
 Alustava pakkauskaavio:
-![Pakkausrakenne](./kuvat/pakkauskaavio.png)
+![Pakkaus](./kuvat/pakkauskaavio.png)
