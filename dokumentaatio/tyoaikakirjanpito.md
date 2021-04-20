@@ -10,7 +10,7 @@
 | 26.3. | 2    | Tietokannan alustus     |
 | 30.3. | 4    | Tietokannan rakennus    |
 | 10.4. | 5    | Näkymien rakentelu      |
-|   |     |  |
-|       |     |  |
-|   |     |  |
-| yht   | 30   | | 
+| 13.4. | 2    | Päänäkymän luonti       |
+| 16.4. | 4    | Korttien muotoilu       |
+| 20.4  | 4    | Kansiorakenteen muotoilu|
+| yht   | 40   | | 
