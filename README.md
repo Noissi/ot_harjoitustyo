@@ -35,5 +35,11 @@ Testikattavuusraportti
 poetry run invoke coverage-report
 ```
 
+### Pylint
+.pylintrc-tiedoston tarkistusten suorittaminen:
+```
+poetry run invoke lint
+```
+
 :chicken: 
 
