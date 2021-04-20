@@ -2,15 +2,15 @@
 
 ### Dokumentaatio
 
-<!-- * [Käyttöohje](https://github.com/Noissi/ot_harjoitustyo/blob/master/KorttiKube/dokumentaatio/kayttoohje.md)-->
+<!-- * [Käyttöohje](https://github.com/Noissi/ot_harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)-->
 
-* [Vaatimusmäärittely](https://github.com/Noissi/ot_harjoitustyo/blob/master/KorttiKube/dokumentaatio/vaatimusmaarittely.md)
+* [Vaatimusmäärittely](https://github.com/Noissi/ot_harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 
-<!-- * [Arkkitehtuurikuvaus](https://github.com/Noissi/ot_harjoitustyo/blob/master/KorttiKube/dokumentaatio/arkkitehtuurikuvaus.md)-->
+<!-- * [Arkkitehtuurikuvaus](https://github.com/Noissi/ot_harjoitustyo/blob/master/dokumentaatio/arkkitehtuurikuvaus.md)-->
 
-<!-- * [Testaus](https://github.com/Noissi/ot_harjoitustyo/blob/master/KorttiKube/dokumentaatio/testaus.md) -->
+<!-- * [Testaus](https://github.com/Noissi/ot_harjoitustyo/blob/master/dokumentaatio/testaus.md) -->
 
-* [Työaikakirjanpito](https://github.com/Noissi/ot_harjoitustyo/blob/master/KorttiKube/dokumentaatio/tyoaikakirjanpito.md)
+* [Työaikakirjanpito](https://github.com/Noissi/ot_harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)
 
 ### Asennus
 HUOM! Ohjelma vaatii toimiakseen vähintään Ubuntu 20 -käyttöjärjestelmään pohjautuvan käyttöjärjestelmän (esim Cubbli 20) tai vastaavan käyttöjärjestelmän.
