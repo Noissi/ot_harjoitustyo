@@ -12,54 +12,54 @@ Sovellus koostuu viidestä päänäkymästä: kirjautumissivu, etusivu, kokoelma
 
 ### Kirjautuminen ja käyttäjätunnuksen luonti
 
-- [] Käyttäjä voi luoda järjestelmään käyttäjätunnuksen
-  -  [] Käyttäjätunnuksen täytyy olla uniikki
-- [] Käyttäjä voi kirjautua järjestelmään
-  - [] Kirjautuessa syötetään käyttäjätunnus ja salasana
+- [ ] Käyttäjä voi luoda järjestelmään käyttäjätunnuksen
+  -  [ ] Käyttäjätunnuksen täytyy olla uniikki
+- [ ] Käyttäjä voi kirjautua järjestelmään
+  - [ ] Kirjautuessa syötetään käyttäjätunnus ja salasana
   - [x] Virheellisestä sisäänkirjautumisesta tulee ilmoitus käyttäjälle
 
 ### Kirjautumisen jälkeen
 
 #### Etusivu
 
-- [] Käyttäjä näkee etusivulla luomansa sekä hänelle jaetut korttikokoelmat
-- [] Käyttäjä voi luoda uusia korttikokoelmia
-  - [] Uusi korttikokoelma voidaan jakaa valituille käyttäjille
-- [] Käyttäjä voi valita tarkasteltavan korttikokoelman
-- [] Käyttäjä voi hakea kortteja eri ominaisuuksilla
+- [ ] Käyttäjä näkee etusivulla luomansa sekä hänelle jaetut korttikokoelmat
+- [ ] Käyttäjä voi luoda uusia korttikokoelmia
+  - [ ] Uusi korttikokoelma voidaan jakaa valituille käyttäjille
+- [ ] Käyttäjä voi valita tarkasteltavan korttikokoelman
+- [ ] Käyttäjä voi hakea kortteja eri ominaisuuksilla
 
 #### Kokoelmasivu
 
-- Käyttäjä voi selata kokoelman kortteja
-  - Kortit on jaettu valmiisiin ja luonnoksiin 
-  - Käyttäjä voi lajitella kortteja valittujen parametrien perusteella
-- Käyttäjä voi hakea kortteja eri ominaisuuksilla
-- Käyttäjä voi luoda uusia kortteja kokoelmaan
-- Käyttäjä voi tuoda taulukossa tiedot uusista korteista ja lisätä ne kokoelmaan
-- Käyttäjä voi valita tarkasteltavan kortin
+- [x] Käyttäjä voi selata kokoelman kortteja
+  - [ ] Kortit on jaettu valmiisiin ja luonnoksiin 
+  - [ ] Käyttäjä voi lajitella kortteja valittujen parametrien perusteella
+- [ ] Käyttäjä voi hakea kortteja eri ominaisuuksilla
+- [x] Käyttäjä voi luoda uusia kortteja kokoelmaan
+- [ ] Käyttäjä voi tuoda taulukossa tiedot uusista korteista ja lisätä ne kokoelmaan
+- [x] Käyttäjä voi valita tarkasteltavan kortin
 
 #### Korttisivu
 
-- Käyttäjä voi tarkastella korttia
-- Käyttäjä voi muokata korttia
-- Käyttäjä voi kommentoida jaettujen peliversioiden kortteja
-  - Kommentit näkyvät muille peliversion käyttäjille
-- Käyttäjä voi ladata korttitiedot sovelluksesta
+- [x] Käyttäjä voi tarkastella korttia
+- [x] Käyttäjä voi muokata korttia
+- [ ] Käyttäjä voi kommentoida jaettujen peliversioiden kortteja
+  - [ ] Kommentit näkyvät muille peliversion käyttäjille
+- [ ] Käyttäjä voi ladata korttitiedot sovelluksesta
 
 ####
 
-- Käyttäjä voi kirjautua ulos järjestelmästä
+- [x] Käyttäjä voi kirjautua ulos järjestelmästä
 
 ## Jatkokehitysideoita
 
 Sovellukseen lisätään ajan salliessa esim. seuraavia toiminnallisuuksia:
 
-- Kokoelmasivulla näkyy toimintoja, tilastoja sekä kortit
-- Korttinäkymää voi vaihtaa haluamakseen (lista/kuvat) 
-- Tarkempien tilastojen tarkastelu
-- Ilmoitukset korttien lisäämisestä ja muokkaamisesta muille käyttäjille
-- Käyttäjä voi "hyväksyä" muiden kortteja
-- Näytä samankaltaisimmat kortit valitulle kortille
-- Korttikokoelman poisto
-- Käyttäjätunnuksen poisto
+- [ ] Kokoelmasivulla näkyy toimintoja, tilastoja sekä kortit
+- [ ] Korttinäkymää voi vaihtaa haluamakseen (lista/kuvat) 
+- [ ] Tarkempien tilastojen tarkastelu
+- [ ] Ilmoitukset korttien lisäämisestä ja muokkaamisesta muille käyttäjille
+- [ ] Käyttäjä voi "hyväksyä" muiden kortteja
+- [ ] Näytä samankaltaisimmat kortit valitulle kortille
+- [ ] Korttikokoelman poisto
+- [ ] Käyttäjätunnuksen poisto
 
