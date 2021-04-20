@@ -6,7 +6,7 @@ class Enchantment(Card):
     Attributes:
         manacost: 
     """
-    
+
     def __init__(self, name):
         """Luokan konstruktori. Luo uuden kortin.
     
@@ -19,7 +19,7 @@ class Enchantment(Card):
         self._feature2 = ["Hexproof", "Indestructible", "Flash"]
         self._power = None
         self._toughness = None
-        
+
     def copy(self, card):
         self.set_id(card.get_id())
         self.set_image(card.get_image())
@@ -33,8 +33,3 @@ class Enchantment(Card):
         self.set_creator(card.get_creator())
         self.set_seticon(card.get_seticon())
         self.set_rarity(card.get_rarity())
-        
-        
-    
-        
-        

@@ -2,14 +2,14 @@ from entities.card import Card
 
 class Sorcery(Card):
     """Luokka joka kuvaa yksittaista korttia
-    
+
     Attributes:
-        manacost: 
+        manacost:
     """
-    
+
     def __init__(self, name):
         """Luokan konstruktori. Luo uuden kortin.
-    
+
         Args:
             manacost:
                 ???
@@ -19,8 +19,8 @@ class Sorcery(Card):
         self._feature = None
         self._power = None
         self._toughness = None
-        
-    def copy(self, card):    	
+
+    def copy(self, card):
         self.set_id(card.get_id())
         self.set_image(card.get_image())
         self.set_colour(card.get_colour())
@@ -33,8 +33,3 @@ class Sorcery(Card):
         self.set_creator(card.get_creator())
         self.set_seticon(card.get_seticon())
         self.set_rarity(card.get_rarity())
-        
-        
-    
-        
-        

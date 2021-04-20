@@ -19,7 +19,7 @@ class Artifact(Card):
         self._feature2 = ["Hexproof", "Indestructible", "Flash"]
         self._power = None
         self._toughness = None
-        
+
     def set_subtype(self, subtype):
         if subtype is not None:
             if type(subtype) is list:
@@ -32,7 +32,7 @@ class Artifact(Card):
             else: 
                 self._power = None
                 self._toughness = None
-        
+
     def copy(self, card):
         self.set_id(card.get_id())
         self.set_image(card.get_image())
@@ -47,8 +47,3 @@ class Artifact(Card):
         self.set_creator(card.get_creator())
         self.set_seticon(card.get_seticon())
         self.set_rarity(card.get_rarity())
-        
-        
-    
-        
-        

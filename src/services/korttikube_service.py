@@ -34,11 +34,11 @@ class KorttikubeService:
             user_repository:
                 Optional. UserRepository entity.
         """
-        
+
         self._user = None
         self._cube = None
         self._card = None
-        
+
         self._card_repository = card_repository
         self._cube_repository = cube_repository
         self._user_repository = user_repository
@@ -50,13 +50,13 @@ class KorttikubeService:
         Returns:
             [Card] Created Card entity.
         """
-        
+
         card = Card(cardname)
         self._card = card
-        
+
     def get_card(self):
         return self._card
-        
+
     def set_card(self, card_row):
         """ Create a Card entity from given database row.
         Args:
@@ -65,7 +65,7 @@ class KorttikubeService:
         Returns:
             [Card] Created Card entity.
         """
-        
+
         name = card_row[1]
         maintype = card_row[4]
         if maintype == "":
@@ -88,7 +88,7 @@ class KorttikubeService:
             card = ArtifactCreature(name)
         elif maintype == "Enchantment Creature":
             card = EnchantmentCreature(name)
-        
+
         card.set_id(card_row[0])
         card.set_cubes(card_row[2])
         card.set_image(card_row[3])
@@ -105,33 +105,33 @@ class KorttikubeService:
         card.set_creator(card_row[15])
         card.set_seticon(card_row[16])
         card.set_rarity(card_row[17])
-        
+
         return card
-        
+
     def enter_card(self, card_db):
         card_entity = self.set_card(card_db)
         self._card = card_entity
-    
+
     def exit_card(self):
         self._card = None
-        
+
     def delete_card(self, card):
         """ Delete an existing card.
         Args:
             card: [Card] The Card entity to be deleted from the database.
         """
-        
+
         print('delete card')
-        
+
     def save_to_database(self, card):
         """ Save card to database.
         Args:
             card: [Card] The Card entity to be saved to the database.
         """
-        
+
         self._card = card
         self._card_repository.save(card)
-        
+
     def change_card_type(self, card, maintype):
         """ Modifies card's maintype. (Creates a new Card entity that
             copies the properties from the old one.)
@@ -139,7 +139,7 @@ class KorttikubeService:
             card: [Card] Card entity that needs to be changed.
             maintype: [String] New maintype for the card.
         """
-        
+
         if maintype == "Creature":
             new_card = Creature(card.get_name())
         elif maintype == "Artifact":
@@ -161,7 +161,7 @@ class KorttikubeService:
         new_card.copy(card)
 
         return new_card
-        
+
     def update_card(self, card, prop, prop_name, add=None):
         """ Modifies card's property that is specified as a parameter.
         Args:
@@ -172,7 +172,7 @@ class KorttikubeService:
             add: [Boolean] Optional. Defines which method to do for 
                            properties with multiple check boxes.
         """
-        
+
         if prop_name == 'name':
             card.set_name(prop)
         elif prop_name == 'legendary':
@@ -205,7 +205,7 @@ class KorttikubeService:
             card.set_seticon(prop)
         elif prop_name == 'rarity':
             card.set_rarity(prop)
-            
+
     def get_cards_in_cube(self, cube_id):
         """ Returns list of cards in cube.
         Args:
@@ -213,14 +213,14 @@ class KorttikubeService:
         Returns:
             [List Card] List of Card entities in cube.
         """
-                
+
         if not cube_id:
             return []
 
         cards = self._card_repository.find_by_cube(cube_id)
 
         return list(cards)
-        
+
     def set_card_frame(self, card):
         """ Selects and returns corresponding card frame image.
         Args:
@@ -228,10 +228,10 @@ class KorttikubeService:
         Returns:
             [String] Path to the card frame image.
         """
-        
+
         if type(card) is tuple:
             card = self.set_card(card)
-        
+
         if card.get_card_colour() == "Punainen":
             card_frame_image = "img/redcard.png"
         elif card.get_card_colour() == "Sininen":
@@ -247,7 +247,7 @@ class KorttikubeService:
         elif card.get_card_colour() == "Kulta":
             card_frame_image = "img/goldcard.png"
         return card_frame_image
-        
+
     def create_cube(self, name):
         """ Creates a new cube.
         Args:
@@ -260,13 +260,13 @@ class KorttikubeService:
         self._cube = cube
 
         return cube
-    
+
     def enter_cube(self, cube):
         self._cube = cube
-    
+
     def exit_cube(self):
         self._cube = None
-        
+
     def get_users_in_cube(self, cube_id):
         """ Returns list of users in cube.
         Args:
@@ -274,17 +274,17 @@ class KorttikubeService:
         Returns:
             [List User] List of User entities in cube.
         """
-        
+
         return self._cube.get_users()
-        
+
     def get_cubes(self):
         """ Returns list of all cubes.
         Returns:
             [List Cube] List of all Cube entities.
         """
-        
+
         return self._cube_repository.find_all()
-        
+
     def create_user(self, username, password):
         """ Creates a new user.
         Args:
@@ -311,7 +311,7 @@ class KorttikubeService:
         Returns:
             [User] User entity of the current user.
         """
-        
+
         return self._user
 
     def get_users(self):
@@ -319,9 +319,9 @@ class KorttikubeService:
         Returns:
             [List User] List of all User entities.
         """
-        
+
         return self._user_repository.find_all()
-    
+
     def login(self, username, password):
         """ Log in user.
         Args:
@@ -342,11 +342,11 @@ class KorttikubeService:
         self._user = user
 
         return user
-        
+
     def logout(self):
         """ Log out current user.
         """
-        
+
         self._user = None
 
 korttikube_service = KorttikubeService()
