@@ -4,7 +4,7 @@ class Planeswalker(Card):
     """Luokka joka kuvaa yksittaista korttia
 
     Attributes:
-        manacost: 
+        manacost:
     """
 
     def __init__(self, name):

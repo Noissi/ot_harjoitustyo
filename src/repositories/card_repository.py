@@ -62,7 +62,7 @@ class CardRepository:
         sql = """ SELECT 1 FROM cards WHERE id = ?; """
         cursor = self._connection.cursor()
         cursor.execute(sql, card_sql)
-        if cursor.fetchone() == None:
+        if cursor.fetchone() is None:
             self.create(card)
         else:
             self.update(card)

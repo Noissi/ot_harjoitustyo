@@ -152,9 +152,9 @@ class Card:
                 feature = feature.split(",")
 
             if self._feature2:
-                for f in feature:
-                    if f in self._feature2:
-                        self.add_feature(f)
+                for single_feature in feature:
+                    if single_feature in self._feature2:
+                        self.add_feature(single_feature)
             else:
                 self._feature = feature
 
@@ -192,7 +192,7 @@ class Card:
     def get_card_colour(self):
         if self._multicolour:
             return "Kulta"
-        elif not self._colour:
+        if not self._colour:
             return "Väritön"
         return self._colour[0]
 

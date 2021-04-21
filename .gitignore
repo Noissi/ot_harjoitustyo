@@ -7,4 +7,4 @@ laskarit/
 .pytest_cache
 
 # Data files
-database.db
+database*

@@ -49,12 +49,12 @@ class Cube:
             return "Ei käyttäjiä"
         return ', '.join(self._users)
 
-    ## Add    
+    ## Add
     def add_user(self, user_id):
         if user_id not in self._users:
             self._users.append(user_id)
 
-    ## Remove    
+    ## Remove
     def remove_user(self, user_id):
         if user_id is not None:
             if user_id in self._users:

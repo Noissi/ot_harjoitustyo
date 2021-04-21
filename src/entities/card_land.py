@@ -2,9 +2,9 @@ from entities.card import Card
 
 class Land(Card):
     """Luokka joka kuvaa yksittaista korttia
-    
+
     Attributes:
-        manacost: 
+        manacost:
     """
 
     def __init__(self, name):
@@ -15,7 +15,7 @@ class Land(Card):
                 ???
         """
         super().__init__(name)
-        self._maintype = "Land"      
+        self._maintype = "Land"
         self._tribal = None
         self._feature2 = ["Hexproof", "Indestructible"]
         self._manacost = None
@@ -28,7 +28,7 @@ class Land(Card):
         self.set_colour(card.get_colour())
         self.set_feature(card.get_feature())
         self.set_legendary(card.get_legendary())
-        self.set_subtype(card.get_subtype())      
+        self.set_subtype(card.get_subtype())
         self.set_ruletext(card.get_ruletext())
         self.set_flavourtext(card.get_flavourtext())
         self.set_creator(card.get_creator())

@@ -92,7 +92,7 @@ class KorttikubeService:
         card.set_id(card_row[0])
         card.set_cubes(card_row[2])
         card.set_image(card_row[3])
-        card.set_legendary(card_row[5])        
+        card.set_legendary(card_row[5])
         card.set_tribal(card_row[6])
         card.set_subtype(card_row[7])
         card.set_colour(card_row[8])
@@ -169,7 +169,7 @@ class KorttikubeService:
             prop: [String, Boolean] New property text/boolean to replace the current one.
                            (e.g. a new name or ruletext for the card).
             prop_name: [String] Property type (e.g. "name", "ruletext").
-            add: [Boolean] Optional. Defines which method to do for 
+            add: [Boolean] Optional. Defines which method to do for
                            properties with multiple check boxes.
         """
 
@@ -255,8 +255,8 @@ class KorttikubeService:
         Returns:
             [Cube] Created Cube entity.
         """
-
-        cube = self._cube_repository.create(Cube(name, self._user))
+        cube_entity = Cube(name, self._user)
+        cube = self._cube_repository.create(cube_entity)
         self._cube = cube
 
         return cube

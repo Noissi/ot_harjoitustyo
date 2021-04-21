@@ -1,5 +1,5 @@
-from database_connection import get_database_connection
 from sqlite3 import Error
+from database_connection import get_database_connection
 
 def create_table(conn, create_table_sql):
     """ Create a table from the create_table_sql statement
@@ -8,18 +8,18 @@ def create_table(conn, create_table_sql):
     	create_table_sql: a CREATE TABLE statement
     """
     try:
-        c = conn.cursor()
-        c.execute(create_table_sql)
+        cursor = conn.cursor()
+        cursor.execute(create_table_sql)
         conn.commit()
-    except Error as e:
-        print(e)
+    except Error as error:
+        print(error)
 
 def create_tables(conn):
     """ Create tables.
     Args:
         conn: Connection object
     """
-    
+
     sql_create_cards_table = """ CREATE TABLE IF NOT EXISTS cards (
                                         id text PRIMARY KEY,
                                         name text NOT NULL,
@@ -48,7 +48,7 @@ def create_tables(conn):
                                     card_id text NOT NULL,
                                     FOREIGN KEY (card_id) REFERENCES cards (id)
                                 );"""
-                              
+
     sql_create_users_table = """CREATE TABLE IF NOT EXISTS users (
                                     id text PRIMARY KEY,
                                     username text NOT NULL,
@@ -56,7 +56,7 @@ def create_tables(conn):
                                     cube_id text,
                                     FOREIGN KEY (cube_id) REFERENCES cubes (id)
                                 );"""
-    
+
     # Create tables
     if conn is not None:
         # Create cards table
@@ -68,11 +68,11 @@ def create_tables(conn):
     else:
         print("Error! Cannot create the database connection.")
 
-def initialise_database():    
+def initialise_database():
     # Create a database connection
     print("Creating database connection")
     connection = get_database_connection()
-    
+
     # Create tables
     create_tables(connection)
 

@@ -2,14 +2,14 @@ from entities.card import Card
 
 class EnchantmentCreature(Card):
     """Luokka joka kuvaa yksittaista korttia
-    
+
     Attributes:
-        manacost: 
+        manacost:
     """
 
     def __init__(self, name):
         """Luokan konstruktori. Luo uuden kortin.
-    
+
         Args:
             manacost:
                 ???
