@@ -186,10 +186,8 @@ class KorttikubeService:
                 card.add_colour(prop)
             else:
                 card.remove_colour(prop)
-        elif prop_name == 'power':
-            card.set_power(prop)
-        elif prop_name == 'toughness':
-            card.set_toughness(prop)
+        elif prop_name == 'manacost':
+            card.set_manacost(prop)
         elif prop_name == 'feature':
             if add:
                 card.add_feature(prop)
@@ -199,12 +197,18 @@ class KorttikubeService:
             card.set_ruletext(prop)
         elif prop_name == 'flavourtext':
             card.set_flavourtext(prop)
-        elif prop_name == 'creator':
-            card.set_creator(prop)
+        elif prop_name == 'power':
+            card.set_power(prop)
+        elif prop_name == 'toughness':
+            card.set_toughness(prop)
+        elif prop_name == 'image':
+            card.set_image(prop)
         elif prop_name == 'seticon':
             card.set_seticon(prop)
         elif prop_name == 'rarity':
             card.set_rarity(prop)
+        elif prop_name == 'creator':
+            card.set_creator(prop)
 
     def get_cards_in_cube(self, cube_id):
         """ Returns list of cards in cube.

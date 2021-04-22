@@ -13,7 +13,6 @@ class Card:
         self._card_id = str(uuid.uuid4())
         self._name = name
         self._cubes = []
-        self._image = ""
         self._maintype = ""
         self._legendary = False
         self._tribal = False
@@ -26,10 +25,11 @@ class Card:
         self._feature = []
         self._feature2 = []
         self._ruletext = ""
-        self._flavourtext = ""
-        self._creator = ""
+        self._flavourtext = ""        
+        self._image = ""
         self._seticon = ""
         self._rarity = ""
+        self._creator = ""
 
     ## Get
     def get_id(self):
@@ -40,9 +40,6 @@ class Card:
 
     def get_cubes(self):
         return self._cubes
-
-    def get_image(self):
-        return self._image
 
     def get_maintype(self):
         return self._maintype
@@ -80,14 +77,17 @@ class Card:
     def get_flavourtext(self):
         return self._flavourtext
 
-    def get_creator(self):
-        return self._creator
+    def get_image(self):
+        return self._image
 
     def get_seticon(self):
         return self._seticon
 
     def get_rarity(self):
         return self._rarity
+
+    def get_creator(self):
+        return self._creator
 
     ## Set
     def set_id(self, card_id):
@@ -101,10 +101,6 @@ class Card:
             self._cubes = cubes
         else:
             self._cubes = cubes.split(",")
-
-    def set_image(self, image):
-        if image is not None:
-            self._image = image
 
     def set_maintype(self, maintype):
         self._maintype = maintype
@@ -163,14 +159,18 @@ class Card:
     def set_flavourtext(self, flavourtext):
         self._flavourtext = flavourtext
 
-    def set_creator(self, creator):
-        self._creator = creator
+    def set_image(self, image):
+        if image is not None:
+            self._image = image
 
     def set_seticon(self, seticon):
         self._seticon = seticon
 
     def set_rarity(self, rarity):
         self._rarity = rarity
+
+    def set_creator(self, creator):
+        self._creator = creator
 
     ## Get print
     def get_cubes_print(self):
@@ -278,7 +278,6 @@ class Card:
 
     def copy(self, card):
         self.set_id(card.get_id())
-        self.set_image(card.get_image())
         self.set_colour(card.get_colour())
         self.set_legendary(card.get_legendary())
         self.set_tribal(card.get_tribal())
@@ -289,16 +288,16 @@ class Card:
         self.set_feature(card.get_feature())
         self.set_ruletext(card.get_ruletext())
         self.set_flavourtext(card.get_flavourtext())
-        self.set_creator(card.get_creator())
+        self.set_image(card.get_image())
         self.set_seticon(card.get_seticon())
         self.set_rarity(card.get_rarity())
+        self.set_creator(card.get_creator())
 
     def show_card(self):
         print('show card')
 
     def __str__(self):
         return "name: " + self._name + ", " + \
-               "image: " + self._image + ", " + \
                "maintype: " + self._maintype + ", " + \
                "legendary: " + str(self.get_legendary_print()) + ", " + \
                "tribal: " + str(self.get_tribal_print()) + ", " + \
@@ -310,6 +309,7 @@ class Card:
                "feature: " + self.get_feature_print() + ", " + \
                "ruletext: " + self._ruletext + ", " + \
                "flavourtext: " + self._flavourtext + ", " + \
-               "creator: " + self._creator + ", " + \
+               "image: " + self._image + ", " + \
                "seticon: " + self._seticon + ", " + \
-               "rarity: " + self._rarity
+               "rarity: " + self._rarity + ", " + \
+               "creator: " + self._creator

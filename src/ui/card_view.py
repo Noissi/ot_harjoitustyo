@@ -83,7 +83,7 @@ class CardView(Window):
         name_label.setText(self._card.get_name())
         name_label.move(500,-700)
         self._card_layout.addWidget(name_label)
-        
+
     def _set_leftpanel_layout(self):
         # Draw left side panel
         self._left_layout.addRow("Nimi", QLabel(self._card.get_name()))
@@ -92,23 +92,29 @@ class CardView(Window):
         self._left_layout.addRow("Tribal:", QLabel(self._card.get_tribal_print()))
         self._left_layout.addRow("Subtype:", QLabel(self._card.get_subtype_print()))
         self._left_layout.addRow("Väri:", QLabel(self._card.get_colour_print()))
-        self._left_layout.addRow("Voimakkuus:", QLabel(str(self._card.get_power_print())))        
-        self._left_layout.addRow("Kestävyys:", QLabel(str(self._card.get_toughness_print())))
-        
-    def _set_rightpanel_layout(self):
-        # Set the right side panel  
+        self._left_layout.addRow("Hinta:", QLabel(self._card.get_manacost()))
         feature_label = QLabel(self._card.get_feature_print())
         feature_label.setWordWrap(True)
-        self._right_layout.addRow("Ominaisuus:", feature_label)
+        self._left_layout.addRow("Ominaisuus:", feature_label)
+
+    def _set_rightpanel_layout(self):
+        # Set the right side panel
         ruletext_label = QLabel(self._card.get_ruletext())
         ruletext_label.setWordWrap(True)
         self._right_layout.addRow("Sääntöteksti:", ruletext_label)
-        self._right_layout.addRow("Tarina:", QLabel(self._card.get_flavourtext()))
+        flavourtext_label = QLabel(self._card.get_flavourtext())
+        flavourtext_label.setWordWrap(True)
+        self._right_layout.addRow("Tarina:", flavourtext_label)
+        self._right_layout.addRow("Voimakkuus:", QLabel(str(self._card.get_power_print())))
+        self._right_layout.addRow("Kestävyys:", QLabel(str(self._card.get_toughness_print())))
+        self._right_layout.addRow("Kuva:", QLabel(self._card.get_image()))
+        self._right_layout.addRow("Tunnus:", QLabel(self._card.get_seticon()))
+        self._right_layout.addRow("Harvinaisuus:", QLabel(self._card.get_rarity()))
         self._right_layout.addRow("Tekijä:", QLabel(self._card.get_creator()))
-        
+
     def _set_card_frame(self):
         self._card_frame = QPixmap(kks.set_card_frame(self._card))
-                     
+
     def _initialise(self):        
         # Set background image
         image = QImage("img/card.jpg")
