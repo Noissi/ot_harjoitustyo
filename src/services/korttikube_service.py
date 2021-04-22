@@ -229,7 +229,7 @@ class KorttikubeService:
             [String] Path to the card frame image.
         """
 
-        if type(card) is tuple:
+        if isinstance(card, tuple):
             card = self.set_card(card)
 
         if card.get_card_colour() == "Punainen":

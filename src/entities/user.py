@@ -34,13 +34,13 @@ class User:
         self._password = password
 
     def set_cubes(self, cubes):
-        if type(cubes) is list:
+        if isinstance(cubes, list):
             self._cubes = cubes
         else:
             self._cubes = cubes.split(",")
 
     def set_shared_cubes(self, shared_cubes):
-        if type(shared_cubes) is list:
+        if isinstance(shared_cubes, list):
             self._shared_cubes = shared_cubes
         else:
             self._shared_cubes = shared_cubes.split(",")

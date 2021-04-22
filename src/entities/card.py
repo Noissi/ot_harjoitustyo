@@ -97,7 +97,7 @@ class Card:
         self._name = name
 
     def set_cubes(self, cubes):
-        if type(cubes) is list:
+        if isinstance(cubes, list):
             self._cubes = cubes
         else:
             self._cubes = cubes.split(",")
@@ -110,22 +110,22 @@ class Card:
         self._maintype = maintype
 
     def set_legendary(self, boolean):
-        if boolean is not None:
+        if self._legendary is not None and boolean is not None:
             self._legendary = boolean
 
     def set_tribal(self, boolean):
-        if boolean is not None:
+        if self._tribal is not None and boolean is not None:
             self._tribal = boolean
 
     def set_subtype(self, subtype):
-        if subtype is not None:
-            if type(subtype) is list:
+        if self._subtype is not None and subtype is not None:
+            if isinstance(subtype, list):
                 self._subtype = subtype
             else:
                 self._subtype = subtype.split(" ")
 
     def set_colour(self, colour):
-        if type(colour) is list:
+        if isinstance(colour, list):
             self._colour = colour
         else:
             if colour == "Väritön":
@@ -135,22 +135,21 @@ class Card:
         self._check_if_multicolour()
 
     def set_manacost(self, manacost):
-        if manacost is not None:
+        if self._manacost is not None and manacost is not None:
             self._manacost = manacost
 
     def set_power(self, power):
-        if power is not None:
+        if self._power is not None and power is not None:
             self._power = power
 
     def set_toughness(self, toughness):
-        if toughness is not None:
+        if self._toughness is not None and toughness is not None:
             self._toughness = toughness
 
     def set_feature(self, feature):
-        if feature is not None:
-            if type(feature) is not list:
-                feature = feature.split(",")
-
+        if self._feature is not None and feature is not None:
+            if not isinstance(feature, list):
+                feature = feature.split(", ")
             if self._feature2:
                 for single_feature in feature:
                     if single_feature in self._feature2:
@@ -159,24 +158,19 @@ class Card:
                 self._feature = feature
 
     def set_ruletext(self, ruletext):
-        if ruletext is not None:
-            self._ruletext = ruletext
+        self._ruletext = ruletext
 
     def set_flavourtext(self, flavourtext):
-        if flavourtext is not None:
-            self._flavourtext = flavourtext
+        self._flavourtext = flavourtext
 
     def set_creator(self, creator):
-        if creator is not None:
-            self._creator = creator
+        self._creator = creator
 
     def set_seticon(self, seticon):
-        if seticon is not None:
-            self._seticon = seticon
+        self._seticon = seticon
 
     def set_rarity(self, rarity):
-        if rarity is not None:
-            self._rarity = rarity
+        self._rarity = rarity
 
     ## Get print
     def get_cubes_print(self):
@@ -282,6 +276,23 @@ class Card:
         else:
             self._multicolour = False
 
+    def copy(self, card):
+        self.set_id(card.get_id())
+        self.set_image(card.get_image())
+        self.set_colour(card.get_colour())
+        self.set_legendary(card.get_legendary())
+        self.set_tribal(card.get_tribal())
+        self.set_subtype(card.get_subtype())
+        self.set_manacost(card.get_manacost())
+        self.set_power(card.get_power())
+        self.set_toughness(card.get_toughness())
+        self.set_feature(card.get_feature())
+        self.set_ruletext(card.get_ruletext())
+        self.set_flavourtext(card.get_flavourtext())
+        self.set_creator(card.get_creator())
+        self.set_seticon(card.get_seticon())
+        self.set_rarity(card.get_rarity())
+
     def show_card(self):
         print('show card')
 
@@ -302,7 +313,3 @@ class Card:
                "creator: " + self._creator + ", " + \
                "seticon: " + self._seticon + ", " + \
                "rarity: " + self._rarity
-
-               #"id: " + self._card_id + ", " + \
-               #"cubes: " + self._cubes + ", " + \
-               #"feature2: " + self._feature2 + ", "

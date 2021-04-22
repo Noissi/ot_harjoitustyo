@@ -24,18 +24,18 @@ class EditCardView(Window):
         self._right_layout = QFormLayout() 
         self._card_layout  = QGridLayout()
         
-        self._name_line         = QLineEdit()
-        self._subtype_line      = QLineEdit()
-        self._ruletext_line     = QLineEdit()
-        self._flavourtext_line  = QLineEdit()
-        self._creator_line      = QLineEdit()
-        self._legendary_btn     = QRadioButton("Legendary")
-        self._tribal_btn        = QRadioButton("Tribal")
-        self._maintype_combo    = QComboBox()
-        self._power_spinbox     = QSpinBox()
-        self._toughness_spinbox = QSpinBox()
-        self._colour_boxes      = []
-        self._feature_boxes     = []
+        self._name_line           = QLineEdit()
+        self._subtype_line        = QLineEdit()
+        self._ruletext_textbox    = QTextEdit()
+        self._flavourtext_textbox = QTextEdit()
+        self._creator_line        = QLineEdit()
+        self._legendary_btn       = QRadioButton("Legendary")
+        self._tribal_btn          = QRadioButton("Tribal")
+        self._maintype_combo      = QComboBox()
+        self._power_spinbox       = QSpinBox()
+        self._toughness_spinbox   = QSpinBox()
+        self._colour_boxes        = []
+        self._feature_boxes       = []
         
         self._initialise_feature()
         self._initialise()
@@ -187,14 +187,14 @@ class EditCardView(Window):
         self._change_feature_box_state()
         
         # Rule text
-        self._ruletext_line.setText(self._card.get_ruletext())
-        self._right_layout.addRow("Sääntöteksti:", self._ruletext_line)
-        self._ruletext_line.textChanged[str].connect(self._change_ruletext)
+        self._ruletext_textbox.setText(self._card.get_ruletext())
+        self._right_layout.addRow("Sääntöteksti:", self._ruletext_textbox)
+        self._ruletext_textbox.textChanged.connect(self._change_ruletext)
         
         # Flavour text
-        self._flavourtext_line.setText(self._card.get_flavourtext())
-        self._right_layout.addRow("Tarina:", self._flavourtext_line)
-        self._flavourtext_line.textChanged[str].connect(self._change_flavourtext)
+        self._flavourtext_textbox.setText(self._card.get_flavourtext())
+        self._right_layout.addRow("Tarina:", self._flavourtext_textbox)
+        self._flavourtext_textbox.textChanged.connect(self._change_flavourtext)
         
         # Creature
         self._creator_line.setText(self._card.get_creator())
@@ -240,14 +240,38 @@ class EditCardView(Window):
         kks.update_card(self._card, text, "feature", add)
         self._update_layout()
     def _change_ruletext(self):
-        kks.update_card(self._card, self._ruletext_line.text(), "ruletext")
+        remaining_text = self._cut_boxtext(self._ruletext_textbox.toPlainText(), True)
+        kks.update_card(self._card, remaining_text, "ruletext")
     def _change_flavourtext(self):
-        kks.update_card(self._card, self._flavourtext_line.text(), "flavourtext")
+        remaining_text = self._cut_boxtext(self._flavourtext_textbox.toPlainText())
+        kks.update_card(self._card, remaining_text, "flavourtext")
     def _change_creator(self):
         kks.update_card(self._card, self._creator_line.text(), "creator")
     def _change_seticon(self):
         kks.update_card(self._card, self._seticon_line.text(), "seticon")
-    
+
+    def _cut_boxtext(self, text, rule=False):
+        limit = 120
+        remaining_text = text
+        rtext = self._ruletext_textbox.toPlainText()
+        ftext = self._flavourtext_textbox.toPlainText()
+        if len(rtext) + len(ftext) > limit:
+            i = limit - len(rtext)
+            if rule:
+                i = limit - len(ftext)
+            remaining_text = text[0:i]
+        if rule:
+            self._ruletext_textbox.setText(remaining_text)
+            cursor = self._ruletext_textbox.textCursor()
+            cursor.movePosition(QTextCursor.End)
+            self._ruletext_textbox.setTextCursor(cursor)
+        else:
+            self._flavourtext_textbox.setText(remaining_text)
+            cursor = self._flavourtext_textbox.textCursor()
+            cursor.movePosition(QTextCursor.End)
+            self._flavourtext_textbox.setTextCursor(cursor)
+        return remaining_text
+
     # Colour
     def _set_colour_boxes(self):
         for colour_box in self._colour_boxes:            

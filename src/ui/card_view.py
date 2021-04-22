@@ -96,9 +96,13 @@ class CardView(Window):
         self._left_layout.addRow("Kestävyys:", QLabel(str(self._card.get_toughness_print())))
         
     def _set_rightpanel_layout(self):
-        # Set the right side panel        
-        self._right_layout.addRow("Ominaisuus:", QLabel(self._card.get_feature_print()))
-        self._right_layout.addRow("Sääntöteksti:", QLabel(self._card.get_ruletext()))
+        # Set the right side panel  
+        feature_label = QLabel(self._card.get_feature_print())
+        feature_label.setWordWrap(True)
+        self._right_layout.addRow("Ominaisuus:", feature_label)
+        ruletext_label = QLabel(self._card.get_ruletext())
+        ruletext_label.setWordWrap(True)
+        self._right_layout.addRow("Sääntöteksti:", ruletext_label)
         self._right_layout.addRow("Tarina:", QLabel(self._card.get_flavourtext()))
         self._right_layout.addRow("Tekijä:", QLabel(self._card.get_creator()))
         
