@@ -42,7 +42,7 @@ class CubeView(Window):
         
     def _set_collection_layout(self):
         # Collection layout
-        cards = kks.get_cards_in_cube(1)
+        cards = kks.get_cards_in_cube()
         row = 0
         col = 0
         # Print cards in a 6x? grid 

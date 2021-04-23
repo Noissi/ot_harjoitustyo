@@ -21,14 +21,7 @@ class Cube:
         self._cube_id = str(uuid.uuid4())
         self._name = name
         self._users = []
-        self._seticon = None
-
-    ## Set
-    def set_name(self, name):
-        self._name = name
-
-    def set_seticon(self, seticon):
-        self._seticon = seticon
+        self._seticon = ""
 
     ## Get
     def get_id(self):
@@ -49,6 +42,22 @@ class Cube:
             return "Ei käyttäjiä"
         return ', '.join(self._users)
 
+    ## Set
+    def set_id(self, cube_id):
+        self._cube_id = cube_id
+
+    def set_name(self, name):
+        self._name = name
+
+    def set_users(self, users):
+        if isinstance(users, list):
+            self._users = users
+        else:
+            self._users = users.split(",")
+
+    def set_seticon(self, seticon):
+        self._seticon = seticon
+
     ## Add
     def add_user(self, user_id):
         if user_id not in self._users:
@@ -59,8 +68,3 @@ class Cube:
         if user_id is not None:
             if user_id in self._users:
                 self._users.remove(user_id)
-
-    ## Other
-
-    def show_cube(self):
-        print('show cube')

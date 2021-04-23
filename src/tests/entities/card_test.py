@@ -29,7 +29,7 @@ class TestCard(unittest.TestCase):
         self.card.set_manacost("2U")
         self.card.set_power(3)
         self.card.set_toughness(2)
-        self.card.set_feature("Haste,Trample")
+        self.card.set_feature("Haste, Trample")
         self.card.set_ruletext("Party Tutor rule")
         self.card.set_flavourtext("Party")
         self.card.set_creator("Masa")

@@ -416,7 +416,7 @@ class EditCardView(Window):
     # Save card to database and return to card view
     def _save_and_return(self):
         print(self._card)
-        kks.save_to_database(self._card)
+        kks.save_to_database(self._card, "card")
         self._handle_show_card_view()
 
     def _return(self):

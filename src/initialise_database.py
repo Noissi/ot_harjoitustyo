@@ -38,15 +38,15 @@ def create_tables(conn):
                                         flavourtext text,
                                         creator text,
                                         seticon text,
-                                        rarity text
+                                        rarity text,
+                                        cube_id text,
+                                        FOREIGN KEY (cube_id) REFERENCES cubes (id)
                                     ); """
 
     sql_create_cubes_table = """CREATE TABLE IF NOT EXISTS cubes (
                                     id text PRIMARY KEY,
                                     name text NOT NULL,
-                                    users text NOT NULL,
-                                    card_id text NOT NULL,
-                                    FOREIGN KEY (card_id) REFERENCES cards (id)
+                                    users text NOT NULL
                                 );"""
 
     sql_create_users_table = """CREATE TABLE IF NOT EXISTS users (

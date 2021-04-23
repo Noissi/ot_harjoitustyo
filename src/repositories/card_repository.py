@@ -73,8 +73,10 @@ class CardRepository:
         self._connection.commit()
 
     def find_by_cube(self, cube):
+        cube_sql = (cube,);
+        sql = """ SELECT * FROM cards WHERE cube_id = ?; """
         cursor = self._connection.cursor()
-        cursor.execute('SELECT * FROM cards')
+        cursor.execute(sql, cube_sql)
         rows = cursor.fetchall()
         return rows
 

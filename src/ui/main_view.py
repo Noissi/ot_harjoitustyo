@@ -5,6 +5,7 @@ from ui.window import Window
 from entities.card_creature import Creature
 from services.korttikube_service import korttikube_service as kks
 from config import CARD_RATIO
+from entities.cube import Cube
 
 class MainView(Window):
     def __init__(self, handle_show_login_view=None, handle_show_cube_view=None):
@@ -70,7 +71,8 @@ class MainView(Window):
         btn_cube3.setFont(QFont('Times', 30))
         btn_cube3.setStyleSheet("QPushButton{border-image: url("+image+")}"
                                "QPushButton{color: white}")
-        btn_cube3.clicked.connect(self._handle_show_cube_view)
+        cube = Cube("Otakube")
+        btn_cube3.clicked.connect(lambda: self._handle_show_cube_view(cube))
         self._scroll_layout.addWidget(btn_cube3, 1, 2)
 
     def _set_bottom_layout(self):
@@ -80,9 +82,9 @@ class MainView(Window):
         self._bottom_layout.addWidget(btn_logout)
         
     def _create_cube(self):
-        msg = QMessageBox()        
-        msg.setText('Uusi kube luotu')
-        msg.exec_()
+        result_name = QInputDialog.getText(0, "Uusi kube", "Nimi:")
+        cube = kks.create_cube_entity(result_name)
+        kks.save_to_database(cube)
         
     def _initialise(self):        
         

@@ -11,14 +11,14 @@ class LoginView(QWidget):
         self._handle_end = handle_end
         self._username_entry = None
         self._password_entry = None
-        
+
         self.left=10
         self.top=10
         self.width=1500
         self.height=1000
-        
+
         self._initialise()
-        
+
     def check_password(self):
         msg = QMessageBox()
         
@@ -29,7 +29,7 @@ class LoginView(QWidget):
         else:
             msg.setText('Incorrect Password')
             msg.exec_()
-        
+
     def _initialise(self):
     
         self.setGeometry(self.left, self.top, self.width, self.height)

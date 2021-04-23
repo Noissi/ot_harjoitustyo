@@ -43,7 +43,42 @@ class KorttikubeService:
         self._cube_repository = cube_repository
         self._user_repository = user_repository
 
-    def create_card(self, cardname):
+    # GET
+    def get_card(self):
+        return self._card
+
+    def get_cube(self):
+        return self._cube
+
+    def get_user(self):
+        return self._user
+
+    #SET
+    def set_card(self, card):
+        self._card = card
+
+    def set_cube(self, cube):
+        self._cube = cube
+
+    def set_user(self, user):
+        self._user = user
+
+    # ENTER AND EXIT
+    def enter_card(self, card_db):
+        card_entity = self.set_card_entity(card_db)
+        self._card = card_entity
+
+    def exit_card(self):
+        self._card = None
+
+    def enter_cube(self, cube):
+        self._cube = cube
+
+    def exit_cube(self):
+        self._cube = None
+
+    # CREATE
+    def create_card_entity(self, cardname):
         """ Create a new card.
         Args:
             cardname: [String] The name of the card.
@@ -52,12 +87,22 @@ class KorttikubeService:
         """
 
         card = Card(cardname)
-        self._card = card
+        card.add_cube(self._cube.get_id())
+        return card
 
-    def get_card(self):
-        return self._card
+    def create_cube_entity(self, cubename):
+        """ Create a new cube.
+        Args:
+            cubename: [String] The name of the cube.
+        Returns:
+            [Cube] Created Cube entity.
+        """
 
-    def set_card(self, card_row):
+        cube = Cube(cubename)
+        return cube
+
+    # SET
+    def set_card_entity(self, card_row):
         """ Create a Card entity from given database row.
         Args:
             card_row: [List Tuple] List of tuples including the parameters
@@ -108,13 +153,6 @@ class KorttikubeService:
 
         return card
 
-    def enter_card(self, card_db):
-        card_entity = self.set_card(card_db)
-        self._card = card_entity
-
-    def exit_card(self):
-        self._card = None
-
     def delete_card(self, card):
         """ Delete an existing card.
         Args:
@@ -122,15 +160,6 @@ class KorttikubeService:
         """
 
         print('delete card')
-
-    def save_to_database(self, card):
-        """ Save card to database.
-        Args:
-            card: [Card] The Card entity to be saved to the database.
-        """
-
-        self._card = card
-        self._card_repository.save(card)
 
     def change_card_type(self, card, maintype):
         """ Modifies card's maintype. (Creates a new Card entity that
@@ -210,7 +239,7 @@ class KorttikubeService:
         elif prop_name == 'creator':
             card.set_creator(prop)
 
-    def get_cards_in_cube(self, cube_id):
+    def get_cards_in_cube(self):
         """ Returns list of cards in cube.
         Args:
             cube_id: [String] Cude entity id.
@@ -218,9 +247,7 @@ class KorttikubeService:
             [List Card] List of Card entities in cube.
         """
 
-        if not cube_id:
-            return []
-
+        cube_id = self._cube.get_id()
         cards = self._card_repository.find_by_cube(cube_id)
 
         return list(cards)
@@ -234,7 +261,7 @@ class KorttikubeService:
         """
 
         if isinstance(card, tuple):
-            card = self.set_card(card)
+            card = self.set_card_entity(card)
 
         if card.get_card_colour() == "Punainen":
             card_frame_image = "img/redcard.png"
@@ -251,25 +278,6 @@ class KorttikubeService:
         elif card.get_card_colour() == "Kulta":
             card_frame_image = "img/goldcard.png"
         return card_frame_image
-
-    def create_cube(self, name):
-        """ Creates a new cube.
-        Args:
-            name: [String] Name of the cser.
-        Returns:
-            [Cube] Created Cube entity.
-        """
-        cube_entity = Cube(name, self._user)
-        cube = self._cube_repository.create(cube_entity)
-        self._cube = cube
-
-        return cube
-
-    def enter_cube(self, cube):
-        self._cube = cube
-
-    def exit_cube(self):
-        self._cube = None
 
     def get_users_in_cube(self, cube_id):
         """ Returns list of users in cube.
@@ -352,5 +360,22 @@ class KorttikubeService:
         """
 
         self._user = None
+
+    def save_to_database(self, obj, obj_type):
+        """ Save card to database.
+        Args:
+            obj: [Card/Cube/User] Entity to be saved to the database.
+            obj_type: [String] Object type ("card", "cube" or "user")
+        """
+
+        if obj_type == "card":
+            self._card = obj
+            self._card_repository.save(obj)
+        elif obj_type == "cube":
+            self._cube = obj
+            self._cube_repository.save(obj)
+        elif obj_type == "user":
+            self._user = obj
+            self._user_repository.save(obj)
 
 korttikube_service = KorttikubeService()
