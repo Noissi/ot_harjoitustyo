@@ -30,8 +30,7 @@ class CreateUserView(QWidget):
             msg.exec_()
         else:
             msg.setText('Uusi käyttäjä luotu')
-            msg.exec_()            
-            app.quit()
+            msg.exec_()
 
     def _initialise(self):
         self.setGeometry(self.left, self.top, self.width, self.height)

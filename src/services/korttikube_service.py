@@ -115,7 +115,6 @@ class KorttikubeService:
 
         card = Card(cardname)
         card.add_cube(self._cube.get_id())
-        print(card)
         return card
 
     def create_cube_entity(self, cubename):
@@ -127,6 +126,7 @@ class KorttikubeService:
         """
 
         cube = Cube(cubename)
+        cube.add_user(self._user.get_username())
         return cube
 
     def create_user(self, username, password):
@@ -218,7 +218,7 @@ class KorttikubeService:
         cube.set_users(cube_row[2])
         cube.set_image(cube_row[3])
         cube.set_seticon(cube_row[4])
-        
+
         return cube
 
     def set_user_entity(self, user_row):
@@ -235,7 +235,7 @@ class KorttikubeService:
         user = User(username, password)
 
         #user.set_id(cube_row[0])
-        
+
         return user
 
     # DELETE
@@ -245,9 +245,9 @@ class KorttikubeService:
             card: [Card] The Card entity to be deleted from the database.
         """
 
-        print('delete card')
+        self._card_repository.delete_card(card.get_id())
 
-    #OTHER
+    # OTHER
     def change_card_type(self, card, maintype):
         """ Modifies card's maintype. (Creates a new Card entity that
             copies the properties from the old one.)
@@ -349,7 +349,8 @@ class KorttikubeService:
         """
 
         username = self._user.get_username()
-        return self._cube_repository.find_all()
+        cubes = list(self._cube_repository.find_by_user(username))
+        return cubes
 
     def set_card_frame(self, card):
         """ Selects and returns corresponding card frame image.
@@ -378,7 +379,7 @@ class KorttikubeService:
             card_frame_image = "img/goldcard.png"
         return card_frame_image
 
-    def get_users_in_cube(self, cube_id):
+    def get_users_in_cube(self):
         """ Returns list of users in cube.
         Args:
             cube_id: [String] Cude entity id.

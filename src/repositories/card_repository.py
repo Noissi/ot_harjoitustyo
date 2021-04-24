@@ -13,7 +13,7 @@ class CardRepository:
                     card.get_subtype_print(), card.get_colour_print(), card.get_manacost(), \
                     card.get_power(), card.get_toughness(), card.get_feature_print(), \
                     card.get_ruletext(), card.get_flavourtext(), card.get_creator(), \
-                    card.get_seticon(), card.get_rarity());
+                    card.get_seticon(), card.get_rarity())
 
         sql = ''' INSERT INTO cards(id, name, cube_id, image, maintype, legendary,
                   tribal, subtype, colour, manacost, power, toughness, feature,
@@ -25,12 +25,12 @@ class CardRepository:
         self._connection.commit()
 
     def update(self, card):
-        card_sql = (card.get_name(), card.get_cubes_print(), card.get_image(), card.get_maintype(), \
-                    card.get_legendary(), card.get_tribal(), card.get_subtype_print(), \
-                    card.get_colour_print(), card.get_manacost(), card.get_power(), \
-                    card.get_toughness(), card.get_feature_print(), card.get_ruletext(), \
-                    card.get_flavourtext(), card.get_creator(), card.get_seticon(), \
-                    card.get_rarity(), card.get_id());
+        card_sql = (card.get_name(), card.get_cubes_print(), card.get_image(), \
+                    card.get_maintype(), card.get_legendary(), card.get_tribal(), \
+                    card.get_subtype_print(), card.get_colour_print(), card.get_manacost(), \
+                    card.get_power(), card.get_toughness(), card.get_feature_print(), \
+                    card.get_ruletext(), card.get_flavourtext(), card.get_creator(), \
+                    card.get_seticon(), card.get_rarity(), card.get_id())
 
         sql = ''' UPDATE cards
                   SET name = ?,
@@ -57,7 +57,7 @@ class CardRepository:
         self._connection.commit()
 
     def save(self, card):
-        card_sql = (card.get_id(),);
+        card_sql = (card.get_id(),)
         sql = """ SELECT 1 FROM cards WHERE id = ?; """
         cursor = self._connection.cursor()
         cursor.execute(sql, card_sql)
@@ -66,13 +66,15 @@ class CardRepository:
         else:
             self.update(card)
 
-    def delete(self, card):
+    def delete(self, card_id):
+        card_sql = (card_id,)
+        sql = """ SELECT * FROM cards WHERE cube_id = ?; """
         cursor = self._connection.cursor()
-        cursor.execute('DELETE card FROM cards') # Fix this
+        cursor.execute(sql, card_sql)
         self._connection.commit()
 
     def find_by_cube(self, cube_id):
-        cube_sql = (cube_id,);
+        cube_sql = (cube_id,)
         sql = """ SELECT * FROM cards WHERE cube_id = ?; """
         cursor = self._connection.cursor()
         cursor.execute(sql, cube_sql)

@@ -25,7 +25,7 @@ class Card:
         self._feature = []
         self._feature2 = []
         self._ruletext = ""
-        self._flavourtext = ""        
+        self._flavourtext = ""
         self._image = ""
         self._seticon = ""
         self._rarity = ""

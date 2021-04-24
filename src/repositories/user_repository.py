@@ -9,7 +9,7 @@ class UserRepository:
         Create a new user into the users table.
         """
 
-        user_sql = (user.get_username(), user.get_password());
+        user_sql = (user.get_username(), user.get_password())
         print(user.get_username(), user.get_password())
 
         sql = ''' INSERT INTO users(username, password)
@@ -19,15 +19,18 @@ class UserRepository:
         cursor.execute(sql, user_sql)
         self._connection.commit()
 
-    def delete(self, user):
+    def delete(self, username):
+        user_sql = (username,)
+        sql = """DELETE FROM users WHERE username = ? """
         cursor = self._connection.cursor()
-        cursor.execute('DELETE FROM users') # Fix this
+        cursor.execute(sql, user_sql)
         self._connection.commit()
 
     def find_all(self):
         cursor = self._connection.cursor()
         cursor.execute('SELECT * FROM users')
         row = cursor.fetchall()
+        return row
 
     def find_by_username(self, username):
         username_sql = (username,)

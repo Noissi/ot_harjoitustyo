@@ -64,15 +64,10 @@ class LoginView(QWidget):
         layout.addWidget(button_create, 3, 0, 1, 2)
         layout.setRowMinimumHeight(2, 10)
 
-        button_skip2 = QPushButton('Skip')
-        button_skip2.clicked.connect(self._handle_show_main_view)
-        layout.addWidget(button_skip2, 4, 0, 1, 2)
-        layout.setRowMinimumHeight(1, 10)
-
         # Draw close button
         button_close = QPushButton('Lopeta')
         button_close.clicked.connect(self._handle_end)
-        layout.addWidget(button_close, 5, 0, 1, 2)
+        layout.addWidget(button_close, 4, 0, 1, 2)
         layout.setRowMinimumHeight(1, 10)
 
         layout.setContentsMargins(600,400,600,400)
