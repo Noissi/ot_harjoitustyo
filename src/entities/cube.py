@@ -19,8 +19,9 @@ class Cube:
         """
 
         self._cube_id = str(uuid.uuid4())
-        self._name = name
-        self._users = []
+        self._name    = name
+        self._users   = []
+        self._image   = ""
         self._seticon = ""
 
     ## Get
@@ -32,6 +33,9 @@ class Cube:
 
     def get_users(self):
         return self._users
+
+    def get_image(self):
+        return self._image
 
     def get_seticon(self):
         return self._seticon
@@ -54,6 +58,9 @@ class Cube:
             self._users = users
         else:
             self._users = users.split(",")
+
+    def set_image(self, image):
+        self._image = image
 
     def set_seticon(self, seticon):
         self._seticon = seticon

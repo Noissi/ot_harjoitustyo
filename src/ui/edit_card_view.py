@@ -225,7 +225,7 @@ class EditCardView(Window):
 
         self._set_middle_layout()
         #self._set_bottom_layout()
-        self._set_layouts()        
+        self._set_layouts()
 
         self.setLayout(self._outer_layout)
 
@@ -284,15 +284,19 @@ class EditCardView(Window):
                 i = limit - len(ftext)
             remaining_text = text[0:i]
         if rule:
+            self._ruletext_textbox.blockSignals(True)
             self._ruletext_textbox.setText(remaining_text)
             cursor = self._ruletext_textbox.textCursor()
             cursor.movePosition(QTextCursor.End)
             self._ruletext_textbox.setTextCursor(cursor)
+            self._ruletext_textbox.blockSignals(False)
         else:
+            self._flavourtext_textbox.blockSignals(True)
             self._flavourtext_textbox.setText(remaining_text)
             cursor = self._flavourtext_textbox.textCursor()
             cursor.movePosition(QTextCursor.End)
             self._flavourtext_textbox.setTextCursor(cursor)
+            self._flavourtext_textbox.blockSignals(False)
         return remaining_text
 
     # Colour

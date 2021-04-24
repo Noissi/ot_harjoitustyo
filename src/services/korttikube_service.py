@@ -71,11 +71,38 @@ class KorttikubeService:
     def exit_card(self):
         self._card = None
 
-    def enter_cube(self, cube):
-        self._cube = cube
+    def enter_cube(self, cube_db):
+        cube_entity = self.set_cube_entity(cube_db)
+        self._cube = cube_entity
 
     def exit_cube(self):
         self._cube = None
+
+    # LOGIN AND LOGOUT
+    def login(self, username, password):
+        """ Log in user.
+        Args:
+            username: [String] Username of the user.
+            password: [String] Password of the user.
+        Returns:
+            [User] User entity that is logged in.
+        Raises:
+            InvalidCredentialsError:
+                Invalid username and/or password.
+        """
+
+        user_list = self._user_repository.find_by_username(username)
+
+        if not user_list or user_list[0][1] != password:
+            return False
+
+        user = self.set_user_entity(user_list[0])
+        self._user = user
+
+        return user
+
+    def logout(self):
+        self._user = None
 
     # CREATE
     def create_card_entity(self, cardname):
@@ -88,6 +115,7 @@ class KorttikubeService:
 
         card = Card(cardname)
         card.add_cube(self._cube.get_id())
+        print(card)
         return card
 
     def create_cube_entity(self, cubename):
@@ -101,9 +129,30 @@ class KorttikubeService:
         cube = Cube(cubename)
         return cube
 
-    # SET
+    def create_user(self, username, password):
+        """ Creates a new user.
+        Args:
+            username: [String] Username of the user.
+            password: [String] Password of the user.
+        Returns:
+            [User] Created User entity.
+        Raises:
+            UsernameExistsError:
+                Cannot use the selected username. Username already exists.
+        """
+
+        existing_user = self._user_repository.find_by_username(username)
+        if existing_user:
+            return False
+
+        user = User(username, password)
+        self._user_repository.create(user)
+
+        return user
+
+    # SET ENTITIES
     def set_card_entity(self, card_row):
-        """ Create a Card entity from given database row.
+        """ Create a Card entity from the given database row.
         Args:
             card_row: [List Tuple] List of tuples including the parameters
                        of one card in database.
@@ -153,6 +202,43 @@ class KorttikubeService:
 
         return card
 
+    def set_cube_entity(self, cube_row):
+        """ Create a Cube entity from the given database row.
+        Args:
+            cube_row: [List Tuple] List of tuples including the parameters
+                       of one cube in database.
+        Returns:
+            [Cube] Created Cube entity.
+        """
+
+        name = cube_row[1]
+        cube = Cube(name)
+
+        cube.set_id(cube_row[0])
+        cube.set_users(cube_row[2])
+        cube.set_image(cube_row[3])
+        cube.set_seticon(cube_row[4])
+        
+        return cube
+
+    def set_user_entity(self, user_row):
+        """ Create a User entity from the given database row.
+        Args:
+            user_row: [List Tuple] List of tuples including the parameters
+                       of one user in database.
+        Returns:
+            [User] Created User entity.
+        """
+
+        username = user_row[0]
+        password = user_row[1]
+        user = User(username, password)
+
+        #user.set_id(cube_row[0])
+        
+        return user
+
+    # DELETE
     def delete_card(self, card):
         """ Delete an existing card.
         Args:
@@ -161,6 +247,7 @@ class KorttikubeService:
 
         print('delete card')
 
+    #OTHER
     def change_card_type(self, card, maintype):
         """ Modifies card's maintype. (Creates a new Card entity that
             copies the properties from the old one.)
@@ -204,6 +291,8 @@ class KorttikubeService:
 
         if prop_name == 'name':
             card.set_name(prop)
+        elif prop_name == "cubes":
+            card.set_cubes(prop)
         elif prop_name == 'legendary':
             card.set_legendary(prop)
         elif prop_name == 'tribal':
@@ -239,6 +328,7 @@ class KorttikubeService:
         elif prop_name == 'creator':
             card.set_creator(prop)
 
+    # DATABASE SEARCH
     def get_cards_in_cube(self):
         """ Returns list of cards in cube.
         Args:
@@ -251,6 +341,15 @@ class KorttikubeService:
         cards = self._card_repository.find_by_cube(cube_id)
 
         return list(cards)
+
+    def get_cubes_from_user(self):
+        """ Returns list of all cubes from current user.
+        Returns:
+            [List Cube] List of Cube entities.
+        """
+
+        username = self._user.get_username()
+        return self._cube_repository.find_all()
 
     def set_card_frame(self, card):
         """ Selects and returns corresponding card frame image.
@@ -289,35 +388,6 @@ class KorttikubeService:
 
         return self._cube.get_users()
 
-    def get_cubes(self):
-        """ Returns list of all cubes.
-        Returns:
-            [List Cube] List of all Cube entities.
-        """
-
-        return self._cube_repository.find_all()
-
-    def create_user(self, username, password):
-        """ Creates a new user.
-        Args:
-            username: [String] Username of the user.
-            password: [String] Password of the user.
-        Returns:
-            [User] Created User entity.
-        Raises:
-            UsernameExistsError:
-                Cannot use the selected username. Username already exists.
-        """
-
-        existing_user = self._user_repository.find_by_username(username)
-
-        if existing_user:
-            raise UsernameExistsError(f'Käyttäjätunnus on jo käytössä.')
-
-        user = self._user_repository.create(User(username, password))
-
-        return user
-
     def get_current_user(self):
         """ Returns the current user.
         Returns:
@@ -334,35 +404,8 @@ class KorttikubeService:
 
         return self._user_repository.find_all()
 
-    def login(self, username, password):
-        """ Log in user.
-        Args:
-            username: [String] Username of the user.
-            password: [String] Password of the user.
-        Returns:
-            [User] User entity that is logged in.
-        Raises:
-            InvalidCredentialsError:
-                Invalid username and/or password.
-        """
-
-        user = self._user_repository.find_by_username(username)
-
-        if not user or user.password != password:
-            raise InvalidCredentialsError('Invalid username or password')
-
-        self._user = user
-
-        return user
-
-    def logout(self):
-        """ Log out current user.
-        """
-
-        self._user = None
-
     def save_to_database(self, obj, obj_type):
-        """ Save card to database.
+        """ Save an object to the database.
         Args:
             obj: [Card/Cube/User] Entity to be saved to the database.
             obj_type: [String] Object type ("card", "cube" or "user")

@@ -43,6 +43,7 @@ class CubeView(Window):
     def _set_collection_layout(self):
         # Collection layout
         cards = kks.get_cards_in_cube()
+        print(cards)
         row = 0
         col = 0
         # Print cards in a 6x? grid 
@@ -71,7 +72,7 @@ class CubeView(Window):
             
     def _set_bottom_layout(self):
         # Bottom layout
-        btn_back = QPushButton('Takaisin peleihin')
+        btn_back = QPushButton('Takaisin etusivulle')
         btn_back.clicked.connect(self._handle_show_main_view)
         self._bottom_layout.addWidget(btn_back)
         

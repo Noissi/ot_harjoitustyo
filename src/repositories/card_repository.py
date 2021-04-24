@@ -15,7 +15,7 @@ class CardRepository:
                     card.get_ruletext(), card.get_flavourtext(), card.get_creator(), \
                     card.get_seticon(), card.get_rarity());
 
-        sql = ''' INSERT INTO cards(id, name, cubes, image, maintype, legendary,
+        sql = ''' INSERT INTO cards(id, name, cube_id, image, maintype, legendary,
                   tribal, subtype, colour, manacost, power, toughness, feature,
                   ruletext, flavourtext, creator, seticon, rarity)
                   VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); '''
@@ -34,7 +34,7 @@ class CardRepository:
 
         sql = ''' UPDATE cards
                   SET name = ?,
-                      cubes = ?,
+                      cube_id = ?,
                       image = ?,
                       maintype = ?,
                       legendary = ?,
@@ -53,7 +53,6 @@ class CardRepository:
                    WHERE id = ?; '''
 
         cursor = self._connection.cursor()
-        print(card_sql)
         cursor.execute(sql, card_sql)
         self._connection.commit()
 
@@ -72,8 +71,8 @@ class CardRepository:
         cursor.execute('DELETE card FROM cards') # Fix this
         self._connection.commit()
 
-    def find_by_cube(self, cube):
-        cube_sql = (cube,);
+    def find_by_cube(self, cube_id):
+        cube_sql = (cube_id,);
         sql = """ SELECT * FROM cards WHERE cube_id = ?; """
         cursor = self._connection.cursor()
         cursor.execute(sql, cube_sql)

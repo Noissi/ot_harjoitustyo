@@ -9,9 +9,10 @@ class UserRepository:
         Create a new user into the users table.
         """
 
-        user_sql = (user.get_name(), user.get_password());
+        user_sql = (user.get_username(), user.get_password());
+        print(user.get_username(), user.get_password())
 
-        sql = ''' INSERT INTO users(name, password)
+        sql = ''' INSERT INTO users(username, password)
                   VALUES(?,?) '''
 
         cursor = self._connection.cursor()
@@ -27,5 +28,12 @@ class UserRepository:
         cursor = self._connection.cursor()
         cursor.execute('SELECT * FROM users')
         row = cursor.fetchall()
+
+    def find_by_username(self, username):
+        username_sql = (username,)
+        cursor = self._connection.cursor()
+        cursor.execute("""SELECT * FROM users WHERE username = ? """, username_sql)
+        row = cursor.fetchall()
+        return row
 
 user_repository = UserRepository(get_database_connection())

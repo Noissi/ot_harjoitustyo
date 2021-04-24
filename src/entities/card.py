@@ -278,6 +278,7 @@ class Card:
 
     def copy(self, card):
         self.set_id(card.get_id())
+        self.set_cubes(card.get_cubes())
         self.set_colour(card.get_colour())
         self.set_legendary(card.get_legendary())
         self.set_tribal(card.get_tribal())
@@ -298,6 +299,7 @@ class Card:
 
     def __str__(self):
         return "name: " + self._name + ", " + \
+               "cube: " + self.get_cubes_print() + ", " + \
                "maintype: " + self._maintype + ", " + \
                "legendary: " + str(self.get_legendary_print()) + ", " + \
                "tribal: " + str(self.get_tribal_print()) + ", " + \

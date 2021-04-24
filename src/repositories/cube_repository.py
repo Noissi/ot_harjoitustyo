@@ -9,13 +9,38 @@ class CubeRepository:
         Create a new cube into the cubes table.
         """
 
-        cube_sql = (cube.get_name(), cube.get_users_print(), cube.get_seticon());
+        cube_sql = (cube.get_id(), cube.get_name(), cube.get_users_print(), cube.get_image(), cube.get_seticon());
 
-        sql = ''' INSERT INTO cubes(name, users, seticon, users)
-              VALUES(?,?,?,?) '''
-        cur = conn.cursor()
-        cur.execute(sql, cube_sql)
-        conn.commit()
+        sql = ''' INSERT INTO cubes(id, name, users, image, seticon)
+                  VALUES(?,?,?,?,?); '''
+
+        cursor = self._connection.cursor()
+        cursor.execute(sql, cube_sql)
+        self._connection.commit()
+
+    def update(self, cube):
+        cube_sql = (cube.get_name(), cube.get_users_print(), cube.get_image(), cube.get_seticon(), cube.get_id());
+
+        sql = ''' UPDATE cubes
+                  SET name = ?,
+                      users = ?,
+                      image = ?,
+                      seticon = ?
+                   WHERE id = ?; '''
+
+        cursor = self._connection.cursor()
+        cursor.execute(sql, cube_sql)
+        self._connection.commit()
+
+    def save(self, cube):
+        cube_sql = (cube.get_id(),);
+        sql = """ SELECT 1 FROM cubes WHERE id = ?; """
+        cursor = self._connection.cursor()
+        cursor.execute(sql, cube_sql)
+        if cursor.fetchone() is None:
+            self.create(cube)
+        else:
+            self.update(cube)
 
     def delete(self, cube):
         cursor = self._connection.cursor()
@@ -26,5 +51,6 @@ class CubeRepository:
         cursor = self._connection.cursor()
         cursor.execute('SELECT * FROM cubes')
         rows = cursor.fetchall()
+        return rows
 
 cube_repository = CubeRepository(get_database_connection())

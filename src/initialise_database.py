@@ -23,7 +23,7 @@ def create_tables(conn):
     sql_create_cards_table = """ CREATE TABLE IF NOT EXISTS cards (
                                         id text PRIMARY KEY,
                                         name text NOT NULL,
-                                        cubes text,
+                                        cube_id text,
                                         image text,
                                         maintype text,
                                         legendary boolean,
@@ -39,19 +39,19 @@ def create_tables(conn):
                                         creator text,
                                         seticon text,
                                         rarity text,
-                                        cube_id text,
                                         FOREIGN KEY (cube_id) REFERENCES cubes (id)
                                     ); """
 
     sql_create_cubes_table = """CREATE TABLE IF NOT EXISTS cubes (
                                     id text PRIMARY KEY,
                                     name text NOT NULL,
-                                    users text NOT NULL
+                                    users text,
+                                    image text,
+                                    seticon text
                                 );"""
 
     sql_create_users_table = """CREATE TABLE IF NOT EXISTS users (
-                                    id text PRIMARY KEY,
-                                    username text NOT NULL,
+                                    username text PRIMARY KEY,
                                     password text NOT NULL,
                                     cube_id text,
                                     FOREIGN KEY (cube_id) REFERENCES cubes (id)

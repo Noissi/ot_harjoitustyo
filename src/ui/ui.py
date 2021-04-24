@@ -59,6 +59,9 @@ class UI(QWidget):
         
     def _show_main_view(self):
         kks.exit_cube()
+        if not kks.get_user():
+            user = kks.create_user("peruna", "salasana")
+            kks.set_user(user)
         self._main_view = MainView(self._show_login_view, self._show_cube_view)
         self.current_view = self._main_view
         self._stacked_layout.addWidget(self._main_view)
