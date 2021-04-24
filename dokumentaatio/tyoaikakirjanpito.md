@@ -15,4 +15,5 @@
 | 20.4  | 4    | Kansiorakenteen muotoilu   |
 | 22.4  | 1    | Korttimuokkauksen parannus |
 | 23.4  | 4    | Tietokantojen päivitys     |
+| 24.4  | 2    | Käytettävyys valmis        |
 | yht   | 45   | | 
