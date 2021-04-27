@@ -1,5 +1,9 @@
 # Ohjelmistotekniikka, harjoitustyö
 
+#### KorttiKube
+
+Sovelluksen avulla käyttäjät luovat omia versioita MTG-kortteista. Sovelluksessa voi luoda useita eri korttikokoelmia, jotka voivat olla yksityisiä tai jaettu muiden käyttäjien kanssa. Sovellus on tarkoitettu helpottamaan korttien luontia ja selailua sekä korttikokoelmien hallintaa. Itsetehdyt kortit ovat oivia etenkin cube-muotoiseen pelaamiseen. Lisätietoa [MTG-korteista](https://mtg.fandom.com/wiki/Card_type) ja [cubesta](https://mtg.fandom.com/wiki/Cube_Draft) englanniksi.
+
 ### Dokumentaatio
 
 * [Käyttöohje](https://github.com/Noissi/ot_harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)
