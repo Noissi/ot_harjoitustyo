@@ -160,8 +160,7 @@ class Card:
         self._flavourtext = flavourtext
 
     def set_image(self, image):
-        if image is not None:
-            self._image = image
+        self._image = image
 
     def set_seticon(self, seticon):
         self._seticon = seticon
@@ -201,8 +200,6 @@ class Card:
         return "Ei"
 
     def get_subtype_print(self):
-        if self._subtype is None:
-            return ""
         return ' '.join(self._subtype)
 
     def get_power_print(self):
@@ -222,8 +219,6 @@ class Card:
 
     ## Get list
     def get_subtype_list(self):
-        if self._subtype is None:
-            return []
         return self._subtype
 
     def get_feature_list(self):
@@ -232,8 +227,6 @@ class Card:
         return self._feature
 
     def get_feature2_list(self):
-        if self._feature2 is None:
-            return []
         return self._feature2
 
     ## Add
@@ -293,9 +286,6 @@ class Card:
         self.set_seticon(card.get_seticon())
         self.set_rarity(card.get_rarity())
         self.set_creator(card.get_creator())
-
-    def show_card(self):
-        print('show card')
 
     def __str__(self):
         return "name: " + self._name + ", " + \

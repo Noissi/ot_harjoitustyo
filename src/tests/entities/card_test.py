@@ -20,7 +20,6 @@ class TestCard(unittest.TestCase):
         self.card.set_id("1234567")
         self.card.set_name("Party Tutor")
         self.card.set_cubes(["123", "234"])
-        self.card.set_image("img/partytutor")
         self.card.set_maintype("Creature")
         self.card.set_legendary(False)
         self.card.set_tribal(True)
@@ -32,6 +31,7 @@ class TestCard(unittest.TestCase):
         self.card.set_feature("Haste, Trample")
         self.card.set_ruletext("Party Tutor rule")
         self.card.set_flavourtext("Party")
+        self.card.set_image("img/partytutor")
         self.card.set_creator("Masa")
         self.card.set_seticon("img/seticon1")
         self.card.set_rarity("Common")
@@ -41,18 +41,24 @@ class TestCard(unittest.TestCase):
         self.assertEqual(self.card.get_id(), "1234567")
         self.assertEqual(self.card.get_name(), "Party Tutor")
         self.assertEqual(self.card.get_cubes(), ["123", "234"])
-        self.assertEqual(self.card.get_image(), "img/partytutor")
         self.assertEqual(self.card.get_maintype(), "Creature")
+        self.assertEqual(self.card.get_legendary(), False)
+        self.card.set_legendary(None)
         self.assertEqual(self.card.get_legendary(), False)
         self.assertEqual(self.card.get_tribal(), True)
         self.assertEqual(self.card.get_subtype(), ["Teekkari", "ISO"])
+        self.card.set_subtype(None)
+        self.assertEqual(self.card.get_subtype(), ["Teekkari", "ISO"])
         self.assertEqual(self.card.get_colour(), ["Vihreä"])
+        self.card.set_colour("Väritön")
+        self.assertEqual(self.card.get_colour(), [])
         self.assertEqual(self.card.get_manacost(), "2U")
         self.assertEqual(self.card.get_power(), 3)
         self.assertEqual(self.card.get_toughness(), 2)
         self.assertEqual(self.card.get_feature(), ["Haste", "Trample"])
         self.assertEqual(self.card.get_ruletext(), "Party Tutor rule")
         self.assertEqual(self.card.get_flavourtext(), "Party")
+        self.assertEqual(self.card.get_image(), "img/partytutor")
         self.assertEqual(self.card.get_creator(), "Masa")
         self.assertEqual(self.card.get_seticon(), "img/seticon1")
         self.assertEqual(self.card.get_rarity(), "Common")
@@ -84,7 +90,7 @@ class TestCard(unittest.TestCase):
         self.assertEqual(self.card.get_subtype_print(), "Beast Bird")
         self.card.set_subtype("Bird")
         self.assertEqual(self.card.get_subtype_print(), "Bird")
-        
+
     def test_get_subtype_list(self):
         self.assertEqual(self.card.get_subtype_list(), [])
         self.card.set_subtype("Beast Bird")
@@ -229,7 +235,7 @@ class TestCard(unittest.TestCase):
         self.assertEqual(self.card.get_feature_list(), ["Flying", "Trample"])
         
     def test_get_feature2_list(self):
-        self.assertEqual(self.card.get_feature2_list(), [])        
+        self.assertEqual(self.card.get_feature2_list(), [])
         
     def test_show_card(self):
         self.set_card()
@@ -306,11 +312,15 @@ class TestCard(unittest.TestCase):
         self.assertEqual(k.get_legendary(), False)
         self.assertEqual(k.get_tribal(), True)
         self.assertEqual(k.get_subtype(), ["Teekkari", "ISO"])
+        k.set_subtype(None)
+        self.assertEqual(k.get_subtype(), ["Teekkari", "ISO"])
         self.assertEqual(k.get_colour(), ["Vihreä"])
         self.assertEqual(k.get_manacost(), "2U")
         self.assertEqual(k.get_power(), None)
         self.assertEqual(k.get_toughness(), None)
         self.assertEqual(k.get_feature(), [])
+        k.set_feature(["Haste", "Flash"])
+        self.assertEqual(k.get_feature(), ["Flash"])
         self.assertEqual(k.get_feature2(), ["Hexproof", "Indestructible", "Flash"])
         self.assertEqual(k.get_ruletext(), "Party Tutor rule")
         self.assertEqual(k.get_flavourtext(), "Party")
@@ -382,7 +392,7 @@ class TestCard(unittest.TestCase):
         self.assertEqual(k.get_id(), "1234567")
         self.assertEqual(k.get_name(), "Party Tutor")
         self.assertEqual(k.get_image(), "img/partytutor")
-        self.assertEqual(k.get_maintype(), "Artifact")
+        self.assertEqual(k.get_maintype(), "Artifact Creature")
         self.assertEqual(k.get_legendary(), False)
         self.assertEqual(k.get_tribal(), None)
         self.assertEqual(k.get_subtype(), ["Teekkari", "ISO"])
@@ -399,7 +409,7 @@ class TestCard(unittest.TestCase):
         self.assertEqual(k.get_rarity(), "Common")
         
     # Enchantment
-    def test_copy_artifact_creature(self):
+    def test_copy_enchantment(self):
         self.set_card()
         k = Enchantment(self.card.get_name())
         k.copy(self.card)
@@ -423,7 +433,7 @@ class TestCard(unittest.TestCase):
         self.assertEqual(k.get_rarity(), "Common")
         
     # Enchantment creature
-    def test_copy_artifact_creature(self):
+    def test_copy_enchantment_creature(self):
         self.set_card()
         k = EnchantmentCreature(self.card.get_name())
         k.copy(self.card)
@@ -447,7 +457,7 @@ class TestCard(unittest.TestCase):
         self.assertEqual(k.get_rarity(), "Common")
         
     # Instant
-    def test_copy_artifact_creature(self):
+    def test_copy_instant(self):
         self.set_card()
         k = Instant(self.card.get_name())
         k.copy(self.card)
@@ -469,9 +479,12 @@ class TestCard(unittest.TestCase):
         self.assertEqual(k.get_creator(), "Masa")
         self.assertEqual(k.get_seticon(), "img/seticon1")
         self.assertEqual(k.get_rarity(), "Common")
-        
+        self.assertEqual(k.get_feature_print(), "")
+        k.remove_feature("Haste")
+        self.assertEqual(k.get_feature_list(), [])
+
     # Land
-    def test_copy_artifact_creature(self):
+    def test_copy_land(self):
         self.set_card()
         k = Land(self.card.get_name())
         k.copy(self.card)
@@ -495,7 +508,7 @@ class TestCard(unittest.TestCase):
         self.assertEqual(k.get_rarity(), "Common")
         
     # Planeswalker
-    def test_copy_artifact_creature(self):
+    def test_copy_planeswalker(self):
         self.set_card()
         k = Planeswalker(self.card.get_name())
         k.copy(self.card)
@@ -519,7 +532,7 @@ class TestCard(unittest.TestCase):
         self.assertEqual(k.get_rarity(), "Common")
         
     # Sorcery
-    def test_copy_artifact_creature(self):
+    def test_copy_sorcery(self):
         self.set_card()
         k = Sorcery(self.card.get_name())
         k.copy(self.card)
