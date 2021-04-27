@@ -27,5 +27,6 @@ Näkymien näyttämsestä vastaa UI-luokka.
 
 ### Kortin luonti
 
+![Kortin_luonti](./kuvat/sekvenssikaavio_uusikortti.png)
 
 
