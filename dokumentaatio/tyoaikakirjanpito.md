@@ -16,4 +16,6 @@
 | 22.4  | 1    | Korttimuokkauksen parannus |
 | 23.4  | 4    | Tietokantojen päivitys     |
 | 24.4  | 2    | Peruskäytettävyys valmis   |
-| yht   | 47   | | 
+| 29.4  | 3    | Lisää testejä              |
+| 1.5   | 3    | Kortit piirtyy             |
+| yht   | 53   | | 
