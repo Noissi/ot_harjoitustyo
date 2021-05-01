@@ -1,16 +1,22 @@
 import sys
+import os
 from PySide6.QtWidgets import QApplication
 from initialise_database import initialise_database
 from ui.ui import UI
 
 def main():
-    # Build database if it does not exist
+    # Build the database if it does not exist
     initialise_database()
+
+    # Create the imgcards and imguser folders if they do not exist
+    if not os.path.exists('imgcards'):
+        os.makedirs('imgcards')
+    if not os.path.exists('imguser'):
+        os.makedirs('imguser')
 
     # Create the Qt Application
     app = QApplication(sys.argv)
     app.setApplicationName("KorttiKube")
-    print("index")
 
     ui = UI()
     ui.start()

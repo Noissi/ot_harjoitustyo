@@ -8,48 +8,51 @@ class CardRepository:
         """
         Create a new card into the cards table.
         """
-        card_sql = (card.get_id(), card.get_name(), card.get_cubes_print(), card.get_image(), \
+        card_sql = (card.get_id(), card.get_name(), card.get_cubes_print(),  \
                     card.get_maintype(), card.get_legendary(), card.get_tribal(), \
                     card.get_subtype_print(), card.get_colour_print(), card.get_manacost(), \
-                    card.get_power(), card.get_toughness(), card.get_feature_print(), \
-                    card.get_ruletext(), card.get_flavourtext(), card.get_creator(), \
-                    card.get_seticon(), card.get_rarity())
+                    card.get_feature_print(), card.get_ruletext(), card.get_flavourtext(), \
+                    card.get_power(), card.get_toughness(), card.get_image(), \
+                    card.get_seticon(), card.get_rarity(), card.get_creator(), \
+                    card.get_picture())
 
-        sql = ''' INSERT INTO cards(id, name, cube_id, image, maintype, legendary,
-                  tribal, subtype, colour, manacost, power, toughness, feature,
-                  ruletext, flavourtext, creator, seticon, rarity)
-                  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); '''
+        sql = ''' INSERT INTO cards(id, name, cube_id, maintype, legendary,
+                  tribal, subtype, colour, manacost, feature, ruletext, flavourtext,
+                  power, toughness, image, seticon, rarity, creator, picture)
+                  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?); '''
 
         cursor = self._connection.cursor()
         cursor.execute(sql, card_sql)
         self._connection.commit()
 
     def update(self, card):
-        card_sql = (card.get_name(), card.get_cubes_print(), card.get_image(), \
+        card_sql = (card.get_name(), card.get_cubes_print(),  \
                     card.get_maintype(), card.get_legendary(), card.get_tribal(), \
                     card.get_subtype_print(), card.get_colour_print(), card.get_manacost(), \
-                    card.get_power(), card.get_toughness(), card.get_feature_print(), \
-                    card.get_ruletext(), card.get_flavourtext(), card.get_creator(), \
-                    card.get_seticon(), card.get_rarity(), card.get_id())
+                    card.get_feature_print(), card.get_ruletext(), card.get_flavourtext(), \
+                    card.get_power(), card.get_toughness(), card.get_image(), \
+                    card.get_seticon(), card.get_rarity(), card.get_creator(), card.get_picture(), \
+                    card.get_id())
 
         sql = ''' UPDATE cards
                   SET name = ?,
                       cube_id = ?,
-                      image = ?,
                       maintype = ?,
                       legendary = ?,
                       tribal = ?,
                       subtype = ?,
                       colour = ?,
                       manacost = ?,
-                      power = ?,
-                      toughness = ?,
                       feature = ?,
                       ruletext = ?,
                       flavourtext = ?,
-                      creator = ?,
+                      power = ?,
+                      toughness = ?,
+                      image = ?,
                       seticon = ?,
-                      rarity = ?
+                      rarity = ?,
+                      creator = ?,
+                      picture = ?
                    WHERE id = ?; '''
 
         cursor = self._connection.cursor()
@@ -78,6 +81,14 @@ class CardRepository:
         sql = """ SELECT * FROM cards WHERE cube_id = ?; """
         cursor = self._connection.cursor()
         cursor.execute(sql, cube_sql)
+        rows = cursor.fetchall()
+        return rows
+
+    def find_by_name_that_contains(self, text):
+        text_sql = ('%'+text+'%',)
+        sql = """ SELECT * FROM cards WHERE name LIKE ? COLLATE NOCASE; """
+        cursor = self._connection.cursor()
+        cursor.execute(sql, text_sql)
         rows = cursor.fetchall()
         return rows
 

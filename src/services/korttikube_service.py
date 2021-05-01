@@ -16,6 +16,8 @@ from repositories.user_repository import user_repository as default_user_reposit
 from repositories.cube_repository import cube_repository as default_cube_repository
 from repositories.card_repository import card_repository as default_card_repository
 
+from config import IMAGES_FILE_PATH
+
 class KorttikubeService:
     """ Class responsible for application logic. """
 
@@ -25,7 +27,7 @@ class KorttikubeService:
         cube_repository = default_cube_repository,
         user_repository = default_user_repository
     ):
-        """ Class constructor. Create new application servise.
+        """ Class constructor. Create a new application servise.
         Args:
             card_repository:
                 Optional. CardRepository entity.
@@ -51,6 +53,10 @@ class KorttikubeService:
         return self._cube
 
     def get_user(self):
+        """ Returns the current user.
+        Returns:
+            [User] User entity of the current user.
+        """
         return self._user
 
     #SET
@@ -92,7 +98,6 @@ class KorttikubeService:
         """
 
         user_list = self._user_repository.find_by_username(username)
-
         if not user_list or user_list[0][1] != password:
             return False
 
@@ -161,7 +166,7 @@ class KorttikubeService:
         """
 
         name = card_row[1]
-        maintype = card_row[4]
+        maintype = card_row[3]
         if maintype == "":
             card = Card(name)
         elif maintype == "Creature":
@@ -185,20 +190,21 @@ class KorttikubeService:
 
         card.set_id(card_row[0])
         card.set_cubes(card_row[2])
-        card.set_image(card_row[3])
-        card.set_legendary(card_row[5])
-        card.set_tribal(card_row[6])
-        card.set_subtype(card_row[7])
-        card.set_colour(card_row[8])
-        card.set_manacost(card_row[9])
-        card.set_power(card_row[10])
-        card.set_toughness(card_row[11])
-        card.set_feature(card_row[12])
-        card.set_ruletext(card_row[13])
-        card.set_flavourtext(card_row[14])
-        card.set_creator(card_row[15])
-        card.set_seticon(card_row[16])
-        card.set_rarity(card_row[17])
+        card.set_legendary(card_row[4])
+        card.set_tribal(card_row[5])
+        card.set_subtype(card_row[6])
+        card.set_colour(card_row[7])
+        card.set_manacost(card_row[8])
+        card.set_feature(card_row[9])
+        card.set_ruletext(card_row[10])
+        card.set_flavourtext(card_row[11])
+        card.set_power(card_row[12])
+        card.set_toughness(card_row[13])
+        card.set_image(card_row[14])
+        card.set_seticon(card_row[15])
+        card.set_rarity(card_row[16])
+        card.set_creator(card_row[17])
+        card.set_picture(card_row[18])
 
         return card
 
@@ -237,15 +243,6 @@ class KorttikubeService:
         #user.set_id(cube_row[0])
 
         return user
-
-    # DELETE
-    def delete_card(self, card):
-        """ Delete an existing card.
-        Args:
-            card: [Card] The Card entity to be deleted from the database.
-        """
-
-        self._card_repository.delete_card(card.get_id())
 
     # OTHER
     def change_card_type(self, card, maintype):
@@ -327,6 +324,8 @@ class KorttikubeService:
             card.set_rarity(prop)
         elif prop_name == 'creator':
             card.set_creator(prop)
+        elif prop_name == 'picture':
+            card.set_picture(prop)
 
     # DATABASE SEARCH
     def get_cards_in_cube(self):
@@ -341,6 +340,19 @@ class KorttikubeService:
         cards = self._card_repository.find_by_cube(cube_id)
 
         return list(cards)
+
+    def get_cards_by_name_that_contains(self, text):
+        """ Returns list of cards (in cube) which name includes the given text.
+            Not case sensitive.
+        Args:
+            text: [String] Given search parameter.
+        Returns:
+            [List Card] List of Card entities in cube that match the criteria.
+        """
+
+        cards = self._card_repository.find_by_name_that_contains(text)
+
+        return cards
 
     def get_cubes_from_user(self):
         """ Returns list of all cubes from current user.
@@ -364,19 +376,19 @@ class KorttikubeService:
             card = self.set_card_entity(card)
 
         if card.get_card_colour() == "Punainen":
-            card_frame_image = "img/redcard.png"
+            card_frame_image = IMAGES_FILE_PATH + "redcard.png"
         elif card.get_card_colour() == "Sininen":
-            card_frame_image = "img/bluecard.png"
+            card_frame_image = IMAGES_FILE_PATH + "bluecard.png"
         elif card.get_card_colour() == "Vihreä":
-            card_frame_image = "img/greencard.png"
+            card_frame_image = IMAGES_FILE_PATH + "greencard.png"
         elif card.get_card_colour() == "Valkoinen":
-            card_frame_image = "img/whitecard.png"
+            card_frame_image = IMAGES_FILE_PATH + "whitecard.png"
         elif card.get_card_colour() == "Musta":
-            card_frame_image = "img/blackcard.png"
+            card_frame_image = IMAGES_FILE_PATH + "blackcard.png"
         elif card.get_card_colour() == "Väritön":
-            card_frame_image = "img/colourlesscard.png"
+            card_frame_image = IMAGES_FILE_PATH + "colourlesscard.png"
         elif card.get_card_colour() == "Kulta":
-            card_frame_image = "img/goldcard.png"
+            card_frame_image = IMAGES_FILE_PATH + "goldcard.png"
         return card_frame_image
 
     def get_users_in_cube(self):
@@ -389,14 +401,6 @@ class KorttikubeService:
 
         return self._cube.get_users()
 
-    def get_current_user(self):
-        """ Returns the current user.
-        Returns:
-            [User] User entity of the current user.
-        """
-
-        return self._user
-
     def get_users(self):
         """ Returns list of all users.
         Returns:
@@ -404,6 +408,14 @@ class KorttikubeService:
         """
 
         return self._user_repository.find_all()
+
+    def delete_card(self, card):
+        """ Delete an existing card.
+        Args:
+            card: [Card] The Card entity to be deleted from the database.
+        """
+
+        self._card_repository.delete(card.get_id())
 
     def save_to_database(self, obj, obj_type):
         """ Save an object to the database.

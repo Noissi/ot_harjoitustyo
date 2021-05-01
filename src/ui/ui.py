@@ -83,8 +83,7 @@ class UI(QWidget):
         self.current_view = self._card_view
         self._stacked_layout.addWidget(self._card_view)
         self._stacked_layout.setCurrentWidget(self._card_view)
-        print('card ui')
-        
+
     def _show_edit_card_view(self, new_card=False):
         if not kks.get_card():
             card = kks.create_card_entity("")

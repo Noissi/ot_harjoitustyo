@@ -1,10 +1,12 @@
+import copy
 from PySide6.QtWidgets import *
 from PySide6.QtGui import *
 from PySide6.QtCore import *
 from ui.window import Window
-import copy
 from services.korttikube_service import korttikube_service as kks
 from entities.card_creature import Creature
+from ui.card_image import CardImage
+from config import IMAGES_FILE_PATH, USER_IMAGES_FILE_PATH
 
 class EditCardView(Window):
     def __init__(self, handle_show_cube_view, handle_show_card_view, new_card = False):
@@ -14,7 +16,7 @@ class EditCardView(Window):
         
         self._card = copy.deepcopy(kks.get_card())
         self._new_card = new_card
-        self._card_frame = None
+        self._card_image = None
         
         self._outer_layout  = self.get_outer_layout()
         self._middle_layout = QGridLayout()
@@ -61,8 +63,6 @@ class EditCardView(Window):
         
         self.setLayout(self._outer_layout)
         
-        print('layouts')
-        
         '''
         outer_layout.setColumnStretch(0, 2)
         outer_layout.setColumnStretch(1, 3)
@@ -92,24 +92,11 @@ class EditCardView(Window):
         self._bottom_layout.addWidget(btn_return)
         
     def _set_card_layout(self):
-        self._card_layout = QGridLayout()
         # Draw card frame
-        self._set_card_frame()
-        card_frame_scaled = self._card_frame.scaledToWidth(self.width-1000)
-        card_frame_label = QLabel(alignment=Qt.AlignCenter)
-        card_frame_label.setPixmap(card_frame_scaled)
-        self._card_layout.addWidget(card_frame_label)
-        
-        # Write card name
-        name_label = QLabel()
-        #name_label.setText('<font color="red", font size="4"> Kiljukuikka </font>')
-        name_label.setText(self._card.get_name())
-        name_label.move(500,-700)
-        self._card_layout.addWidget(name_label)        
-        
-        #feature_label = QLabel(''.join(self._card.feature))
-        #feature_label.setStyleSheet('color: white')
-        #self._card_layout.addWidget(feature_label)
+        self._card_layout = QGridLayout()
+        self._card_image = CardImage()
+        self._card_image.set_card(self._card)
+        self._card_layout.addWidget(self._card_image, 0, Qt.AlignCenter)
         
     def _set_leftpanel_layout(self):
         # Draw left side panel
@@ -192,7 +179,7 @@ class EditCardView(Window):
 
         # Image buttons
         image_btn = QPushButton("Lataa kuva")
-        image_btn.clicked.connect(self._getfile)
+        image_btn.clicked.connect(self._change_image)
         self._image_buttons.addWidget(image_btn)
         self._right_layout.addRow("Kuva:", self._image_buttons)
         image_remove_btn = QPushButton("Poista kuva")
@@ -201,7 +188,7 @@ class EditCardView(Window):
 
         # Seticon buttons
         seticon_btn = QPushButton("Lataa tunnus")
-        seticon_btn.clicked.connect(self._getfile)
+        seticon_btn.clicked.connect(self._change_seticon)
         self._seticon_buttons.addWidget(seticon_btn)
         self._right_layout.addRow("Tunnus:", self._seticon_buttons)
         seticon_remove_btn = QPushButton("Poista tunnus")
@@ -265,16 +252,26 @@ class EditCardView(Window):
     def _change_manacost(self):
         kks.update_card(self._card, self._manacost_line.text(), "manacost")
     def _change_image(self):
-        kks.update_card(self._card, self._image_line.text(), "image")
+        fname = QFileDialog.getOpenFileName(self, 'Open file', 
+        				     USER_IMAGES_FILE_PATH, "Image files (*.jpg *.png *.jpeg)")
+        fname = list(fname)[0]
+        fname = fname.split("/")
+        fname = USER_IMAGES_FILE_PATH + fname[-1]
+        kks.update_card(self._card, fname, "image")
     def _change_seticon(self):
-        kks.update_card(self._card, self._seticon_line.text(), "seticon")
+        fname = QFileDialog.getOpenFileName(self, 'Open file', 
+        				     USER_IMAGES_FILE_PATH, "Image files (*.jpg *.png *.jpeg)")
+        fname = list(fname)[0]
+        fname = fname.split("/")
+        fname = USER_IMAGES_FILE_PATH + fname[-1]
+        kks.update_card(self._card, fname, "seticon")
     def _change_rarity(self):
         kks.update_card(self._card, self._rarity_line.text(), "rarity")
     def _change_creator(self):
         kks.update_card(self._card, self._creator_line.text(), "creator")
 
     def _cut_boxtext(self, text, rule=False):
-        limit = 120
+        limit = 200
         remaining_text = text
         rtext = self._ruletext_textbox.toPlainText()
         ftext = self._flavourtext_textbox.toPlainText()
@@ -344,7 +341,6 @@ class EditCardView(Window):
 
     # Legendary
     def _set_legendary_btn(self):
-        print(self._card.get_legendary())
         is_checked =  self._card.get_legendary()
         if is_checked is not None:
             self._legendary_btn.setChecked(is_checked)
@@ -362,14 +358,6 @@ class EditCardView(Window):
     # Seticon
     def _remove_seticon(self):
         print("remove image")
-
-    def _getfile(self):
-        fname = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\',"Image files (*.jpg *.gif)")
-        self.le.setPixmap(QPixmap(fname))
-
-    # Set card frame image
-    def _set_card_frame(self):
-        self._card_frame = QPixmap(kks.set_card_frame(self._card))
 
     # Set checkboxes
     def _check_if_card_has(self, checkbox, cards_list):
@@ -419,7 +407,8 @@ class EditCardView(Window):
 
     # Save card to database and return to card view
     def _save_and_return(self):
-        print(self._card)
+        filename = self._card_image.save_image()
+        kks.update_card(self._card, filename, "picture")
         kks.save_to_database(self._card, "card")
         self._handle_show_card_view()
 
@@ -492,7 +481,7 @@ class EditCardView(Window):
 
     def _initialise(self):        
         # Set background image
-        image = QImage("img/card.jpg")
+        image = QImage(IMAGES_FILE_PATH + "card.jpg")
         image_scaled = image.scaled(QSize(self.width, self.height)) # resize Image to widgets size
         palette = QPalette()
         palette.setBrush(QPalette.Window, QBrush(image_scaled))                        
@@ -510,5 +499,3 @@ class EditCardView(Window):
         self._set_layouts()
 
         self.setLayout(self._outer_layout)
-
-        print('edit card')

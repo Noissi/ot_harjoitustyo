@@ -10,7 +10,6 @@ class UserRepository:
         """
 
         user_sql = (user.get_username(), user.get_password())
-        print(user.get_username(), user.get_password())
 
         sql = ''' INSERT INTO users(username, password)
                   VALUES(?,?) '''
@@ -18,6 +17,9 @@ class UserRepository:
         cursor = self._connection.cursor()
         cursor.execute(sql, user_sql)
         self._connection.commit()
+
+    def save(self, user):
+        self.create(user)
 
     def delete(self, username):
         user_sql = (username,)

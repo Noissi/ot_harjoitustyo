@@ -3,6 +3,7 @@ from PySide6.QtGui import QImage, QPalette, QBrush
 from PySide6.QtCore import QSize, QRect, Qt
 from ui.window import Window
 from services.korttikube_service import korttikube_service as kks
+from config import IMAGES_FILE_PATH
 
 class LoginView(QWidget):
     def __init__(self, handle_show_create_user_view, handle_show_main_view, handle_end):
@@ -34,7 +35,7 @@ class LoginView(QWidget):
         layout = QGridLayout()
 
         # Set background image
-        image = QImage("img/login.jpg")
+        image = QImage(IMAGES_FILE_PATH + "login.jpg")
         image_scaled = image.scaled(QSize(self.width, self.height)) # resize Image to widgets size
         palette = QPalette()
         palette.setBrush(QPalette.Window, QBrush(image_scaled))                        

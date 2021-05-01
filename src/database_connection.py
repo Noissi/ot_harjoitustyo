@@ -2,11 +2,6 @@ import sqlite3
 from sqlite3 import Error
 from config import DATABASE_FILE_PATH
 
-"""
-Create a database connection to the SQLite database specified by DATABASE_FILE_PATH file.
-return: Connection object or None
-"""
-
 connection = None
 print(DATABASE_FILE_PATH)
 try:
@@ -15,4 +10,8 @@ except Error as error:
     print(error)
 
 def get_database_connection():
+    """ Create a database connection to the SQLite database specified by DATABASE_FILE_PATH file.
+    Returns: 
+        Connection object or None
+    """
     return connection

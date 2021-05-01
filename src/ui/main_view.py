@@ -3,9 +3,9 @@ from PySide6.QtGui import *
 from PySide6.QtCore import *
 from ui.window import Window
 from entities.card_creature import Creature
-from services.korttikube_service import korttikube_service as kks
-from config import CARD_RATIO
 from entities.cube import Cube
+from services.korttikube_service import korttikube_service as kks
+from config import CARD_RATIO, IMAGES_FILE_PATH
 
 class MainView(Window):
     def __init__(self, handle_show_login_view=None, handle_show_cube_view=None):
@@ -49,9 +49,9 @@ class MainView(Window):
             btn_cube = QPushButton(cube[1])
             btn_cube.setMinimumSize(200, 200)
             btn_cube.setMaximumSize(200, 200)
-            hover_image = "img/kana.jpeg"
+            hover_image = IMAGES_FILE_PATH + "mri.jpeg"
             btn_cube.setFont(QFont('Times', 20))
-            image = "img/dipoli.jpeg"
+            image = IMAGES_FILE_PATH + "kana.jpeg"
             btn_cube.setStyleSheet("QPushButton{border-image: url("+image+")}"
                                    "QPushButton:hover{url("+hover_image+")}"
                                    "QPushButton{text-align: center}"
@@ -83,7 +83,7 @@ class MainView(Window):
 
     def _initialise(self):
         # Set background image
-        image = QImage("img/mtg_puu.jpg")
+        image = QImage(IMAGES_FILE_PATH + "mtg_puu.jpg")
         image_scaled = image.scaled(QSize(self.width, self.height)) # resize Image to widgets size
         palette = QPalette()
         palette.setBrush(QPalette.Window, QBrush(image_scaled))
