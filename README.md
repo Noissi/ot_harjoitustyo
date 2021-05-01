@@ -19,6 +19,8 @@ Sovelluksen avulla käyttäjät luovat omia versioita MTG-kortteista. Sovellukse
 ### Asennus
 HUOM! Ohjelma vaatii toimiakseen vähintään Ubuntu 20 -käyttöjärjestelmään pohjautuvan käyttöjärjestelmän (esim Cubbli 20) tai vastaavan käyttöjärjestelmän.
 
+Lataa projektin viimeisin [release](https://github.com/Noissi/ot_harjoitustyo/releases): _Assets_ -> _Source code_.
+
 1. Riippuvuuksien asenntaminen
 ```
 poetry install
