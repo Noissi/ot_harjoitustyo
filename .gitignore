@@ -4,8 +4,8 @@ htmlcov
 
 # Folders
 laskarit/
-imgcards/
-imguser/
+imgcards*/
+imguser*/
 .pytest_cache
 
 # Data files

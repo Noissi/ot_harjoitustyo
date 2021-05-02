@@ -27,6 +27,7 @@ class CardImage(QWidget):
     def _set_card_frame(self):
         """ Sets the frame image png-file path belonging to the card (colour).
         """
+        
         self._frame = kks.set_card_frame(self._card)
 
     def paintEvent(self, event):
@@ -83,7 +84,6 @@ class CardImage(QWidget):
 
         # Creator
         painter.drawText(50,670, self._card.get_creator())
-
         painter.end()
 
     def save_image(self):

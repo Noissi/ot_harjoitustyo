@@ -374,7 +374,6 @@ class KorttikubeService:
 
         if isinstance(card, tuple):
             card = self.set_card_entity(card)
-
         if card.get_card_colour() == "Punainen":
             card_frame_image = IMAGES_FILE_PATH + "redcard.png"
         elif card.get_card_colour() == "Sininen":

@@ -205,52 +205,59 @@ class EditCardView(Window):
         self._right_layout.addRow("Tekijä:", self._creator_line)
         self._creator_line.textChanged[str].connect(self._change_creator)
 
-    def _update_layout(self):
+    def _update_card_layout(self):
         self._set_card_layout()
-        #self._set_leftpanel_layout()
-        #self._set_rightpanel_layout()
-
         self._set_middle_layout()
-        #self._set_bottom_layout()
         self._set_layouts()
-
         self.setLayout(self._outer_layout)
 
     # Save to card
     def _change_name(self):
         kks.update_card(self._card, self._name_line.text(), "name")
+        self._update_card_layout()
+    def _change_maintype(self): # Creates a new Card entity
+        self._card = kks.change_card_type(self._card, self._maintype_combo.currentText())        
+        self._disable_edit()
+        self._update_card_layout()
     def _change_legendary(self):
         is_checked = self._legendary_btn.isChecked()
         kks.update_card(self._card, is_checked, "legendary")
+        self._update_card_layout()
     def _change_tribal(self):
         is_checked = self._tribal_btn.isChecked()
         kks.update_card(self._card, is_checked, "tribal")
+        self._update_card_layout()
     def _change_subtype(self):
         kks.update_card(self._card, self._subtype_line.text(), "subtype")
         self._disable_edit()
+        self._update_card_layout()
     def _change_colour(self, colour_box):
         add = colour_box.isChecked()
         text = colour_box.text()
         kks.update_card(self._card, text, "colour", add)
-        self._set_card_frame()             
-        self._update_layout()
+        self._update_card_layout()
     def _change_power(self):
         kks.update_card(self._card, self._power_spinbox.value(), "power")
+        self._update_card_layout()
     def _change_toughness(self):
         kks.update_card(self._card, self._toughness_spinbox.value(), "toughness")
+        self._update_card_layout()
     def _change_feature(self, feature_box):
         add = feature_box.isChecked()
         text = feature_box.text()
         kks.update_card(self._card, text, "feature", add)
-        self._update_layout()
+        self._update_card_layout()
     def _change_ruletext(self):
         remaining_text = self._cut_boxtext(self._ruletext_textbox.toPlainText(), True)
         kks.update_card(self._card, remaining_text, "ruletext")
+        self._update_card_layout()
     def _change_flavourtext(self):
         remaining_text = self._cut_boxtext(self._flavourtext_textbox.toPlainText())
         kks.update_card(self._card, remaining_text, "flavourtext")
+        self._update_card_layout()
     def _change_manacost(self):
         kks.update_card(self._card, self._manacost_line.text(), "manacost")
+        self._update_card_layout()
     def _change_image(self):
         fname = QFileDialog.getOpenFileName(self, 'Open file', 
         				     USER_IMAGES_FILE_PATH, "Image files (*.jpg *.png *.jpeg)")
@@ -258,6 +265,7 @@ class EditCardView(Window):
         fname = fname.split("/")
         fname = USER_IMAGES_FILE_PATH + fname[-1]
         kks.update_card(self._card, fname, "image")
+        self._update_card_layout()
     def _change_seticon(self):
         fname = QFileDialog.getOpenFileName(self, 'Open file', 
         				     USER_IMAGES_FILE_PATH, "Image files (*.jpg *.png *.jpeg)")
@@ -265,10 +273,13 @@ class EditCardView(Window):
         fname = fname.split("/")
         fname = USER_IMAGES_FILE_PATH + fname[-1]
         kks.update_card(self._card, fname, "seticon")
+        self._update_card_layout()
     def _change_rarity(self):
         kks.update_card(self._card, self._rarity_line.text(), "rarity")
+        self._update_card_layout()
     def _change_creator(self):
         kks.update_card(self._card, self._creator_line.text(), "creator")
+        self._update_card_layout()
 
     def _cut_boxtext(self, text, rule=False):
         limit = 200
@@ -333,10 +344,6 @@ class EditCardView(Window):
     def _set_maintype_combo(self):
         index = self._maintype_combo.findText(self._card.get_maintype())  # finds the index of the item wanted
         self._maintype_combo.setCurrentIndex(index)        
-        self._disable_edit()
-
-    def _change_maintype(self): # Returns a new Card entity
-        self._card = kks.change_card_type(self._card, self._maintype_combo.currentText())        
         self._disable_edit()
 
     # Legendary
