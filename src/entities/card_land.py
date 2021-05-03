@@ -1,19 +1,24 @@
 from entities.card import Card
 
 class Land(Card):
-    """Luokka joka kuvaa yksittaista korttia
+    """ Card subclass that represents a single Land card.
 
     Attributes:
-        manacost:
+        _maintype: [String] Card's maintype is Land.
+        _tribal: [None] Land does not have tribal.
+        _feature2: [List String] If the card has a limited set
+                   of features, the available features are listed here.
+        _manacost: [None] Instant has no manacost.
+        _power: [None] Instant has no power.
+        _toughness: [None] Instant has no toughness.
     """
 
     def __init__(self, name):
-        """Luokan konstruktori. Luo uuden kortin.
-
+        """ Class constructor. Creates a new card.
         Args:
-            manacost:
-                ???
+            name: [String] Name of the card.
         """
+
         super().__init__(name)
         self._maintype = "Land"
         self._tribal = None

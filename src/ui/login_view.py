@@ -6,22 +6,41 @@ from services.korttikube_service import korttikube_service as kks
 from config import IMAGES_FILE_PATH
 
 class LoginView(QWidget):
+    """ Class responsible for login ui.
+
+    Attributes:
+        handle_show_create_user_view: A method to open a -create user- ui.
+        handle_show_main_view: A method to open a -main- ui.
+        handle_end: A method to exit the programme.
+    """
+
     def __init__(self, handle_show_create_user_view, handle_show_main_view, handle_end):
+        """ Class constructor. Creates a new login ui.
+        
+        Args:
+	        handle_show_create_user_view: A method to open a -create user- ui.
+            handle_show_main_view: A method to open a -main- ui.
+            handle_end: A method to exit the programme.
+            left, top, width, height: Page geometry values.
+        """
+
         super().__init__()
         self._handle_show_create_user_view = handle_show_create_user_view
         self._handle_show_main_view = handle_show_main_view
         self._handle_end = handle_end
-        self._username_entry = None
-        self._password_entry = None
 
-        self.left=10
-        self.top=10
-        self.width=1500
-        self.height=1000
+        self.left   = 10
+        self.top    = 10
+        self.width  = 1500
+        self.height = 1000
 
         self._initialise()
 
-    def check_password(self):
+    def _check_password(self):
+        """ Checks if the given username and password combo exists. If exist,
+            logs the user in and opens the main view. If not, gives an error message.
+        """
+
         msg = QMessageBox()
         login = kks.login(self.lineEdit_username.text(), self.lineEdit_password.text())
         if login:
@@ -31,6 +50,9 @@ class LoginView(QWidget):
             msg.exec_()
 
     def _initialise(self):
+        """ Draws the login page.
+        """
+
         self.setGeometry(self.left, self.top, self.width, self.height)
         layout = QGridLayout()
 
@@ -56,7 +78,7 @@ class LoginView(QWidget):
         layout.addWidget(self.lineEdit_password, 1, 1)
 
         button_login = QPushButton('Kirjaudu')
-        button_login.clicked.connect(self.check_password)
+        button_login.clicked.connect(self._check_password)
         layout.addWidget(button_login, 2, 0, 1, 2)
         layout.setRowMinimumHeight(2, 10)
 

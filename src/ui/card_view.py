@@ -84,24 +84,38 @@ class CardView(Window):
         self._left_layout.addRow("Subtype:", QLabel(self._card.get_subtype_print()))
         self._left_layout.addRow("Väri:", QLabel(self._card.get_colour_print()))
         self._left_layout.addRow("Hinta:", QLabel(self._card.get_manacost()))
+        
         feature_label = QLabel(self._card.get_feature_print())
         feature_label.setWordWrap(True)
         self._left_layout.addRow("Ominaisuus:", feature_label)
 
     def _set_rightpanel_layout(self):
-        # Set the right side panel
         ruletext_label = QLabel(self._card.get_ruletext())
         ruletext_label.setWordWrap(True)
         self._right_layout.addRow("Sääntöteksti:", ruletext_label)
+        
         flavourtext_label = QLabel(self._card.get_flavourtext())
         flavourtext_label.setWordWrap(True)
         self._right_layout.addRow("Tarina:", flavourtext_label)
+        
         self._right_layout.addRow("Voimakkuus:", QLabel(str(self._card.get_power_print())))
         self._right_layout.addRow("Kestävyys:", QLabel(str(self._card.get_toughness_print())))
-        self._right_layout.addRow("Kuva:", QLabel(self._card.get_image()))
-        self._right_layout.addRow("Tunnus:", QLabel(self._card.get_seticon()))
-        self._right_layout.addRow("Harvinaisuus:", QLabel(self._card.get_rarity()))
-        self._right_layout.addRow("Tekijä:", QLabel(self._card.get_creator()))
+
+        image_label = QLabel(self._card.get_image())
+        image_label.setWordWrap(True)
+        self._right_layout.addRow("Kuva:", image_label)
+
+        seticon_label = QLabel(self._card.get_seticon())
+        seticon_label.setWordWrap(True)
+        self._right_layout.addRow("Tunnus:", seticon_label)
+
+        rarity_label = QLabel(self._card.get_rarity())
+        rarity_label.setWordWrap(True)
+        self._right_layout.addRow("Harvinaisuus:", rarity_label)
+
+        creator_label = QLabel(self._card.get_creator())
+        creator_label.setWordWrap(True)
+        self._right_layout.addRow("Tekijä:", creator_label)
 
     def _initialise(self):        
         # Set background image

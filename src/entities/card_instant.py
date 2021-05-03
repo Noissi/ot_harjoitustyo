@@ -1,19 +1,21 @@
 from entities.card import Card
 
 class Instant(Card):
-    """Luokka joka kuvaa yksittaista korttia
+    """ Card subclass that represents a single Instant card.
 
     Attributes:
-        manacost:
+        _maintype: [String] Card's maintype is Instant.
+        _feature: [None] Instant has no feature.
+        _power: [None] Instant has no power.
+        _toughness: [None] Instant has no toughness.
     """
 
     def __init__(self, name):
-        """Luokan konstruktori. Luo uuden kortin.
-
+        """ Class constructor. Creates a new card.
         Args:
-            manacost:
-                ???
+            name: [String] Name of the card.
         """
+
         super().__init__(name)
         self._maintype = "Instant"
         self._feature = None

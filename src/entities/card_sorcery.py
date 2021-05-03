@@ -1,19 +1,21 @@
 from entities.card import Card
 
 class Sorcery(Card):
-    """Luokka joka kuvaa yksittaista korttia
+    """ Card subclass that represents a single Sorcery card.
 
     Attributes:
-        manacost:
+        _maintype: [String] Card's maintype is Sorcery.
+        _feature: [None] Sorcery has no feature.
+        _power: [None] Sorcery has no power.
+        _toughness: [None] Sorcery has no toughness.
     """
 
     def __init__(self, name):
-        """Luokan konstruktori. Luo uuden kortin.
-
+        """ Class constructor. Creates a new card.
         Args:
-            manacost:
-                ???
+            name: [String] Name of the card.
         """
+
         super().__init__(name)
         self._maintype = "Sorcery"
         self._feature = None

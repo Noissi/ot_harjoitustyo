@@ -1,19 +1,22 @@
 from entities.card import Card
 
 class Enchantment(Card):
-    """Luokka joka kuvaa yksittaista korttia
+    """ Card subclass that represents a single Enchantment card.
 
     Attributes:
-        manacost:
+        _maintype: [String] Card's maintype is Enchantment.
+        _feature2: [List String] If the card has a limited set of
+                   features, the available features are listed here.
+        _power: [None] Enchantment has no power.
+        _toughness: [None] Enchantment has no toughness.
     """
 
     def __init__(self, name):
-        """Luokan konstruktori. Luo uuden kortin.
-
+        """ Class constructor. Creates a new card.
         Args:
-            manacost:
-                ???
+            name: [String] Name of the card.
         """
+
         super().__init__(name)
         self._maintype = "Enchantment"
         self._feature2 = ["Hexproof", "Indestructible", "Flash"]

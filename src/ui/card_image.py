@@ -54,18 +54,20 @@ class CardImage(QWidget):
                                  self._card.get_subtype_print())
 
         # Manacost
-        painter.drawText(400,66, self._card.get_manacost())
+        #400, 66
+        flags = Qt.AlignRight
+        painter.drawText(300, 40, 150, 40, flags, self._card.get_manacost())
 
         # Feature, Ruletext, Flavourtext
         painter.setFont(QFont("times", 16))
         flags = Qt.AlignVCenter|Qt.TextWordWrap
-        painter.drawText(50,450, 390, 150, flags, self._card.get_feature_print() + " \n" + \
+        painter.drawText(50, 450, 390, 150, flags, self._card.get_feature_print() + " \n" + \
                                  self._card.get_ruletext() + "\n" + \
                                  self._card.get_flavourtext())
 
         # Power, Toughness
         painter.setFont(QFont("times", 20, QFont.Bold))
-        painter.drawText(400,652, str(self._card.get_power_print()) + "/" + \
+        painter.drawText(400, 652, str(self._card.get_power_print()) + "/" + \
                                   str(self._card.get_toughness_print()))
 
         # Image

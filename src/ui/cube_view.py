@@ -19,14 +19,13 @@ class CubeView(Window):
         self.width=1500
         self.height=1000     
 
-        self._search = False
+        self._search_parameters = {"name": "", "maintype": "", "colour": ""}
         
         self._outer_layout = self.get_outer_layout()
         self._upper_layout = QGridLayout()
         #self._collection_layout = QGridLayout()
         self._bottom_layout = QHBoxLayout()
         
-        self._search_line = QLineEdit()
         self._scroll_layout = QGridLayout()
         self._scrollwidget = QWidget()
         #self._scrollwidget.setLayout(self._collection_layout)
@@ -38,31 +37,57 @@ class CubeView(Window):
         
     def _set_upper_layout(self):
         # Uusi kortti
-        btn_new = QPushButton('Uusi kortti')        
+        btn_new = QPushButton('Uusi kortti')
         btn_new.setMaximumWidth(100)
         btn_new.clicked.connect(lambda: self._handle_show_edit_card_view(True))
-        self._upper_layout.addWidget(btn_new, 0, 1)
+        self._upper_layout.addWidget(btn_new, 0, 3)
 
-        # Search
-        search_label = QLabel('<font size="3"> Hae korttia </font>')
-        self._search_line.setPlaceholderText('Kortin nimi')
-        self._upper_layout.addWidget(search_label, 1, 0)
-        self._upper_layout.addWidget(self._search_line, 1, 1)
-        self._search_line.textChanged[str].connect(self._search_name)
+        # Search by name
+        search_by_name_label = QLabel('<font size="3", color="white"> Hae korttia </font>')
+        search_by_name_line = QLineEdit()
+        search_by_name_line.setMaximumWidth(300)
+        search_by_name_line.setPlaceholderText('Kortin nimi')
+        self._upper_layout.addWidget(search_by_name_label, 1, 0)
+        self._upper_layout.addWidget(search_by_name_line, 1, 1)
+        search_by_name_line.textChanged[str].connect(lambda: self._search_by_name(search_by_name_line.text()))
         
-        # Select type
-        search_label = QLabel('<font size="3"> Hae korttia </font>')
-        self._search_line.setPlaceholderText('Kortin nimi')
-        self._upper_layout.addWidget(search_label, 1, 2)
-        self._upper_layout.addWidget(self._search_line, 1, 3)
+        # Search by maintype
+        search_by_maintype_label = QLabel('<font size="3", color="white"> Korttityyppi </font>')
+        maintype_combo = QComboBox()
+        maintype_combo.addItem("Ei valittu")
+        maintype_combo.addItem("Creature")
+        maintype_combo.addItem("Artifact")
+        maintype_combo.addItem("Enchantment")
+        maintype_combo.addItem("Land")
+        maintype_combo.addItem("Instant")
+        maintype_combo.addItem("Sorcery")
+        maintype_combo.addItem("Planeswalker")
+        maintype_combo.addItem("Artifact Creature")
+        maintype_combo.addItem("Enchantment Creature")
+        maintype_combo.setCurrentIndex(0)
+        self._upper_layout.addWidget(search_by_maintype_label, 1, 2)
+        self._upper_layout.addWidget(maintype_combo, 1, 3)
+        maintype_combo.activated.connect(lambda: self._search_by_maintype(maintype_combo.currentText()))
         
+        # Search by colour
+        search_by_colour_label = QLabel('<font size="3", color="white"> Väri </font>')
+        colour_combo = QComboBox()
+        colour_combo.addItem("Ei valittu")
+        colour_combo.addItem("Punainen")
+        colour_combo.addItem("Sininen")
+        colour_combo.addItem("Vihreä")
+        colour_combo.addItem("Valkoinen")
+        colour_combo.addItem("Musta")
+        colour_combo.addItem("Väritön")
+        colour_combo.addItem("Monivärinen")
+        colour_combo.setCurrentIndex(0)
+        self._upper_layout.addWidget(search_by_colour_label, 1, 4)
+        self._upper_layout.addWidget(colour_combo, 1, 5)
+        colour_combo.activated.connect(lambda: self._search_by_colour(colour_combo.currentText()))
         
     def _set_collection_layout(self):
         # Get cards
-        if self._search == False:
-            cards = self._get_cards()
-        else:
-            cards = self._get_cards_with_search()
+        cards = self._get_cards_with_search()
 
         row = 0
         col = 0
@@ -93,12 +118,7 @@ class CubeView(Window):
         btn_back.clicked.connect(self._handle_show_main_view)
         self._bottom_layout.addWidget(btn_back)
         
-    def _search_name(self):
-        if self._search_line.text() == "":
-            self._search = False
-        else:
-            self._search = True
-
+    def _update_cards(self):
         self._scroll_layout = QGridLayout()
         self._scrollwidget = QWidget()
         #self._scrollwidget.setLayout(self._collection_layout)
@@ -110,12 +130,30 @@ class CubeView(Window):
         self._set_collection_layout()
         self._outer_layout.addWidget(self._scroll, 2, 0, 8, 1)
 
+    def _search_by_name(self, text):
+        self._search_parameters["name"] = text
+        self._update_cards()
+
+    def _search_by_maintype(self, text):
+        if text == "Ei valittu":
+            text = ""
+        self._search_parameters["maintype"] = text
+        self._update_cards()
+
+    def _search_by_colour(self, text):
+        if text == "Ei valittu":
+            text = ""
+        self._search_parameters["colour"] = text
+        self._update_cards()
+
     def _get_cards(self):
         cards = kks.get_cards_in_cube()
         return cards
 
     def _get_cards_with_search(self):
-        cards = kks.get_cards_by_name_that_contains(self._search_line.text())
+        cards = kks.get_cards_that_contains(self._search_parameters["name"],
+                                               self._search_parameters["maintype"],
+                                               self._search_parameters["colour"],)
         return cards
 
     def _initialise(self):

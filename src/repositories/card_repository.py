@@ -1,13 +1,27 @@
 from database_connection import get_database_connection
 
 class CardRepository:
+    """ Class responsible for card database logic.
+
+    Attributes:
+        connection: A databse connection object.
+    """
+
     def __init__(self, connection):
+        """ Class constructor. Creates a new card repository.
+
+        Args:
+            connection: A databse connection object.
+        """
+
         self._connection = connection
 
     def create(self, card):
+        """ Creates a new card into the cards table.
+        Args:
+            card: [Card] The Card entity to be saved.
         """
-        Create a new card into the cards table.
-        """
+
         card_sql = (card.get_id(), card.get_name(), card.get_cubes_print(),  \
                     card.get_maintype(), card.get_legendary(), card.get_tribal(), \
                     card.get_subtype_print(), card.get_colour_print(), card.get_manacost(), \
@@ -26,6 +40,11 @@ class CardRepository:
         self._connection.commit()
 
     def update(self, card):
+        """ Updates an existing card in the cards table.
+        Args:
+            card: [Card] The Card entity to be updated.
+        """
+
         card_sql = (card.get_name(), card.get_cubes_print(),  \
                     card.get_maintype(), card.get_legendary(), card.get_tribal(), \
                     card.get_subtype_print(), card.get_colour_print(), card.get_manacost(), \
@@ -60,6 +79,11 @@ class CardRepository:
         self._connection.commit()
 
     def save(self, card):
+        """ Saves the card into the cards table.
+        Args:
+            card: [Card] The Card entity to be saved.
+        """
+
         card_sql = (card.get_id(),)
         sql = """ SELECT 1 FROM cards WHERE id = ?; """
         cursor = self._connection.cursor()
@@ -70,6 +94,11 @@ class CardRepository:
             self.update(card)
 
     def delete(self, card_id):
+        """ Removes the card from the cards table.
+        Args:
+            card_id: [String] The id of the card to be removed from the database.
+        """
+
         card_sql = (card_id,)
         sql = """ SELECT * FROM cards WHERE cube_id = ?; """
         cursor = self._connection.cursor()
@@ -77,6 +106,13 @@ class CardRepository:
         self._connection.commit()
 
     def find_by_cube(self, cube_id):
+        """ Selects the cards belonging to the given cube.
+        Args:
+            cube_id: [String] The id of the cube.
+        Return:
+            rows: [List Tuple] List of tuples including the cards.
+        """
+
         cube_sql = (cube_id,)
         sql = """ SELECT * FROM cards WHERE cube_id = ?; """
         cursor = self._connection.cursor()
@@ -85,10 +121,36 @@ class CardRepository:
         return rows
 
     def find_by_name_that_contains(self, text):
+        """ Selects the cards containing -text- in the name.
+        Args:
+            text: [String] String to be matched with the name.
+        Return:
+            rows: [List Tuple] List of tuples including the cards.
+        """
+
         text_sql = ('%'+text+'%',)
         sql = """ SELECT * FROM cards WHERE name LIKE ? COLLATE NOCASE; """
         cursor = self._connection.cursor()
         cursor.execute(sql, text_sql)
+        rows = cursor.fetchall()
+        return rows
+
+    def find_cards_from_cube_that_contains(self, cube_id, name_part, maintype, colour):
+        """ Selects the cards belonging to the given cube that has given
+            maintype and card frame colour and which name includes name_part.
+        Args:
+            cube_id: [String] The id of the cube.
+            name_part: [String] String to be matched with the name.
+            maintype: [String] Maintype that the cards should be.
+            colour: [String] Card frame colour that the cards should have.
+        Return:
+            rows: [List Tuple] List of tuples including the cards.
+        """
+
+        insert_sql = (cube_id, '%'+maintype+'%', '%'+colour+'%', '%'+name_part+'%')
+        sql = """ SELECT * FROM cards WHERE cube_id = ? AND maintype LIKE ? AND colour LIKE ? AND name LIKE ? COLLATE NOCASE; """
+        cursor = self._connection.cursor()
+        cursor.execute(sql, insert_sql)
         rows = cursor.fetchall()
         return rows
 

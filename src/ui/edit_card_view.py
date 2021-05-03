@@ -343,7 +343,7 @@ class EditCardView(Window):
     # Maintype
     def _set_maintype_combo(self):
         index = self._maintype_combo.findText(self._card.get_maintype())  # finds the index of the item wanted
-        self._maintype_combo.setCurrentIndex(index)        
+        self._maintype_combo.setCurrentIndex(index)
         self._disable_edit()
 
     # Legendary
@@ -380,25 +380,23 @@ class EditCardView(Window):
             self._legendary_btn.setChecked(False)
         else:
             self._legendary_btn.setEnabled(True)
+
         if self._card.get_tribal() is None:
             self._tribal_btn.setEnabled(False)
             self._tribal_btn.setChecked(False)
         else:
             self._tribal_btn.setEnabled(True)
+
         if self._card.get_subtype() is None:
             self._subtype_line.setEnabled(False)
         else:
             self._subtype_line.setEnabled(True)
-        if self._card.get_power() is None:
-            self._power_spinbox.setEnabled(False)
-            self._power_spinbox.setValue(0)
+
+        if self._card.get_manacost() is None:
+            self._manacost_line.setEnabled(False)
         else:
-            self._power_spinbox.setEnabled(True)
-        if self._card.get_toughness() is None:
-            self._toughness_spinbox.setEnabled(False)
-            self._toughness_spinbox.setValue(0)
-        else:
-            self._toughness_spinbox.setEnabled(True)
+            self._manacost_line.setEnabled(True)
+
         if self._card.get_feature() is None:
             for box in self._feature_boxes:
                 box.setEnabled(False)
@@ -406,17 +404,31 @@ class EditCardView(Window):
         else:
             for box in self._feature_boxes:
                 box.setEnabled(True)
-        if self._card.get_feature2_list():
+
+        if self._card.get_feature2():
             for box in self._feature_boxes:
-                if box.text() not in self._card.get_feature2_list():
+                if box.text() not in self._card.get_feature2():
                     box.setEnabled(False)
                     box.setChecked(False)
+
+        if self._card.get_power() is None:
+            self._power_spinbox.setEnabled(False)
+            self._power_spinbox.setValue(0)
+        else:
+            self._power_spinbox.setEnabled(True)
+
+        if self._card.get_toughness() is None:
+            self._toughness_spinbox.setEnabled(False)
+            self._toughness_spinbox.setValue(0)
+        else:
+            self._toughness_spinbox.setEnabled(True)
 
     # Save card to database and return to card view
     def _save_and_return(self):
         filename = self._card_image.save_image()
         kks.update_card(self._card, filename, "picture")
         kks.save_to_database(self._card, "card")
+        print(self._card)
         self._handle_show_card_view()
 
     def _return(self):
@@ -424,18 +436,6 @@ class EditCardView(Window):
             self._handle_show_cube_view()
         else:
             self._handle_show_card_view()
-
-    # Other
-    def _clear_layout(self, layout):
-        print('before: ' +str(layout.count()))
-        for i in range(layout.count()):
-            print('i: ' +str(i))
-            layout_item = layout.takeAt(i)
-            if layout_item:
-                widget = layout_item.widget()
-                if widget:
-                    widget.setParent(None)
-        print('after: ' + str(layout.count()))
 
     def _initialise_colour(self):
         colour_red_box   = QCheckBox("Punainen")

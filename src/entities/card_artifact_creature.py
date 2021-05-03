@@ -1,19 +1,19 @@
 from entities.card import Card
 
 class ArtifactCreature(Card):
-    """Luokka joka kuvaa yksittaista korttia
+    """ Card subclass that represents a single Artifact Creature card.
 
     Attributes:
-        manacost:
+        _maintype: [String] Card's maintype is Artifact Creature.
+        _tribal: [None] Artifact Creature does not have tribal.
     """
 
     def __init__(self, name):
-        """Luokan konstruktori. Luo uuden kortin.
-
+        """ Class constructor. Creates a new card.
         Args:
-            manacost:
-                ???
+            name: [String] Name of the card.
         """
+
         super().__init__(name)
         self._maintype = "Artifact Creature"
         self._tribal = None
