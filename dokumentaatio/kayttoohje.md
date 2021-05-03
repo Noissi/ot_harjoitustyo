@@ -4,7 +4,7 @@ Lataa projektin viimeisin [release](https://github.com/Noissi/ot_harjoitustyo/re
 
 ## Konfigurointi
 
-Tietokantatiedosto _database.db_ luodaan automaattisesti _src_-kansioon ohjelman käynnistyksessä, mikäli tiedostoa ei vielä ole olemassa. Polkujen ja tiedostonimien muuttaminen onnistuu tiedostossa _config.py_.
+Tietokantatiedosto _database.db_ luodaan automaattisesti _src_-kansioon ohjelman käynnistyksessä, mikäli tiedostoa ei vielä ole olemassa. Ohjelma myös luo kansiot _imgcards_ ja _imguser_ korttien ja käyttäjän antamille kuville, jos niitä ei vielä ole. Polkujen ja tiedostonimien muuttaminen onnistuu tiedostossa _config.py_.
 
 ## Ohjelman käynnistäminen
 
@@ -27,11 +27,14 @@ poetry run invoke start
 Luo aluksi uusi käyttäjä napista _Luo uusi käyttäjä_. Anna valitsemasi käyttäjätunnus ja salasana ja luo käyttäjä.
 Kirjaudu sisään tunnuksilla syöttämällä ne tyhjiin kenttiin ja paina _Kirjaudu_-nappia.
 
+![](./kuvat/login.png)
+
 ### Uuden kuben luonti ja tarkastelu
 
 Luo uusi kube painamalla _Uusi kube_ -nappia ja syöttämällä valitsemasi nimi kubelle.
 Voit tarkastella haluamaasi kubea painamalla sen kuvaketta, jolloin kubenäkymä avautuu.
 
+![](./kuvat/login.png)
 
 ### Uuden kortin luominen kubeen
 
