@@ -34,8 +34,6 @@ Kirjaudu sisään tunnuksilla syöttämällä ne tyhjiin kenttiin ja paina _Kirj
 Luo uusi kube painamalla _Uusi kube_ -nappia ja syöttämällä valitsemasi nimi kubelle.
 Voit tarkastella haluamaasi kubea painamalla sen kuvaketta, jolloin kubenäkymä avautuu.
 
-![](./kuvat/login.png)
-
 ### Uuden kortin luominen kubeen
 
 Luo uusi kortti kubeen painamalla _Uusi kortti_ -nappia, jolloin siirryt kortinluontinäkymään.
