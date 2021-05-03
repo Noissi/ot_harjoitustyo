@@ -6,7 +6,7 @@ Sovelluksen avulla käyttäjät luovat omia versioita MTG-kortteista. Sovellukse
 
 ## Käyttöliittymäluonnos
 
-Sovellus koostuu viidestä päänäkymästä: kirjautumissivu, etusivu, kokoelmasivu, korttisivu ja kortinmuokkaussivu. Lisäksi muita mahdollisia näkymiä ovat esimerkiksi tilastot ja info.
+Sovellus koostuu kuudesta päänäkymästä: kirjautumissivu, käyttäjän luonti -sivu, etusivu, kubesivu, korttisivu ja kortinmuokkaussivu. Lisäksi muita mahdollisia näkymiä ovat esimerkiksi tilastot ja info.
 
 ## Toiminnallisuudet
 
@@ -17,49 +17,58 @@ Sovellus koostuu viidestä päänäkymästä: kirjautumissivu, etusivu, kokoelma
 - [x] Käyttäjä voi kirjautua järjestelmään
   - [x] Kirjautuessa syötetään käyttäjätunnus ja salasana
   - [x] Virheellisestä sisäänkirjautumisesta tulee ilmoitus käyttäjälle
+- [x] Sivu näyttää järkevältä
 
 ### Kirjautumisen jälkeen
 
 #### Etusivu
 
-- [x] Käyttäjä näkee etusivulla luomansa sekä hänelle jaetut korttikokoelmat
+- [x] Käyttäjä näkee etusivulla luomansa (sekä hänelle jaetut) korttikokoelmat
 - [x] Käyttäjä voi luoda uusia korttikokoelmia
-  - [ ] Uusi korttikokoelma voidaan jakaa valituille käyttäjille
 - [x] Käyttäjä voi valita tarkasteltavan korttikokoelman
-- [ ] Käyttäjä voi hakea kortteja eri ominaisuuksilla
+- [ ] Sivu näyttää järkevältä
 
-#### Kokoelmasivu
+#### Kubesivu
 
-- [x] Käyttäjä voi selata kokoelman kortteja
-  - [ ] Kortit on jaettu valmiisiin ja luonnoksiin 
-  - [ ] Käyttäjä voi lajitella kortteja valittujen parametrien perusteella
-- [ ] Käyttäjä voi hakea kortteja eri ominaisuuksilla
-- [x] Käyttäjä voi luoda uusia kortteja kokoelmaan
-- [ ] Käyttäjä voi tuoda taulukossa tiedot uusista korteista ja lisätä ne kokoelmaan
+- [x] Käyttäjä voi selata kuben kortteja
+- [x] Käyttäjä voi hakea kortteja eri ominaisuuksilla
+- [x] Käyttäjä voi luoda uusia kortteja kubeen
 - [x] Käyttäjä voi valita tarkasteltavan kortin
+- [ ] Käyttäjä voi poistaa kuben
+- [ ] Sivu näyttää järkevältä
 
 #### Korttisivu
 
 - [x] Käyttäjä voi tarkastella korttia
 - [x] Käyttäjä voi muokata korttia
-- [ ] Käyttäjä voi kommentoida jaettujen peliversioiden kortteja
-  - [ ] Kommentit näkyvät muille peliversion käyttäjille
-- [ ] Käyttäjä voi ladata korttitiedot sovelluksesta
+  - [x] Korteista tallennetaan käyttäjälle tulostettava kuva.
+- [ ] Käyttäjä voi poistaa kortin
+- [x] Sivu näyttää järkevältä
+
+#### Kortinmuokkaussivu
+
+- [x] Käyttäjä voi tarkastella korttia
+- [x] Käyttäjä voi muokata korttia
+  - [x] Kortin ominaisuudet piirtyvät kortille
+  - [x] Käyttäjä näkee muokkaukset reaaliajassa
+- [x] Sivu näyttää järkevältä
 
 ####
 
 - [x] Käyttäjä voi kirjautua ulos järjestelmästä
+- [x] Luotujen korttien tiedot tallettuvat tietokantaan
 
 ## Jatkokehitysideoita
 
 Sovellukseen lisätään ajan salliessa esim. seuraavia toiminnallisuuksia:
 
-- [ ] Kokoelmasivulla näkyy toimintoja, tilastoja sekä kortit
-- [ ] Korttinäkymää voi vaihtaa haluamakseen (lista/kuvat) 
-- [ ] Tarkempien tilastojen tarkastelu
-- [ ] Ilmoitukset korttien lisäämisestä ja muokkaamisesta muille käyttäjille
+- [ ] Kokoelmasivulla näkyy toimintoja ja tilastoja
 - [ ] Käyttäjä voi "hyväksyä" muiden kortteja
 - [ ] Näytä samankaltaisimmat kortit valitulle kortille
-- [ ] Korttikokoelman poisto
 - [ ] Käyttäjätunnuksen poisto
-
+- [ ] Uusi korttikokoelma voidaan jakaa valituille käyttäjille
+- [ ] Kortit on jaettu valmiisiin ja luonnoksiin
+- [ ] Käyttäjä voi tuoda taulukossa tiedot uusista korteista ja lisätä ne kokoelmaan
+- [ ] Käyttäjä voi kommentoida jaettujen peliversioiden kortteja
+  - [ ] Kommentit näkyvät muille peliversion käyttäjille
+- [ ] Käyttäjä voi ladata korttitiedot sovelluksesta
