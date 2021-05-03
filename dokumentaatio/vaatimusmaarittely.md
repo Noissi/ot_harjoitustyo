@@ -17,6 +17,7 @@ Sovellus koostuu kuudesta päänäkymästä: kirjautumissivu, käyttäjän luont
 - [x] Käyttäjä voi kirjautua järjestelmään
   - [x] Kirjautuessa syötetään käyttäjätunnus ja salasana
   - [x] Virheellisestä sisäänkirjautumisesta tulee ilmoitus käyttäjälle
+- [x] Sivu näyttää järkevältä
 
 ### Kirjautumisen jälkeen
 
@@ -25,40 +26,45 @@ Sovellus koostuu kuudesta päänäkymästä: kirjautumissivu, käyttäjän luont
 - [x] Käyttäjä näkee etusivulla luomansa (sekä hänelle jaetut) korttikokoelmat
 - [x] Käyttäjä voi luoda uusia korttikokoelmia
 - [x] Käyttäjä voi valita tarkasteltavan korttikokoelman
+- [ ] Sivu näyttää järkevältä
 
-#### Kokoelmasivu
+#### Kubesivu
 
-- [x] Käyttäjä voi selata kokoelman kortteja
-- [ ] Käyttäjä voi hakea kortteja eri ominaisuuksilla
-- [x] Käyttäjä voi luoda uusia kortteja kokoelmaan
+- [x] Käyttäjä voi selata kuben kortteja
+- [x] Käyttäjä voi hakea kortteja eri ominaisuuksilla
+- [x] Käyttäjä voi luoda uusia kortteja kubeen
 - [x] Käyttäjä voi valita tarkasteltavan kortin
+- [ ] Käyttäjä voi poistaa kuben
+- [ ] Sivu näyttää järkevältä
 
 #### Korttisivu
 
 - [x] Käyttäjä voi tarkastella korttia
 - [x] Käyttäjä voi muokata korttia
   - [x] Korteista tallennetaan käyttäjälle tulostettava kuva.
+- [ ] Käyttäjä voi poistaa kortin
+- [x] Sivu näyttää järkevältä
 
 #### Kortinmuokkaussivu
 
 - [x] Käyttäjä voi tarkastella korttia
 - [x] Käyttäjä voi muokata korttia
+  - [x] Kortin ominaisuudet piirtyvät kortille
   - [x] Käyttäjä näkee muokkaukset reaaliajassa
+- [x] Sivu näyttää järkevältä
 
 ####
 
 - [x] Käyttäjä voi kirjautua ulos järjestelmästä
+- [x] Luotujen korttien tiedot tallettuvat tietokantaan
 
 ## Jatkokehitysideoita
 
 Sovellukseen lisätään ajan salliessa esim. seuraavia toiminnallisuuksia:
 
 - [ ] Kokoelmasivulla näkyy toimintoja ja tilastoja
-- [ ] Korttinäkymää voi vaihtaa haluamakseen (lista/kuvat)
-- [ ] Ilmoitukset korttien lisäämisestä ja muokkaamisesta muille käyttäjille
 - [ ] Käyttäjä voi "hyväksyä" muiden kortteja
 - [ ] Näytä samankaltaisimmat kortit valitulle kortille
-- [ ] Korttikokoelman poisto
 - [ ] Käyttäjätunnuksen poisto
 - [ ] Uusi korttikokoelma voidaan jakaa valituille käyttäjille
 - [ ] Kortit on jaettu valmiisiin ja luonnoksiin
