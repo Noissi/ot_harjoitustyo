@@ -71,18 +71,18 @@ class TestCard(unittest.TestCase):
         self.assertEqual(self.card.get_cubes_print(), "9876")
         
     def test_get_legendary_print(self):
-        self.assertEqual(self.card.get_legendary_print(), "Ei")
+        self.assertEqual(self.card.get_legendary_print(), "")
         self.card.set_legendary(True)
-        self.assertEqual(self.card.get_legendary_print(), "Kyllä")
+        self.assertEqual(self.card.get_legendary_print(), "Legendary ")
         self.card.set_legendary(False)
-        self.assertEqual(self.card.get_legendary_print(), "Ei")
+        self.assertEqual(self.card.get_legendary_print(), "")
         
     def test_get_tribal_print(self):
-        self.assertEqual(self.card.get_tribal_print(), "Ei")
+        self.assertEqual(self.card.get_tribal_print(), "")
         self.card.set_tribal(True)
-        self.assertEqual(self.card.get_tribal_print(), "Kyllä")
+        self.assertEqual(self.card.get_tribal_print(), "Tribal ")
         self.card.set_tribal(False)
-        self.assertEqual(self.card.get_tribal_print(), "Ei")
+        self.assertEqual(self.card.get_tribal_print(), "")
         
     def test_get_subtype_print(self):
         self.assertEqual(self.card.get_subtype_print(), "")
@@ -90,13 +90,6 @@ class TestCard(unittest.TestCase):
         self.assertEqual(self.card.get_subtype_print(), "Beast Bird")
         self.card.set_subtype("Bird")
         self.assertEqual(self.card.get_subtype_print(), "Bird")
-
-    def test_get_subtype_list(self):
-        self.assertEqual(self.card.get_subtype_list(), [])
-        self.card.set_subtype("Beast Bird")
-        self.assertEqual(self.card.get_subtype_list(), ["Beast", "Bird"])
-        self.card.set_subtype("Bird")
-        self.assertEqual(self.card.get_subtype_list(), ["Bird"])
         
     def test_add_cube(self):
         self.assertEqual(self.card.get_cubes(), [])
@@ -233,9 +226,6 @@ class TestCard(unittest.TestCase):
         self.assertEqual(self.card.get_feature_list(), ["Flying", "Vigilance", "Trample"])
         self.card.remove_feature("Vigilance")
         self.assertEqual(self.card.get_feature_list(), ["Flying", "Trample"])
-        
-    def test_get_feature2_list(self):
-        self.assertEqual(self.card.get_feature2_list(), [])
         
     def test_show_card(self):
         self.set_card()
