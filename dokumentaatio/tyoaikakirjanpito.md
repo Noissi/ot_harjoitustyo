@@ -18,4 +18,6 @@
 | 24.4  | 2    | Peruskäytettävyys valmis   |
 | 29.4  | 3    | Lisää testejä              |
 | 1.5   | 3    | Kortit piirtyy             |
-| yht   | 53   | | 
+| 3.5   | 3    | Hakutoiminto tehty         |
+| 4.5   | 1    | Testien parantelua ja lisä |
+| yht   | 57   | | 
