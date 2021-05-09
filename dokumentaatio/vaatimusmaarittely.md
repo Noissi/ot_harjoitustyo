@@ -26,7 +26,7 @@ Sovellus koostuu kuudesta päänäkymästä: kirjautumissivu, käyttäjän luont
 - [x] Käyttäjä näkee etusivulla luomansa (sekä hänelle jaetut) korttikokoelmat
 - [x] Käyttäjä voi luoda uusia korttikokoelmia
 - [x] Käyttäjä voi valita tarkasteltavan korttikokoelman
-- [ ] Sivu näyttää järkevältä
+- [x] Sivu näyttää järkevältä
 
 #### Kubesivu
 
@@ -34,15 +34,15 @@ Sovellus koostuu kuudesta päänäkymästä: kirjautumissivu, käyttäjän luont
 - [x] Käyttäjä voi hakea kortteja eri ominaisuuksilla
 - [x] Käyttäjä voi luoda uusia kortteja kubeen
 - [x] Käyttäjä voi valita tarkasteltavan kortin
-- [ ] Käyttäjä voi poistaa kuben
-- [ ] Sivu näyttää järkevältä
+- [x] Käyttäjä voi muokata kubea (kuva)
+- [x] Sivu näyttää järkevältä
 
 #### Korttisivu
 
 - [x] Käyttäjä voi tarkastella korttia
 - [x] Käyttäjä voi muokata korttia
   - [x] Korteista tallennetaan käyttäjälle tulostettava kuva.
-- [ ] Käyttäjä voi poistaa kortin
+- [x] Käyttäjä voi poistaa kortin
 - [x] Sivu näyttää järkevältä
 
 #### Kortinmuokkaussivu
