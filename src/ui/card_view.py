@@ -61,12 +61,18 @@ class CardView(Window):
         btn_back.setMaximumWidth(100)
         btn_back.clicked.connect(self._handle_show_cube_view)
         self._bottom_layout.addWidget(btn_back)
-        
-        # Draw bottom edit box
+
+        # Draw edit box
         btn_edit = QPushButton('Muokkaa')
         btn_edit.setMaximumWidth(100)
         btn_edit.clicked.connect(self._handle_show_edit_card_view)
         self._bottom_layout.addWidget(btn_edit)
+
+        # Draw delete box
+        btn_del = QPushButton('Poista')
+        btn_del.setMaximumWidth(100)
+        btn_del.clicked.connect(self._delete_card)
+        self._bottom_layout.addWidget(btn_del)
         
     def _set_card_layout(self):
         # Draw card frame
@@ -116,6 +122,14 @@ class CardView(Window):
         creator_label = QLabel(self._card.get_creator())
         creator_label.setWordWrap(True)
         self._right_layout.addRow("Tekijä:", creator_label)
+
+    def _delete_card(self):
+        msg = QMessageBox()
+        ret = msg.question(self,'', "Haluatko varmasti poistaa kortin?", msg.Yes | msg.No)
+        if ret == msg.Yes:
+            kks.delete_card()
+            self._handle_show_cube_view()
+        
 
     def _initialise(self):        
         # Set background image

@@ -16,9 +16,7 @@ class UI(QWidget):
         self._layout = QVBoxLayout()
         self.setLayout(self._layout)
         self._stacked_layout = QStackedLayout()
-        
-        print("ui")
-        
+
     def start(self):
         self._show_login_view()
         #self._show_card_view(card)
@@ -49,7 +47,6 @@ class UI(QWidget):
         self.current_view = self._login_view
         self._stacked_layout.addWidget(self._login_view)
         self._stacked_layout.setCurrentWidget(self._login_view)
-        print('login ui')
         
     def _show_create_user_view(self):
         self._create_user_view = CreateUserView(self._show_login_view)

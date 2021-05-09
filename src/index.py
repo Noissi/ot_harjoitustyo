@@ -1,6 +1,6 @@
 import sys
 import os
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import *
 from initialise_database import initialise_database
 from ui.ui import UI
 

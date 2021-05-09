@@ -4,7 +4,7 @@ from PySide6.QtCore import *
 from ui.window import Window
 from entities.card_creature import Creature
 from services.korttikube_service import korttikube_service as kks
-from config import CARD_RATIO, IMAGES_FILE_PATH
+from config import CARD_RATIO, IMAGES_FILE_PATH, USER_IMAGES_FILE_PATH
 
 class CubeView(Window):
     def __init__(self, handle_show_main_view=None, 
@@ -12,14 +12,10 @@ class CubeView(Window):
         super().__init__()
         self._handle_show_main_view = handle_show_main_view
         self._handle_show_card_view = handle_show_card_view
-        self._handle_show_edit_card_view = handle_show_edit_card_view
-        
-        self.left=10
-        self.top=10
-        self.width=1500
-        self.height=1000     
+        self._handle_show_edit_card_view = handle_show_edit_card_view  
 
         self._search_parameters = {"name": "", "maintype": "", "colour": ""}
+        self._order = ["name", "ASC"]
         
         self._outer_layout = self.get_outer_layout()
         self._upper_layout = QGridLayout()
@@ -36,24 +32,31 @@ class CubeView(Window):
         self._initialise()
         
     def _set_upper_layout(self):
-        # Uusi kortti
+        upper_hbox = QHBoxLayout()
+        lower_hbox = QHBoxLayout()
+        
+        # New card button
         btn_new = QPushButton('Uusi kortti')
         btn_new.setMaximumWidth(100)
         btn_new.clicked.connect(lambda: self._handle_show_edit_card_view(True))
-        self._upper_layout.addWidget(btn_new, 0, 3)
+        upper_hbox.addWidget(btn_new, 0)
+        self._upper_layout.addLayout(upper_hbox, 0, 0)
 
         # Search by name
         search_by_name_label = QLabel('<font size="3", color="white"> Hae korttia </font>')
+        search_by_name_label.setMaximumWidth(80)
         search_by_name_line = QLineEdit()
         search_by_name_line.setMaximumWidth(300)
         search_by_name_line.setPlaceholderText('Kortin nimi')
-        self._upper_layout.addWidget(search_by_name_label, 1, 0)
-        self._upper_layout.addWidget(search_by_name_line, 1, 1)
+        lower_hbox.addWidget(search_by_name_label, 0)
+        lower_hbox.addWidget(search_by_name_line, 1)
         search_by_name_line.textChanged[str].connect(lambda: self._search_by_name(search_by_name_line.text()))
         
         # Search by maintype
         search_by_maintype_label = QLabel('<font size="3", color="white"> Korttityyppi </font>')
+        search_by_maintype_label.setMaximumWidth(85)
         maintype_combo = QComboBox()
+        maintype_combo.setMaximumWidth(190)
         maintype_combo.addItem("Ei valittu")
         maintype_combo.addItem("Creature")
         maintype_combo.addItem("Artifact")
@@ -65,13 +68,15 @@ class CubeView(Window):
         maintype_combo.addItem("Artifact Creature")
         maintype_combo.addItem("Enchantment Creature")
         maintype_combo.setCurrentIndex(0)
-        self._upper_layout.addWidget(search_by_maintype_label, 1, 2)
-        self._upper_layout.addWidget(maintype_combo, 1, 3)
+        lower_hbox.addWidget(search_by_maintype_label, 2)
+        lower_hbox.addWidget(maintype_combo, 3)
         maintype_combo.activated.connect(lambda: self._search_by_maintype(maintype_combo.currentText()))
         
         # Search by colour
         search_by_colour_label = QLabel('<font size="3", color="white"> Väri </font>')
+        search_by_colour_label.setMaximumWidth(30)
         colour_combo = QComboBox()
+        colour_combo.setMaximumWidth(120)
         colour_combo.addItem("Ei valittu")
         colour_combo.addItem("Punainen")
         colour_combo.addItem("Sininen")
@@ -81,9 +86,26 @@ class CubeView(Window):
         colour_combo.addItem("Väritön")
         colour_combo.addItem("Monivärinen")
         colour_combo.setCurrentIndex(0)
-        self._upper_layout.addWidget(search_by_colour_label, 1, 4)
-        self._upper_layout.addWidget(colour_combo, 1, 5)
+        lower_hbox.addWidget(search_by_colour_label, 4)
+        lower_hbox.addWidget(colour_combo, 5)
         colour_combo.activated.connect(lambda: self._search_by_colour(colour_combo.currentText()))
+
+        # Order
+        order_by_label = QLabel('<font size="3", color="white"> Järjestys </font>')
+        order_by_label.setMaximumWidth(70)
+        order_combo = QComboBox()
+        order_combo.setMaximumWidth(170)
+        order_combo.addItem("Aakkosjärjestys")
+        order_combo.addItem("Suurin voimakkuus")
+        order_combo.addItem("Suurin kestävyys")
+        order_combo.addItem("Pienin voimakkuus")
+        order_combo.addItem("Pienin kestävyys")
+        order_combo.setCurrentIndex(0)
+        lower_hbox.addWidget(order_by_label, 6)
+        lower_hbox.addWidget(order_combo, 7)
+        order_combo.activated.connect(lambda: self._order_by(order_combo.currentText()))
+
+        self._upper_layout.addLayout(lower_hbox, 1, 0)
         
     def _set_collection_layout(self):
         # Get cards
@@ -98,7 +120,7 @@ class CubeView(Window):
             btn_card.setMinimumSize(card_width, card_width * CARD_RATIO)
             btn_card.setMaximumSize(card_width, card_width * CARD_RATIO)
             card_picture = card[18]
-            hover_image = IMAGES_FILE_PATH + "bluecard.png"
+            hover_image = IMAGES_FILE_PATH + "colourlesscard.png"
             # changing font and size of text
             btn_card.setFont(QFont('Times', 10))
             btn_card.setStyleSheet("QPushButton{border-image: url("+card_picture+")}"
@@ -113,10 +135,17 @@ class CubeView(Window):
                 row += 1
             
     def _set_bottom_layout(self):
-        # Bottom layout
+        # Back button
         btn_back = QPushButton('Takaisin etusivulle')
+        btn_back.setMaximumWidth(200)
         btn_back.clicked.connect(self._handle_show_main_view)
         self._bottom_layout.addWidget(btn_back)
+
+        # Change image
+        btn_image = QPushButton('Valitse kubekuva')
+        btn_image.setMaximumWidth(200)
+        btn_image.clicked.connect(self._change_image)
+        self._bottom_layout.addWidget(btn_image)
         
     def _update_cards(self):
         self._scroll_layout = QGridLayout()
@@ -129,6 +158,14 @@ class CubeView(Window):
 
         self._set_collection_layout()
         self._outer_layout.addWidget(self._scroll, 2, 0, 8, 1)
+
+    def _change_image(self):
+        fname = QFileDialog.getOpenFileName(self, 'Open file', 
+        				     USER_IMAGES_FILE_PATH, "Image files (*.jpg *.png *.jpeg)")
+        fname = list(fname)[0]
+        fname = fname.split("/")
+        fname = USER_IMAGES_FILE_PATH + fname[-1]
+        kks.update_cube(fname, "image")
 
     def _search_by_name(self, text):
         self._search_parameters["name"] = text
@@ -146,14 +183,30 @@ class CubeView(Window):
         self._search_parameters["colour"] = text
         self._update_cards()
 
+    def _order_by(self, text):
+        if text == "Aakkosjärjestys":
+            order = ["name", "ASC"]
+        elif text == "Suurin voimakkuus":
+            order = ["power", "DESC"]
+        elif text == "Suurin kestävyys":
+            order = ["toughness", "DESC"]
+        elif text == "Pienin voimakkuus":
+            order = ["power", "ASC"]
+        elif text == "Pienin kestävyys":
+            order = ["toughness", "ASC"]
+
+        self._order = order
+        self._update_cards()
+
     def _get_cards(self):
         cards = kks.get_cards_in_cube()
         return cards
 
     def _get_cards_with_search(self):
         cards = kks.get_cards_that_contains(self._search_parameters["name"],
-                                               self._search_parameters["maintype"],
-                                               self._search_parameters["colour"],)
+                                            self._search_parameters["maintype"],
+                                            self._search_parameters["colour"],
+                                            self._order)
         return cards
 
     def _initialise(self):

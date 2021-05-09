@@ -100,7 +100,7 @@ class CardRepository:
         """
 
         card_sql = (card_id,)
-        sql = """ SELECT * FROM cards WHERE cube_id = ?; """
+        sql = """ DELETE FROM cards WHERE id = ?; """
         cursor = self._connection.cursor()
         cursor.execute(sql, card_sql)
         self._connection.commit()
@@ -135,7 +135,7 @@ class CardRepository:
         rows = cursor.fetchall()
         return rows
 
-    def find_cards_from_cube_that_contains(self, cube_id, name_part, maintype, colour):
+    def find_cards_from_cube_that_contains(self, cube_id, name_part, maintype, colour, order):
         """ Selects the cards belonging to the given cube that has given
             maintype and card frame colour and which name includes name_part.
         Args:
@@ -143,12 +143,14 @@ class CardRepository:
             name_part: [String] String to be matched with the name.
             maintype: [String] Maintype that the cards should be.
             colour: [String] Card frame colour that the cards should have.
+            order: [List String] Desired order parameter and direction of the cards.
         Return:
             rows: [List Tuple] List of tuples including the cards.
         """
 
         insert_sql = (cube_id, '%'+maintype+'%', '%'+colour+'%', '%'+name_part+'%')
-        sql = """ SELECT * FROM cards WHERE cube_id = ? AND maintype LIKE ? AND colour LIKE ? AND name LIKE ? COLLATE NOCASE; """
+        sql = """ SELECT * FROM cards WHERE cube_id = ? AND maintype LIKE ? AND colour LIKE ?
+                  AND name LIKE ? COLLATE NOCASE ORDER BY {}; """.format(order[0] + " " + order[1])
         cursor = self._connection.cursor()
         cursor.execute(sql, insert_sql)
         rows = cursor.fetchall()

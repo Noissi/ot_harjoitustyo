@@ -11,7 +11,7 @@ except Error as error:
 
 def get_database_connection():
     """ Create a database connection to the SQLite database specified by DATABASE_FILE_PATH file.
-    Returns: 
+    Returns:
         Connection object or None
     """
     return connection

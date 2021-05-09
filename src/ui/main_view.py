@@ -61,7 +61,7 @@ class MainView(Window):
             btn_cube.setMaximumSize(200, 200)
             hover_image = IMAGES_FILE_PATH + "mri.jpeg"
             btn_cube.setFont(QFont('Times', 20))
-            image = IMAGES_FILE_PATH + "kana.jpeg"
+            image = cube[3]
             btn_cube.setStyleSheet("QPushButton{border-image: url("+image+")}"
                                    "QPushButton:hover{url("+hover_image+")}"
                                    "QPushButton{text-align: center}"

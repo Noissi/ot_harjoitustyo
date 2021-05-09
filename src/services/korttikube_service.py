@@ -366,6 +366,30 @@ class KorttikubeService:
         elif prop_name == 'picture':
             card.set_picture(prop)
 
+    def update_cube(self, prop, prop_name, add=None):
+        """ Modifies cube's property that is specified as a parameter.
+        Args:
+            prop: [String, Boolean] New property text/boolean to replace the current one.
+                           (e.g. a new name or image for the card).
+            prop_name: [String] Property type (e.g. "name", "image").
+            add: [Boolean] Optional. Defines which method to do for
+                           properties with multiple check boxes (add or remove).
+        """
+
+        if prop_name == 'name':
+            self._cube.set_name(prop)
+        elif prop_name == "users":
+            if add:
+                self._cube.add_user(prop)
+            else:
+                self._cube.remove_user(prop)
+        elif prop_name == "image":
+            self._cube.set_image(prop)
+        elif prop_name == 'seticon':
+            self._cube.set_seticon(prop)
+
+        self.save_to_database(self._cube, "cube")
+
     # DATABASE SEARCH
     def get_cards_in_cube(self):
         """ Returns a list of cards in the current cube.
@@ -378,14 +402,15 @@ class KorttikubeService:
 
         return list(cards)
 
-    def get_cards_that_contains(self, name_part, maintype, colour):
+    def get_cards_that_contains(self, name_part, maintype, colour, order):
         """ Returns list of cards (in the current cube) which name includes
-            the given text and maintype and colour match the given text.
-            Not case sensitive.
+            the given text and maintype and colour match the given text. Cards
+            are ordered as specified with 'order'. Not case sensitive.
         Args:
             name_part: [String] Given name search parameter.
             maintype: [String] Given maintype search parameter.
             colour: [String] Given card frame colour search parameter.
+            order: [List String] Desired order parameter and direction of the cards.
         Returns:
             [List Card] List of Card entities in the current cube that
                         match the criteria.
@@ -395,7 +420,7 @@ class KorttikubeService:
             colour = ", "
         cards = self._card_repository.find_cards_from_cube_that_contains(self._cube.get_id(),
                                                                          name_part, maintype,
-                                                                         colour)
+                                                                         colour, order)
 
         return cards
 

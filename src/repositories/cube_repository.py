@@ -59,6 +59,7 @@ class CubeRepository:
         """
 
         cube_sql = (cube.get_id(),)
+        print(cube.get_image())
         sql = """ SELECT 1 FROM cubes WHERE id = ?; """
         cursor = self._connection.cursor()
         cursor.execute(sql, cube_sql)

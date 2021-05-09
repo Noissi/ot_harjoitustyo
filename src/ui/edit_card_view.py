@@ -282,7 +282,7 @@ class EditCardView(Window):
         self._update_card_layout()
 
     def _cut_boxtext(self, text, rule=False):
-        limit = 200
+        limit = 250
         remaining_text = text
         rtext = self._ruletext_textbox.toPlainText()
         ftext = self._flavourtext_textbox.toPlainText()
@@ -360,11 +360,13 @@ class EditCardView(Window):
 
     # Image
     def _remove_image(self):
-        print("remove image")
+        kks.update_card(self._card, "", "image")
+        self._update_card_layout()
 
     # Seticon
     def _remove_seticon(self):
-        print("remove image")
+        kks.update_card(self._card, "", "seticon")
+        self._update_card_layout()
 
     # Set checkboxes
     def _check_if_card_has(self, checkbox, cards_list):
@@ -428,7 +430,6 @@ class EditCardView(Window):
         filename = self._card_image.save_image()
         kks.update_card(self._card, filename, "picture")
         kks.save_to_database(self._card, "card")
-        print(self._card)
         self._handle_show_card_view()
 
     def _return(self):
