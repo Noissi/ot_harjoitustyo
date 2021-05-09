@@ -20,4 +20,6 @@
 | 1.5   | 3    | Kortit piirtyy             |
 | 3.5   | 3    | Hakutoiminto tehty         |
 | 4.5   | 1    | Testien parantelua ja lisä |
-| yht   | 57   | | 
+| 9.5   | 2    | Ulkoasun parannus          |
+| 9.5   | 1    | Hakutoiminnon laajennus    |
+| yht   | 57   | |
