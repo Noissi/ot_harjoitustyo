@@ -22,6 +22,9 @@ poetry run invoke start
 
 ## Käyttö
 
+### Yleistä
+Korttikube on kubejen ja korttien luomiseen tehty työkalu. Korttikuben kortit noudattavat ominaisuuksiltaan ja muokattavuudeltaan pääosin MTG:n korttien ominaisuuksia. Korteille voi määritellä vain korttityyppiä vastaavia ominaisuuksia. Esimerkiksi _Land_-korttityyppille ei voi asettaa voimakkuutta (power) eikä kestävyyttä (toughness), sillä ei voi olla heimoa (tribal), sillä ei ole hintaa (cost) ja sille voi asettaa vain kahta eri ominaisuutta (feature). Toisaalta taas _Sorcery_-korttityypillä ei muun muassa ole voimakkuutta ja kestävyyttä paitsi, jos sen alatyyppi on _Vehicle_. Tarkemmin korttien ominaisuuksiin voi perehtyä [MTG:n sivuilla](https://magic.wizards.com/en).
+
 ### Käyttäjän luonti ja kirjautuminen
 
 Luo aluksi uusi käyttäjä napista _Luo uusi käyttäjä_. Anna valitsemasi käyttäjätunnus ja salasana ja luo käyttäjä.
