@@ -65,10 +65,9 @@ Sovellukseen lisätään ajan salliessa esim. seuraavia toiminnallisuuksia:
 - [ ] Kokoelmasivulla näkyy toimintoja ja tilastoja
 - [ ] Käyttäjä voi "hyväksyä" muiden kortteja
 - [ ] Näytä samankaltaisimmat kortit valitulle kortille
-- [ ] Käyttäjätunnuksen poisto
 - [ ] Uusi korttikokoelma voidaan jakaa valituille käyttäjille
 - [ ] Kortit on jaettu valmiisiin ja luonnoksiin
 - [ ] Käyttäjä voi tuoda taulukossa tiedot uusista korteista ja lisätä ne kokoelmaan
 - [ ] Käyttäjä voi kommentoida jaettujen peliversioiden kortteja
   - [ ] Kommentit näkyvät muille peliversion käyttäjille
-- [ ] Käyttäjä voi ladata korttitiedot sovelluksesta
+- [x] Käyttäjä voi ladata korttitiedot sovelluksesta tiedostoon
