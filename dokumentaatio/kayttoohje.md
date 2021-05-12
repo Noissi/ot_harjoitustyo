@@ -4,7 +4,7 @@ Lataa projektin viimeisin [release](https://github.com/Noissi/ot_harjoitustyo/re
 
 ## Konfigurointi
 
-Tietokantatiedosto _database.db_ luodaan automaattisesti _src_-kansioon ohjelman käynnistyksessä, mikäli tiedostoa ei vielä ole olemassa. Ohjelma myös luo kansiot _imgcards_ ja _imguser_ korttien ja käyttäjän antamille kuville, jos niitä ei vielä ole. Polkujen ja tiedostonimien muuttaminen onnistuu tiedostossa _config.py_.
+Tietokantatiedosto _database.db_ luodaan automaattisesti _src_-kansioon ohjelman käynnistyksessä, mikäli tiedostoa ei vielä ole olemassa. Ohjelma myös luo kansiot _imgcards_ ja _imguser_ korttien ja käyttäjän antamille kuville sekä _userfiles_ tiedostoille, jos niitä ei vielä ole. Polkujen ja tiedostonimien muuttaminen onnistuu tiedostossa _config.py_.
 
 ## Ohjelman käynnistäminen
 
@@ -23,7 +23,7 @@ poetry run invoke start
 ## Käyttö
 
 ### Yleistä
-Korttikube on kubejen ja korttien luomiseen tehty työkalu. Korttikuben kortit noudattavat ominaisuuksiltaan ja muokattavuudeltaan pääosin MTG:n korttien ominaisuuksia. Korteille voi määritellä vain korttityyppiä vastaavia ominaisuuksia. Esimerkiksi _Land_-korttityyppille ei voi asettaa voimakkuutta (power) eikä kestävyyttä (toughness), sillä ei voi olla heimoa (tribal), sillä ei ole hintaa (cost) ja sille voi asettaa vain kahta eri ominaisuutta (feature). Toisaalta taas _Sorcery_-korttityypillä ei muun muassa ole voimakkuutta ja kestävyyttä paitsi, jos sen alatyyppi on _Vehicle_. Tarkemmin korttien ominaisuuksiin voi perehtyä [MTG:n sivuilla](https://magic.wizards.com/en).
+Korttikube on kubejen ja korttien luomiseen tehty työkalu. Korttikuben kortit noudattavat ominaisuuksiltaan ja muokattavuudeltaan pääosin MTG:n korttien ominaisuuksia. Korteille voi määritellä vain korttityyppiä vastaavia ominaisuuksia. Esimerkiksi _Land_-korttityyppille ei voi asettaa voimakkuutta (power) eikä kestävyyttä (toughness), sillä ei voi olla heimoa (tribal), sillä ei ole hintaa (cost) ja sille voi asettaa vain kahta eri ominaisuutta (feature). Toisaalta taas _Sorcery_-korttityypillä ei muun muassa ole voimakkuutta ja kestävyyttä paitsi, jos sen alatyyppi on _Vehicle_. Tarkemmin korttien ominaisuuksiin voi perehtyä [MTG:n sivuilla](https://magic.wizards.com/en). Huom. _Plainswalker_ ei monimutkaisuutensa takia piirry oikein, vaan näyttäytyy _Creaturen_ kaltaisena.
 
 ### Käyttäjän luonti ja kirjautuminen
 
