@@ -34,14 +34,23 @@ Kirjaudu sisään tunnuksilla syöttämällä ne tyhjiin kenttiin ja paina _Kirj
 
 ### Uuden kuben luonti ja tarkastelu
 
-Luo uusi kube painamalla _Uusi kube_ -nappia ja syöttämällä valitsemasi nimi kubelle.
+Luo uusi kube painamalla _Uusi kube_ -nappia ja syöttämällä valitsemasi nimi kubelle. Näkymään ilmestyy nyt uusi kube.
 Voit tarkastella haluamaasi kubea painamalla sen kuvaketta, jolloin kubenäkymä avautuu.
+
+![](./kuvat/uusi_kube.png)
 
 ### Uuden kortin luominen kubeen
 
 Luo uusi kortti kubeen painamalla _Uusi kortti_ -nappia, jolloin siirryt kortinluontinäkymään.
 Anna haluamasi tiedot kortille ja paina _Tallenna_, näet vielä yhteenvedon kortistasi. Pääset takaisin kubenäkymään painamalla _Takaisin_.
 
+![](./kuvat/uusi_korrti.png)
+
 ### Kortin tarkastelu ja muokkaus
 Voit tarkastella haluamaasi kubea painamalla sen kuvaketta, jolloin korttinäkymä avautuu.
 Voit muokata kortin tietoja painamalla _Muokkaa_-nappia, jolloin kortinmuokkaussivu avautuu. Kun olet tehnyt haluamais muutokset, voit tallentaa ne _Tallenna_-napista.
+
+### Kubenäkymä ja korttien haku
+Kubenäkymässä näet kaikki kuben kortit. Voit hakea kortteja hakukenttien avulla ja järjestää kortit haluamaasi järjestykseen. Voit myös muokata etusivulla näkyvää kubekuvaketta valitsemalla sille kuvan _Valitse kubekuva_-napista.
+
+![](./kuvat/cube_view.png)
