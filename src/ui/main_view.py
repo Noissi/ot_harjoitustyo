@@ -21,6 +21,9 @@ class MainView(Window):
         Args:
             handle_show_login_view: A method to open a -login- ui.
             handle_show_cube_view: A method to open a -cube- ui.
+            outer_layout, upper_layout, bottom_layout: Main layouts.
+            scroll_layout, scroll: Layouts and widgets responsible for the
+                                   scrolling view.
         """
 
         super().__init__()
@@ -29,9 +32,9 @@ class MainView(Window):
         
         self._outer_layout  = self.get_outer_layout()
         self._upper_layout  = QHBoxLayout()
-        self._scroll_layout = QGridLayout()
         self._bottom_layout = QHBoxLayout()
 
+        self._scroll_layout = QGridLayout()
         self._scroll = QScrollArea()
         self._set_scroll()
 
@@ -59,13 +62,12 @@ class MainView(Window):
             btn_cube = QPushButton(cube[1])
             btn_cube.setMinimumSize(200, 200)
             btn_cube.setMaximumSize(200, 200)
-            hover_image = IMAGES_FILE_PATH + "mri.jpeg"
+            hover_image = IMAGES_FILE_PATH + "white.png"
             btn_cube.setFont(QFont('Times', 20))
             image = cube[3]
             btn_cube.setStyleSheet("QPushButton{border-image: url("+image+")}"
-                                   "QPushButton:hover{url("+hover_image+")}"
-                                   "QPushButton{text-align: center}"
-                                   "QPushButton{color: white}")
+                                   "QPushButton:hover{image: url("+hover_image+")}"
+                                   "QPushButton{text-align: center}")
             btn_cube.clicked.connect(lambda checked=False, a=cube: self._handle_show_cube_view(a))
             self._scroll_layout.addWidget(btn_cube, row, col)
             col += 1

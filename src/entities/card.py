@@ -14,7 +14,6 @@ class Card:
         _tribal: [Boolean] Tells if the card has tribal.
         _subtype: [List String] List of card's subtypes.
         _colour: [List String] List of card's colours.
-        _multicolour: [Boolean] Tells if the card has multiple colours.
         _manacost: [String] Card's manacost.
         _feature: [List String] List of card's features.
         _feature2: [List String] If the card has a limited set
@@ -45,7 +44,6 @@ class Card:
         self._tribal      = False
         self._subtype     = []
         self._colour      = []
-        self._multicolour = False
         self._manacost    = ""
         self._feature     = []
         self._feature2    = []
@@ -201,7 +199,6 @@ class Card:
                 self._colour = []
             else:
                 self._colour = colour.split(", ")
-        self._check_if_multicolour()
 
     def set_manacost(self, manacost):
         """ Sets card's manacost if the card type is allowed to have manacost.
@@ -331,7 +328,7 @@ class Card:
             [String] Colour of the card frame.
         """
 
-        if self._multicolour:
+        if self._check_if_multicolour():
             return "Kulta"
         if not self._colour:
             return "Väritön"
@@ -414,7 +411,6 @@ class Card:
 
         if colour not in self._colour:
             self._colour.append(colour)
-            self._check_if_multicolour()
 
     def add_feature(self, feature):
         """ Adds a feature in the feature list.
@@ -447,7 +443,6 @@ class Card:
 
         if colour in self._colour:
             self._colour.remove(colour)
-            self._check_if_multicolour()
 
     def remove_feature(self, feature):
         """ Removes a feature from the feature list.
@@ -463,12 +458,13 @@ class Card:
     def _check_if_multicolour(self):
         """ Checks if card has multiple colours, and sets
             the _multicolour paramater accordingly.
+        Returns:
+            [Boolean] Tells if the card has multiple colours.
         """
 
         if len(self._colour) > 1:
-            self._multicolour = True
-        else:
-            self._multicolour = False
+            return True
+        return False
 
     def copy(self, card):
         """ Copies the properties of another card to this card.
@@ -491,26 +487,3 @@ class Card:
         self.set_rarity(card.get_rarity())
         self.set_creator(card.get_creator())
         self.set_picture(card.get_picture())
-
-    def __str__(self):
-        """ Print card properties.
-        """
-
-        return "name: " + self._name + ", " + \
-               "cube: " + self.get_cubes_print() + ", " + \
-               "maintype: " + self._maintype + ", " + \
-               "legendary: " + str(self.get_legendary_print()) + ", " + \
-               "tribal: " + str(self.get_tribal_print()) + ", " + \
-               "subtype: " + self.get_subtype_print() + ", " + \
-               "colour: " + self.get_colour_print() + ", " + \
-               "manacost: " + str(self._manacost) + ", " + \
-               "power: " + str(self.get_power_print()) + ", " + \
-               "toughness: " + str(self.get_toughness_print()) + ", " + \
-               "feature: " + self.get_feature_print() + ", " + \
-               "ruletext: " + self._ruletext + ", " + \
-               "flavourtext: " + self._flavourtext + ", " + \
-               "image: " + self._image + ", " + \
-               "seticon: " + self._seticon + ", " + \
-               "rarity: " + self._rarity + ", " + \
-               "creator: " + self._creator + ", " + \
-               "picture: " + self._picture

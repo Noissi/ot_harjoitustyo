@@ -8,7 +8,24 @@ from ui.card_image import CardImage
 from config import CARD_RATIO, IMAGES_FILE_PATH
 
 class CardView(Window):
+    """ Class responsible for card ui.
+
+    Attributes:
+        handle_show_cube_view: A method to open a -cube- ui.
+        handle_show_edit_card_view: A method to open a -edit card- ui.
+    """
+
     def __init__(self, handle_show_cube_view, handle_show_edit_card_view):
+        """ Class constructor. Creates a new card ui.
+        
+        Args:
+            handle_show_cube_view: A method to open a -cube- ui.
+            handle_show_edit_card_view: A method to open a -edit card- ui.
+            card: The Card entity to be shown.
+            outer_layout, middle_layout, bottom_layout: Main layouts.
+            left_layout, right_layout: Layouts in middle_layout.
+        """
+
         super().__init__()
         self._handle_show_edit_card_view = handle_show_edit_card_view
         self._handle_show_cube_view = handle_show_cube_view
@@ -25,8 +42,9 @@ class CardView(Window):
         self._initialise()
         
     def _set_layouts(self):
-        # Set all layouts to outer layout grid
-        
+        """ Sets all layouts to the outer layout grid.
+        """
+
         self._outer_layout.addLayout(self._middle_layout, 1, 0)
         self._outer_layout.addLayout(self._bottom_layout, 2, 0)
         
@@ -34,28 +52,24 @@ class CardView(Window):
         self._outer_layout.setContentsMargins(50,50,50,50)
         self._outer_layout.setSpacing(20)
         
-        #self._outer_layout.setColumnStretch(0, 1)
-        #self._outer_layout.setColumnStretch(1, 5)
-        #self._outer_layout.setColumnStretch(2, 1)
-        
         self._outer_layout.setRowStretch(0, 1)        
         self._outer_layout.setRowStretch(1, 10)
         self._outer_layout.setRowStretch(2, 1)
         
         self.setLayout(self._outer_layout)
-        
-        #widget = QWidget(self)
-        #widget.setLayout(self._outer_layout)
-        #self.setCentralWidget(widget)
-        #self.centralWidget().setLayout(self._outer_layout)
 
     def _set_middle_layout(self):
-        # Add to middle layout
+        """ Sets the middle layout elements.
+        """
+
         self._middle_layout.addLayout(self._left_layout, 0, 0)
         self._middle_layout.addLayout(self._card_layout, 0, 1)
         self._middle_layout.addLayout(self._right_layout, 0, 2)
         
     def _set_bottom_layout(self):
+        """ Sets the bottom layout elements.
+        """
+
         # Draw return button
         btn_back = QPushButton('Takaisin')
         btn_back.setMaximumWidth(100)
@@ -75,14 +89,18 @@ class CardView(Window):
         self._bottom_layout.addWidget(btn_del)
         
     def _set_card_layout(self):
-        # Draw card frame
+        """ Draws the card frame.
+        """
+
         self._card_layout = QGridLayout()
         card_image = CardImage()
         card_image.set_card(self._card)
         self._card_layout.addWidget(card_image, 0, Qt.AlignCenter)
 
     def _set_leftpanel_layout(self):
-        # Draw left side panel
+        """ Sets the left side panel elements.
+        """
+
         self._left_layout.addRow("Nimi", QLabel(self._card.get_name()))
         self._left_layout.addRow("Tyyppi:", QLabel(self._card.get_maintype()))
         self._left_layout.addRow("Legendary:", QLabel(self._card.get_legendary_print()))
@@ -96,6 +114,9 @@ class CardView(Window):
         self._left_layout.addRow("Ominaisuus:", feature_label)
 
     def _set_rightpanel_layout(self):
+        """ Sets the right side panel elements.
+        """
+
         ruletext_label = QLabel(self._card.get_ruletext())
         ruletext_label.setWordWrap(True)
         self._right_layout.addRow("Sääntöteksti:", ruletext_label)
@@ -124,6 +145,10 @@ class CardView(Window):
         self._right_layout.addRow("Tekijä:", creator_label)
 
     def _delete_card(self):
+        """ Shows a message to the user and if user agrees to delete the card,
+            the card is removed from the database and user returns to the cube view.
+        """
+
         msg = QMessageBox()
         ret = msg.question(self,'', "Haluatko varmasti poistaa kortin?", msg.Yes | msg.No)
         if ret == msg.Yes:
@@ -131,7 +156,10 @@ class CardView(Window):
             self._handle_show_cube_view()
         
 
-    def _initialise(self):        
+    def _initialise(self):
+        """ Initialise the card view page. Creates the final layout.
+        """
+   
         # Set background image
         image = QImage(IMAGES_FILE_PATH + "card.jpg")
         image_scaled = image.scaled(QSize(self.width, self.height)) # resize Image to widgets size

@@ -5,24 +5,40 @@ from services.korttikube_service import korttikube_service as kks
 from config import IMAGES_FILE_PATH
 
 class CreateUserView(QWidget):
+    """ Class responsible for create user ui.
+
+    Attributes:
+        handle_show_login_view: A method to open a -login- ui.
+    """
+
     def __init__(self, handle_show_login_view=None):
+        """ Class constructor. Creates a new create user ui.
+
+        Args:
+            handle_show_login_view: A method to open a -login- ui.
+            left, top, width, height: Page geometry values.
+            username_line: QLineEdit widget for entering the username
+            password_line: QLineEdit widget for entering the password
+        """
+
         super().__init__()
         self._handle_show_login_view = handle_show_login_view
-        self._username_entry = None
-        self._password_entry = None
-        
+
         self.left=10
         self.top=10
         self.width=1500
         self.height=1000
-        
+
         self._username_line = QLineEdit()
         self._password_line = QLineEdit()
-        self._unique_username = False
-        
+
         self._initialise()  
 
     def _create_user(self):
+        """ Creates a new user if the given username does not already exist.
+            Gives a  message showing the outcome.
+        """
+
         msg = QMessageBox()
         user = kks.create_user(self._username_line.text(), self._password_line.text())
         
@@ -34,6 +50,9 @@ class CreateUserView(QWidget):
             msg.exec_()
 
     def _initialise(self):
+        """ Draws the create user page page.
+        """
+
         self.setGeometry(self.left, self.top, self.width, self.height)
         layout = QGridLayout()
 
@@ -41,7 +60,7 @@ class CreateUserView(QWidget):
         image = QImage(IMAGES_FILE_PATH + "login.jpg")
         image_scaled = image.scaled(QSize(self.width, self.height)) # resize Image to widgets size
         palette = QPalette()
-        palette.setBrush(QPalette.Window, QBrush(image_scaled))                        
+        palette.setBrush(QPalette.Window, QBrush(image_scaled))
         self.setPalette(palette)
 
         # Set username label

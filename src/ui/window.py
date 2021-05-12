@@ -2,6 +2,9 @@ from PySide6.QtWidgets import *
 from PySide6.QtCore import *
 
 class Window(QWidget):
+    """ Class responsible for ui geometries.
+    """
+
     def __init__(self):
         super().__init__()
 
@@ -15,7 +18,7 @@ class Window(QWidget):
         self.height = 1000
         self.setGeometry(self.left, self.top, self.width, self.height)
 
-        self._initialise_menu()
+        #self._initialise_menu()
 
     def get_outer_layout(self):
         return self._outer_layout

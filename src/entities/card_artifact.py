@@ -8,7 +8,8 @@ class Artifact(Card):
         _feature2: [List String] If the card has a limited set
                    of features, the available features are listed here.
         _power: [Integer] Artifact has no power (unless subtype includes 'Vehicle').
-        _toughness: [Integer] Artifact has no toughness (unless subtype includes 'Vehicle').
+        _toughness: [Integer] Artifact has no toughness (unless subtype includes
+                              'Vehicle').
     """
 
     def __init__(self, name):
@@ -24,7 +25,8 @@ class Artifact(Card):
         self._toughness = None
 
     def set_subtype(self, subtype):
-        """ Sets card's subtypes. If subtype includes 'Vehicle', power and toughness are set on.
+        """ Sets card's subtypes. If subtype includes 'Vehicle', power and toughness
+            are set on.
         Args:
             subtype: [List or String] List of subtypes or a string of them to be set.
         """

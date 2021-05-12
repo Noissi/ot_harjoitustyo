@@ -1,4 +1,6 @@
+import csv
 from database_connection import get_database_connection
+from config import USER_FILES_FILE_PATH
 
 class CardRepository:
     """ Class responsible for card database logic.
@@ -155,5 +157,20 @@ class CardRepository:
         cursor.execute(sql, insert_sql)
         rows = cursor.fetchall()
         return rows
+
+    def create_csv_file(self, cube):
+        """ Creates a csv-file from cards in selected cubr.
+        Args:
+            cube: [Cube] The Cube entity from where the cards are selected.
+        """
+
+        with open(USER_FILES_FILE_PATH + cube.get_name() + ".csv", "w") as csv_file:
+            cube_sql = (cube.get_id(),)
+            sql = """ SELECT * FROM cards WHERE cube_id = ?; """
+            cursor = self._connection.cursor()
+            cursor.execute(sql, cube_sql)
+            csv_writer = csv.writer(csv_file, delimiter=";")
+            csv_writer.writerow([i[0] for i in cursor.description])
+            csv_writer.writerows(cursor)
 
 card_repository = CardRepository(get_database_connection())

@@ -7,8 +7,29 @@ from services.korttikube_service import korttikube_service as kks
 from config import CARD_RATIO, IMAGES_FILE_PATH, USER_IMAGES_FILE_PATH
 
 class CubeView(Window):
+    """ Class responsible for cube ui.
+
+    Attributes:
+        handle_show_main_view: A method to open a -main- ui.
+        handle_show_card_view: A method to open a -card- ui.
+        handle_show_edit_card_view: A method to open a -edit card- ui.
+    """
+
     def __init__(self, handle_show_main_view=None, 
                  handle_show_card_view=None, handle_show_edit_card_view=None):
+        """ Class constructor. Creates a new cube ui.
+        
+        Args:
+            handle_show_main_view: A method to open a -main- ui.
+            handle_show_card_view: A method to open a -card- ui.
+            handle_show_edit_card_view: A method to open a -edit card- ui.
+            search_parameters: Dictionary of selected searching criteria.
+            order: Selected order for cube listing.
+            outer_layout, upper_layout, bottom_layout: Main layouts.
+            scroll_layout, scroll: Layouts and widgets responsible for the
+                                   scrolling view.
+        """
+
         super().__init__()
         self._handle_show_main_view = handle_show_main_view
         self._handle_show_card_view = handle_show_card_view
@@ -16,30 +37,35 @@ class CubeView(Window):
 
         self._search_parameters = {"name": "", "maintype": "", "colour": ""}
         self._order = ["name", "ASC"]
-        
+
         self._outer_layout = self.get_outer_layout()
         self._upper_layout = QGridLayout()
-        #self._collection_layout = QGridLayout()
         self._bottom_layout = QHBoxLayout()
-        
+
         self._scroll_layout = QGridLayout()
-        self._scrollwidget = QWidget()
-        #self._scrollwidget.setLayout(self._collection_layout)
-        self._scrollwidget.setLayout(self._scroll_layout)
         self._scroll = QScrollArea()
-        self._scroll.setWidgetResizable(True)  # Set to make the inner widget resize with scroll area
-        self._scroll.setWidget(self._scrollwidget)
+        self._set_scroll()
+
         self._initialise()
-        
+
     def _set_upper_layout(self):
+        """ Sets the upper layout elements. Divided into two levels.
+        """
+
         upper_hbox = QHBoxLayout()
         lower_hbox = QHBoxLayout()
-        
+
         # New card button
         btn_new = QPushButton('Uusi kortti')
         btn_new.setMaximumWidth(100)
         btn_new.clicked.connect(lambda: self._handle_show_edit_card_view(True))
         upper_hbox.addWidget(btn_new, 0)
+
+        # Import cards from excel button
+        btn_import = QPushButton('Lataa kortit tiedostoon')
+        btn_import.setMaximumWidth(180)
+        btn_import.clicked.connect(self._export_cards)
+        upper_hbox.addWidget(btn_import, 1)
         self._upper_layout.addLayout(upper_hbox, 0, 0)
 
         # Search by name
@@ -106,8 +132,20 @@ class CubeView(Window):
         order_combo.activated.connect(lambda: self._order_by(order_combo.currentText()))
 
         self._upper_layout.addLayout(lower_hbox, 1, 0)
+    
+    def _set_scroll(self):
+        """ Sets the scroll area of the page for the card listing.
+        """
+
+        scrollwidget = QWidget()
+        scrollwidget.setLayout(self._scroll_layout)
+        self._scroll.setWidgetResizable(True) # Set to make the inner widget resize with scroll area
+        self._scroll.setWidget(scrollwidget)
         
     def _set_collection_layout(self):
+        """ Sets the collection layout elements (list of cards).
+        """
+
         # Get cards
         cards = self._get_cards_with_search()
 
@@ -121,13 +159,11 @@ class CubeView(Window):
             btn_card.setMaximumSize(card_width, card_width * CARD_RATIO)
             card_picture = card[18]
             hover_image = IMAGES_FILE_PATH + "colourlesscard.png"
-            # changing font and size of text
             btn_card.setFont(QFont('Times', 10))
             btn_card.setStyleSheet("QPushButton{border-image: url("+card_picture+")}"
                                    "QPushButton:hover{image: url("+hover_image+")}"
                                    "QPushButton{text-align: top left}")
             btn_card.clicked.connect(lambda checked=False, a=card: self._handle_show_card_view(a))
-            #self._collection_layout.addWidget(btn_card, row, col)
             self._scroll_layout.addWidget(btn_card, row, col)
             col += 1
             if col > 5:
@@ -135,6 +171,9 @@ class CubeView(Window):
                 row += 1
             
     def _set_bottom_layout(self):
+        """ Sets the bottom layout elements.
+        """
+
         # Back button
         btn_back = QPushButton('Takaisin etusivulle')
         btn_back.setMaximumWidth(200)
@@ -148,9 +187,11 @@ class CubeView(Window):
         self._bottom_layout.addWidget(btn_image)
         
     def _update_cards(self):
+        """ Updates the card list.
+        """
+
         self._scroll_layout = QGridLayout()
         self._scrollwidget = QWidget()
-        #self._scrollwidget.setLayout(self._collection_layout)
         self._scrollwidget.setLayout(self._scroll_layout)
         self._scroll = QScrollArea()
         self._scroll.setWidgetResizable(True)  # Set to make the inner widget resize with scroll area
@@ -159,31 +200,64 @@ class CubeView(Window):
         self._set_collection_layout()
         self._outer_layout.addWidget(self._scroll, 2, 0, 8, 1)
 
+    def _export_cards(self):
+        """ Creates a csv file out of the cards in cube.
+        """
+
+        kks.create_csv_file()
+        msg = QMessageBox()
+        msg.setText('Tiedosto luotu')
+        msg.exec_()
+
     def _change_image(self):
+        """ Changes the cube image showed in main page on the cube button.
+        """
+
         fname = QFileDialog.getOpenFileName(self, 'Open file', 
         				     USER_IMAGES_FILE_PATH, "Image files (*.jpg *.png *.jpeg)")
-        fname = list(fname)[0]
-        fname = fname.split("/")
-        fname = USER_IMAGES_FILE_PATH + fname[-1]
-        kks.update_cube(fname, "image")
+        if fname[0] != "":
+            fname = list(fname)[0]
+            fname = fname.split("/")
+            fname = USER_IMAGES_FILE_PATH + fname[-1]
+            kks.update_cube(fname, "image")
 
     def _search_by_name(self, text):
+        """ Shows only cards which name contains the given text.
+        Args:
+            text: [String] The selected name (part).
+        """
+
         self._search_parameters["name"] = text
         self._update_cards()
 
     def _search_by_maintype(self, text):
+        """ Shows only cards which maintype is the given text.
+        Args:
+            text: [String] The selected maintype.
+        """
+
         if text == "Ei valittu":
             text = ""
         self._search_parameters["maintype"] = text
         self._update_cards()
 
     def _search_by_colour(self, text):
+        """ Shows only cards which colours contains the given text.
+        Args:
+            text: [String] The selected colour.
+        """
+
         if text == "Ei valittu":
             text = ""
         self._search_parameters["colour"] = text
         self._update_cards()
 
     def _order_by(self, text):
+        """ Shows cards in the selected order.
+        Args:
+            text: [String] The ordering parameter.
+        """
+
         if text == "Aakkosjärjestys":
             order = ["name", "ASC"]
         elif text == "Suurin voimakkuus":
@@ -198,11 +272,10 @@ class CubeView(Window):
         self._order = order
         self._update_cards()
 
-    def _get_cards(self):
-        cards = kks.get_cards_in_cube()
-        return cards
-
     def _get_cards_with_search(self):
+        """ Get cards from the database that agree with the search parameters.
+        """
+
         cards = kks.get_cards_that_contains(self._search_parameters["name"],
                                             self._search_parameters["maintype"],
                                             self._search_parameters["colour"],
@@ -210,6 +283,9 @@ class CubeView(Window):
         return cards
 
     def _initialise(self):
+        """ Initialise the cube view page. Creates the final layout.
+        """
+   
         # Set background image
         image = QImage(IMAGES_FILE_PATH + "mtg_puu.jpg")
         image_scaled = image.scaled(QSize(self.width, self.height)) # resize Image to widgets size
@@ -223,7 +299,6 @@ class CubeView(Window):
         
         self._outer_layout.addLayout(self._upper_layout, 1, 0)
         self._outer_layout.addWidget(self._scroll, 2, 0, 8, 1)
-        #self._outer_layout.addLayout(self._collection_layout, 2, 0, 8, 1)
         self._outer_layout.addLayout(self._bottom_layout, 10, 0)
         
         self.setLayout(self._outer_layout)

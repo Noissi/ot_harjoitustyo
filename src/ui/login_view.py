@@ -16,7 +16,7 @@ class LoginView(QWidget):
 
     def __init__(self, handle_show_create_user_view, handle_show_main_view, handle_end):
         """ Class constructor. Creates a new login ui.
-        
+
         Args:
 	        handle_show_create_user_view: A method to open a -create user- ui.
             handle_show_main_view: A method to open a -main- ui.

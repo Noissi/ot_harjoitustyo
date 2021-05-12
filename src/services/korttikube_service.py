@@ -1,3 +1,5 @@
+import os
+
 from entities.user import User
 from entities.cube import Cube
 from entities.card import Card
@@ -477,11 +479,18 @@ class KorttikubeService:
 
         return self._user_repository.find_all()
 
+    def create_csv_file(self):
+        """ Creates a csv file of cards in the current cube.
+        """
+
+        self._card_repository.create_csv_file(self._cube)
+
     def delete_card(self):
         """ Delete the current card. Deletes the card from the database.
         """
 
         self._card_repository.delete(self._card.get_id())
+        os.remove(self._card.get_picture())
 
     def save_to_database(self, obj, obj_type):
         """ Save an object to the database.
