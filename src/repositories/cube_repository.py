@@ -59,7 +59,6 @@ class CubeRepository:
         """
 
         cube_sql = (cube.get_id(),)
-        print(cube.get_image())
         sql = """ SELECT 1 FROM cubes WHERE id = ?; """
         cursor = self._connection.cursor()
         cursor.execute(sql, cube_sql)
@@ -75,9 +74,18 @@ class CubeRepository:
         """
 
         cube_sql = (cube_id,)
-        sql = """ DELETE FROM cubes WHERE cube_id = ?; """
+        sql = """ DELETE FROM cubes WHERE id = ?; """
         cursor = self._connection.cursor()
         cursor.execute(sql, cube_sql)
+        self._connection.commit()
+
+    def delete_all(self):
+        """ Removes all the cubes from the cubes table.
+        """
+
+        sql = """ DELETE FROM cubes; """
+        cursor = self._connection.cursor()
+        cursor.execute(sql)
         self._connection.commit()
 
     def find_all(self):

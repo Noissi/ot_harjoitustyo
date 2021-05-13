@@ -1,6 +1,4 @@
-import csv
 from database_connection import get_database_connection
-from config import USER_FILES_FILE_PATH
 
 class CardRepository:
     """ Class responsible for card database logic.
@@ -107,6 +105,27 @@ class CardRepository:
         cursor.execute(sql, card_sql)
         self._connection.commit()
 
+    def delete_all(self):
+        """ Removes all the cards from the cards table.
+        """
+
+        sql = """ DELETE FROM cards; """
+        cursor = self._connection.cursor()
+        cursor.execute(sql)
+        self._connection.commit()
+
+    def find_all(self):
+        """ Selects all cards in database.
+        Return:
+            rows: [List Tuple] List of tuples including the cards.
+        """
+
+        sql = """ SELECT * FROM cards; """
+        cursor = self._connection.cursor()
+        cursor.execute(sql)
+        rows = cursor.fetchall()
+        return rows
+
     def find_by_cube(self, cube_id):
         """ Selects the cards belonging to the given cube.
         Args:
@@ -158,19 +177,19 @@ class CardRepository:
         rows = cursor.fetchall()
         return rows
 
-    def create_csv_file(self, cube):
+    def create_csv_file(self, cube_id):
         """ Creates a csv-file from cards in selected cubr.
         Args:
             cube: [Cube] The Cube entity from where the cards are selected.
+        Return:
+            data: cursor data
         """
 
-        with open(USER_FILES_FILE_PATH + cube.get_name() + ".csv", "w") as csv_file:
-            cube_sql = (cube.get_id(),)
-            sql = """ SELECT * FROM cards WHERE cube_id = ?; """
-            cursor = self._connection.cursor()
-            cursor.execute(sql, cube_sql)
-            csv_writer = csv.writer(csv_file, delimiter=";")
-            csv_writer.writerow([i[0] for i in cursor.description])
-            csv_writer.writerows(cursor)
+        cube_sql = (cube_id,)
+        sql = """ SELECT * FROM cards WHERE cube_id = ?; """
+        cursor = self._connection.cursor()
+        cursor.execute(sql, cube_sql)
+
+        return cursor
 
 card_repository = CardRepository(get_database_connection())

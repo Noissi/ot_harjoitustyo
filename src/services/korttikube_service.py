@@ -1,4 +1,5 @@
 import os
+import csv
 
 from entities.user import User
 from entities.cube import Cube
@@ -18,7 +19,7 @@ from repositories.user_repository import user_repository as default_user_reposit
 from repositories.cube_repository import cube_repository as default_cube_repository
 from repositories.card_repository import card_repository as default_card_repository
 
-from config import IMAGES_FILE_PATH
+from config import IMAGES_FILE_PATH, USER_FILES_FILE_PATH
 
 class KorttikubeService:
     """ Class responsible for application logic.
@@ -483,14 +484,19 @@ class KorttikubeService:
         """ Creates a csv file of cards in the current cube.
         """
 
-        self._card_repository.create_csv_file(self._cube)
+        with open(USER_FILES_FILE_PATH + self._cube.get_name() + ".csv", "w") as csv_file:
+            cursor = self._card_repository.create_csv_file(self._cube.get_id())
+            csv_writer = csv.writer(csv_file, delimiter=";")
+            csv_writer.writerow([i[0] for i in cursor.description])
+            csv_writer.writerows(cursor)
 
     def delete_card(self):
         """ Delete the current card. Deletes the card from the database.
         """
 
         self._card_repository.delete(self._card.get_id())
-        os.remove(self._card.get_picture())
+        if os.path.exists(self._card.get_picture()):
+            os.remove(self._card.get_picture())
 
     def save_to_database(self, obj, obj_type):
         """ Save an object to the database.

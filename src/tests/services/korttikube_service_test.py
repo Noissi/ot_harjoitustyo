@@ -48,9 +48,15 @@ class FakeCardRepository():
                 cards_in_cube.append(card)
         return cards_in_cube
         
-    def find_cards_from_cube_that_contains(cube_id, name_part,
-    					    maintype, colour):
-        return []
+    def find_cards_from_cube_that_contains(self, cube_id, name_part,
+    					    maintype, colour, order):
+        found = []
+        for card in self.cards:
+            if card.get_maintype() == maintype:
+                if colour in card.get_colour_print():
+                    if name_part in card.get_name():
+                        found.append(card)
+        return found
         
 class FakeCubeRepository():
     def __init__(self, cubes=[]):
@@ -152,14 +158,21 @@ class TestKorttikubeService(unittest.TestCase):
 
     # LOGIN AND LOGOUT
     def test_login_logout(self):
-        user = self.kks.login("Testaaja", "testo")
-        self.assertEqual(user, False)
         self.kks.save_to_database(self.user, "user")
         user = self.kks.login("Testaaja", "testo")
         self.assertEqual(user.get_username(), "Testaaja")
         self.assertEqual(self.kks.get_user().get_username(), "Testaaja")
         self.kks.logout()
         self.assertEqual(self.kks.get_user(), None)
+
+    def test_login_wrong_user(self):
+        user = self.kks.login("Testaaja", "testo")
+        self.assertEqual(user, False)
+
+    def test_login_wrong_password(self):
+        self.kks.save_to_database(self.user, "user")
+        user = self.kks.login("Testaaja", "pesto")
+        self.assertEqual(user, False)
 
     # SET ENTITIES
     def test_create_card_entity_db(self):
@@ -375,6 +388,34 @@ class TestKorttikubeService(unittest.TestCase):
         self.kks.update_card(self.card, "kuva.png", "picture")
         self.assertEqual(self.card.get_picture(), "kuva.png")
 
+    def test_update_cube(self):
+        cube = self.cube
+        self.kks.set_cube(cube)
+        self.assertEqual(cube.get_name(), "Testikube")
+        self.assertEqual(cube.get_users(), [])
+        self.assertEqual(cube.get_image(), "")
+        self.assertEqual(cube.get_seticon(), "")
+        self.kks.update_cube("Uusi", "name")
+        self.assertEqual(cube.get_name(), "Uusi")
+        self.assertEqual(cube.get_users(), [])
+        self.assertEqual(cube.get_image(), "")
+        self.assertEqual(cube.get_seticon(), "")
+        self.kks.update_cube("id1", "users", True)
+        self.assertEqual(cube.get_name(), "Uusi")
+        self.assertEqual(cube.get_users(), ["id1"])
+        self.assertEqual(cube.get_image(), "")
+        self.assertEqual(cube.get_seticon(), "")
+        self.kks.update_cube("kuva.pngee", "image")
+        self.assertEqual(cube.get_name(), "Uusi")
+        self.assertEqual(cube.get_users(), ["id1"])
+        self.assertEqual(cube.get_image(), "kuva.pngee")
+        self.assertEqual(cube.get_seticon(), "")
+        self.kks.update_cube("tunnus.pngee", "seticon")
+        self.assertEqual(cube.get_name(), "Uusi")
+        self.assertEqual(cube.get_users(), ["id1"])
+        self.assertEqual(cube.get_image(), "kuva.pngee")
+        self.assertEqual(cube.get_seticon(), "tunnus.pngee")
+
     def test_set_card_frame(self):
         card_frame_image = self.kks.set_card_frame(self.card_db)
         self.assertEqual(card_frame_image, "img/whitecard.png")
@@ -411,6 +452,57 @@ class TestKorttikubeService(unittest.TestCase):
         cards = self.kks.get_cards_in_cube()
         self.assertEqual(cards, [card])
 
+    def test_get_cards_that_contains(self):
+        self.set_user_and_cube()
+        card1 = self.kks.create_card_entity("testikortti")
+        card1 = self.kks.change_card_type(card1, "Creature")
+        self.kks.update_card(card1, "Punainen", "colour", True)
+        self.kks.save_to_database(card1, "card")
+        card2 = self.kks.create_card_entity("testi2")
+        card2 = self.kks.change_card_type(card2, "Creature")
+        self.kks.update_card(card2, "Punainen", "colour", True)
+        self.kks.save_to_database(card2, "card")
+        card3 = self.kks.create_card_entity("testi1")
+        card3 = self.kks.change_card_type(card3, "Instant")
+        self.kks.update_card(card3, "Punainen", "colour", True)
+        self.kks.save_to_database(card3, "card")
+        card4 = self.kks.create_card_entity("kortti")
+        card4 = self.kks.change_card_type(card4, "Creature")
+        self.kks.update_card(card4, "Punainen", "colour", True)
+        self.kks.save_to_database(card4, "card")
+        card5 = self.kks.create_card_entity("testikort")
+        card5 = self.kks.change_card_type(card5, "Creature")
+        self.kks.update_card(card5, "Vihreä", "colour", True)
+        self.kks.update_card(card5, "Sininen", "colour", True)
+        self.kks.save_to_database(card5, "card")
+        card6 = self.kks.create_card_entity("korttitesti1")
+        card6 = self.kks.change_card_type(card6, "Creature")
+        self.kks.update_card(card6, "Punainen", "colour", True)
+        self.kks.save_to_database(card6, "card")
+        cards = self.kks.get_cards_that_contains("testi", "Creature",
+                                                 "Punainen", "")
+        self.assertEqual(cards, [card1, card2, card6])
+
+    def test_get_cards_that_contains_multicolour(self):
+        self.set_user_and_cube()
+        card1 = self.kks.create_card_entity("testikortti")
+        card1 = self.kks.change_card_type(card1, "Creature")
+        self.kks.update_card(card1, "Vihreä", "colour", True)
+        self.kks.save_to_database(card1, "card")
+        card2 = self.kks.create_card_entity("testi2")
+        card2 = self.kks.change_card_type(card2, "Creature")
+        self.kks.update_card(card2, "Punainen", "colour", True)
+        self.kks.update_card(card2, "Sininen", "colour", True)
+        self.kks.save_to_database(card2, "card")
+        card3 = self.kks.create_card_entity("testikort")
+        card3 = self.kks.change_card_type(card3, "Creature")
+        self.kks.update_card(card3, "Vihreä", "colour", True)
+        self.kks.update_card(card3, "Sininen", "colour", True)
+        self.kks.save_to_database(card3, "card")
+        cards = self.kks.get_cards_that_contains("testi", "Creature",
+                                                 "Monivärinen", "")
+        self.assertEqual(cards, [card2, card3])
+
     def test_get_cubes_from_user(self):
         suser, cube = self.set_user_and_cube()
         cubes = self.kks.get_cubes_from_user()
@@ -432,10 +524,23 @@ class TestKorttikubeService(unittest.TestCase):
         self.set_user_and_cube()
         cards = self.kks.get_cards_in_cube()
         self.assertEqual(cards, [])
-        card = self.kks.create_card_entity("Eka")
+        card = self.kks.create_card_entity("Testcard123")
         self.kks.save_to_database(card, "card")
         cards = self.kks.get_cards_in_cube()
         self.assertEqual(cards, [card])
         self.kks.delete_card()
         cards = self.kks.get_cards_in_cube()
         self.assertEqual(cards, [])
+
+    def test_user_creates_account_cube_and_card(self):
+        user = self.kks.create_user("nimi", "salasana")
+        self.assertEqual(user.get_username(), "nimi")
+        self.kks.login("nimi", "salasana")
+        cube = self.kks.create_cube_entity("uusikube")
+        self.kks.set_cube(cube)
+        self.assertEqual(self.kks.get_cube().get_name(), "uusikube")
+        card = self.kks.create_card_entity("uusikortti")
+        self.kks.set_card(card)
+        self.assertEqual(self.kks.get_card().get_name(), "uusikortti")
+        
+        

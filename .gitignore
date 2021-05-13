@@ -10,4 +10,4 @@ userfiles*/
 .pytest_cache
 
 # Data files
-database*
+*database*

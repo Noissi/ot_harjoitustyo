@@ -2,14 +2,12 @@ from database_connection import get_database_connection
 
 class UserRepository:
     """ Class responsible for user database logic.
-
     Attributes:
         connection: A databse connection object.
     """
 
     def __init__(self, connection):
         """ Class constructor. Creates a new user repository.
-
         Args:
             connection: A databse connection object.
         """
@@ -49,6 +47,15 @@ class UserRepository:
         sql = """DELETE FROM users WHERE username = ? """
         cursor = self._connection.cursor()
         cursor.execute(sql, user_sql)
+        self._connection.commit()
+
+    def delete_all(self):
+        """ Removes all the users from the users table.
+        """
+
+        sql = """ DELETE FROM users; """
+        cursor = self._connection.cursor()
+        cursor.execute(sql)
         self._connection.commit()
 
     def find_all(self):

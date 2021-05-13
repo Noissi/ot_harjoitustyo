@@ -239,7 +239,7 @@ class EditCardView(Window):
         self._set_card_layout()
         self._set_middle_layout()
         self._set_layouts()
-        self.setLayout(self._outer_layout)
+        #self.setLayout(self._outer_layout)
 
     # Save to card
     def _change_name(self):
@@ -252,7 +252,8 @@ class EditCardView(Window):
     def _change_maintype(self):
         """ Changes the maintype of the card. Creates a new Card entity
         """
-        self._card = kks.change_card_type(self._card, self._maintype_combo.currentText())        
+
+        self._card = kks.change_card_type(self._card, self._maintype_combo.currentText())
         self._disable_edit()
         self._update_card_layout()
 
@@ -664,4 +665,4 @@ class EditCardView(Window):
         self._set_bottom_layout()
         self._set_layouts()
 
-        self.setLayout(self._outer_layout)
+        #self.setLayout(self._outer_layout)
