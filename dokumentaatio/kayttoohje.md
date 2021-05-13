@@ -53,6 +53,6 @@ Voit muokata kortin tietoja painamalla _Muokkaa_-nappia, jolloin kortinmuokkauss
 ![](./kuvat/muokkaa_korttia.png)
 
 ### Kubenäkymä ja korttien haku
-Kubenäkymässä näet kaikki kuben kortit. Voit hakea kortteja hakukenttien avulla ja järjestää kortit haluamaasi järjestykseen. Voit myös muokata etusivulla näkyvää kubekuvaketta valitsemalla sille kuvan _Valitse kubekuva_-napista. Lata kuben korttitiedot tiedostoon napista _Lataa kortit tiedostoon_. Tiedosto tallettuu _userfiles_-kansioon.
+Kubenäkymässä näet kaikki kuben kortit. Voit hakea kortteja hakukenttien avulla ja järjestää kortit haluamaasi järjestykseen. Voit myös muokata etusivulla näkyvää kubekuvaketta valitsemalla sille kuvan _Valitse kubekuva_-napista. Lataa kuben korttitiedot tiedostoon napista _Lataa kortit tiedostoon_. Tiedosto tallettuu _userfiles_-kansioon.
 
 ![](./kuvat/cube_view.png)
