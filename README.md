@@ -12,7 +12,7 @@ Sovelluksen avulla käyttäjät luovat omia versioita MTG-kortteista. Sovellukse
 
 * [Arkkitehtuurikuvaus](https://github.com/Noissi/ot_harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
 
-<!-- * [Testaus](https://github.com/Noissi/ot_harjoitustyo/blob/master/dokumentaatio/testaus.md) -->
+* [Testaus](https://github.com/Noissi/ot_harjoitustyo/blob/master/dokumentaatio/testaus.md)
 
 * [Työaikakirjanpito](https://github.com/Noissi/ot_harjoitustyo/blob/master/dokumentaatio/tyoaikakirjanpito.md)
 
@@ -32,7 +32,7 @@ poetry run invoke start
 ```
 
 ### Testaus
-Testien suorittaminen
+Testien suorittaminen (poista mahdollinen src/test_database.db-tiedosto ennen testejä)
 ```
 poetry run invoke test
 ```
