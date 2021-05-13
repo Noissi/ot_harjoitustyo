@@ -29,14 +29,24 @@ Ohjelman osien suhdetta kuvaa seuraava pakkauskaavio:
 
 ![Pakkaus](./kuvat/pakkauskaavio.png)
 
+## Tiestojen tallennus
+
+Tiestojen tallentamisesta huolehtivat repositorioluokat [UserRepository](https://github.com/Noissi/ot_harjoitustyo/edit/master/src/repositories/user_repository.py), [CubeRepository](https://github.com/Noissi/ot_harjoitustyo/edit/master/src/repositories/cube_repository.py) ja [CardRepository](https://github.com/Noissi/ot_harjoitustyo/edit/master/src/repositories/card_repository.py, jotka tallettavat tiedon SQLite-tietokantaan. Initialise_database-funktio alustaa tietokannan ja luo sille database.db-tiedoston.
+
+Lisäksi ohjelma luo png-kuvia korteista, jotka se tallettaa _imgcards_-tiedostoon. Halutessaan käyttäjä voi myös ladata korttitiedot csv-tiedostoon, joka talletetaan _userfiles_-kansioon.
+
 ## Päätoiminnallisuudet
+
+Sekvenssikaavioita sovelluksen muutamasta päätoiminnallisuudesta.
 
 ### Sisäänkirjautuminen
 
-### Kuben luonti
+![Login](./kuvat/sekvenssikaavio_login.png)
 
 ### Kortin luonti
 
 ![Kortin_luonti](./kuvat/sekvenssikaavio_uusikortti.png)
 
+### Kortin muokkaus
 
+![Kortin_muokkaus](./kuvat/sekvenssikaavio_muokkaa.png)
