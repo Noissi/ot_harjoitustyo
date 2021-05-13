@@ -20,7 +20,7 @@ Repositorioluokkia (CardRepository, CubeRepository ja UserRepository) testataan 
 
 Sovelluksen haarautumakattavuus on 97% (poislukien käyttöliittymä).
 
-![](./kuvat/coverage_raport.png)
+![](./kuvat/coverage_report.png)
 
 ## Järjestelmätestaus
 
