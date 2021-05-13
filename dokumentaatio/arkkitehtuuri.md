@@ -41,12 +41,24 @@ Sekvenssikaavioita sovelluksen muutamasta päätoiminnallisuudesta.
 
 ### Sisäänkirjautuminen
 
+Sisäänkirjautuessa käyttäjä syöttää käyttäjätunnuksensa ja salasanansa niille annettuihin kenttiin ja painaa _Kirjaudu sisään_-nappia. Sovelluksen kontrolli käy läpi tällöin seuraavat vaiheet:
+
 ![Login](./kuvat/sekvenssikaavio_login.png)
+
+Korttikube_service tarkastaa onko kyseistä käyttäjätunnusta olemassa sekä tarkistaa onko salasana oikein. Mikäli nämä ehdot pätevät, kirjaa sovellus käyttäjän sisään ja avaa etusivun (main_view).
 
 ### Kortin luonti
 
+Uutta korttia luodessa käyttäjä painaa _Uusi kortti_-nappia, joka siirtää hänet kortinmuokkausnäkymään. Sovelluskontrolli käy läpi tällöin seuraavat vaiheet:
+
 ![Kortin_luonti](./kuvat/sekvenssikaavio_uusikortti.png)
+
+Sovellus luo uuden kortti-olion ja asettaa sen käsiteltäväksi kortiksi. Nyt käyttäjä voi muokata korttia antamalla sille esimerkiksi nimen. Kortin nimi tallettuu korttioliolle. Lopulta käyttäjä voi tallentaa kortin painamalla _Tallenna_-nappia. Tällöin kortti tallettuu tietokantaan ja käyttäjä palaa korttinäkymään.
 
 ### Kortin muokkaus
 
+Käyttäjä voi muokata korttia painamalla _Muokkaa_-napista. Sovelluskontrolli käy läpi tällöin seuraavat vaiheet:
+
 ![Kortin_muokkaus](./kuvat/sekvenssikaavio_muokkaa.png)
+
+Ohjelma tarkistaa ensin, onko käsiteltävää korttia vielä asetettu. Sen jälkeen ohjelma siirtyy kortinmuokkausnäkymään, jossa käyttäjä voi muokata haluamiaan kortin ominaisuuksia. Muokatut ominaisuudet, päivittyvät kortti-olioon, mutta ei vielä käsiteltävään korttiin. Kun käyttäjä lopulta tallettaa muutokset _Tallenna_-napista, kortti tallennetaan tietokantaan ja käsiteltävä kortti päivittyy muokattuun korttiolioon.
