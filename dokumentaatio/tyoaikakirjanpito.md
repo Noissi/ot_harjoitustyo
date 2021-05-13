@@ -20,6 +20,11 @@
 | 1.5   | 3    | Kortit piirtyy             |
 | 3.5   | 3    | Hakutoiminto tehty         |
 | 4.5   | 1    | Testien parantelua ja lisä |
-| 9.5   | 2    | Ulkoasun parannus          |
-| 9.5   | 1    | Hakutoiminnon laajennus    |
-| yht   | 57   | |
+| 9.5   | 3    | Ulkoasun parannus          |
+| 9.5   | 2    | Hakutoiminnon laajennus    |
+| 10.5  | 5    | Ongelmien ja korjausta     |
+| 12.5  | 3    | Koodin kommentointi        |
+| 13.5  | 1    | Dokumentaation päivitys    |
+| 13.5  | 4    | Testien lisäystä           |
+| 14.5  | 3    | Arkkitehtuuridokumentaatio |
+| yht   | 75   | |
