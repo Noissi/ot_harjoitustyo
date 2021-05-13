@@ -35,6 +35,7 @@ Sovellus koostuu kuudesta päänäkymästä: kirjautumissivu, käyttäjän luont
 - [x] Käyttäjä voi luoda uusia kortteja kubeen
 - [x] Käyttäjä voi valita tarkasteltavan kortin
 - [x] Käyttäjä voi muokata kubea (kuva)
+- [x] Käyttäjä voi ladata kuben korttitiedot sovelluksesta tiedostoon
 - [x] Sivu näyttää järkevältä
 
 #### Korttisivu
@@ -70,4 +71,3 @@ Sovellukseen lisätään ajan salliessa esim. seuraavia toiminnallisuuksia:
 - [ ] Käyttäjä voi tuoda taulukossa tiedot uusista korteista ja lisätä ne kokoelmaan
 - [ ] Käyttäjä voi kommentoida jaettujen peliversioiden kortteja
   - [ ] Kommentit näkyvät muille peliversion käyttäjille
-- [x] Käyttäjä voi ladata korttitiedot sovelluksesta tiedostoon
