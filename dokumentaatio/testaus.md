@@ -4,19 +4,19 @@ Ohjelmaa on testattu kattavilla yksikkö- ja integraatiotesteillä. Lisäksi ohj
 
 ## Yksikkö- ja integraatiotestaus
 
-# Oliot
+### Oliot
 
 Kortti-, Kube-, ja Käyttäjäolioita testataan testiluokilla [TestCard](https://github.com/Noissi/ot_harjoitustyo/blob/master/src/tests/entities/card_test.py), [TestCube](https://github.com/Noissi/ot_harjoitustyo/blob/master/src/tests/entities/cube_test.py) ja [TestUser](https://github.com/Noissi/ot_harjoitustyo/blob/master/src/tests/entities/user_test.py).
 
-# Sovelluslogiikka
+### Sovelluslogiikka
 
 Sovelluslogiikkaa testataan [TestKorttikubeService](https://github.com/Noissi/ot_harjoitustyo/blob/master/src/tests/services/korttikube_service_test.py)-testiluokalla, jolle on alustettu FakeCardRepository ja FakeCubeRepository toteuttamaan oikeaa tietokantaa vastaavia toimintoja (tallentamatta tietoa kuitenkaan pysyvään muistiin).
 
-# Repositoriot
+### Repositoriot
 
 Repositorioluokkia (CardRepository, CubeRepository ja UserRepository) testataan erikseen määritellyllä test_database.db-tiedostolla, joka otetaan käyttöön pytest-kutsun yhteydessä (luetaan env.test-tiedostosat). Repositoriotestiluokkia on kolme: [TestCardRepository](https://github.com/Noissi/ot_harjoitustyo/blob/master/src/tests/repositories/card_repository_test.py), [TestCubeRepository](https://github.com/Noissi/ot_harjoitustyo/blob/master/src/tests/repositories/cube_repository_test.py) ja [TestUserRepository](https://github.com/Noissi/ot_harjoitustyo/blob/master/src/tests/repositories/user_repository_test.py).
 
-# Testikattavuus
+### Testikattavuus
 
 Sovelluksen haarautumakattavuus on 97% (poislukien käyttöliittymä).
 
