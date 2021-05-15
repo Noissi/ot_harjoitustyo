@@ -244,8 +244,6 @@ class EditCardView(Window):
 
         self._set_card_layout()
         self._update_middle_layout()
-        #self._set_layouts()
-        #self.setLayout(self._outer_layout)
 
     # Save to card
     def _change_name(self):
@@ -575,7 +573,6 @@ class EditCardView(Window):
 
         msg = QMessageBox()
 
-        #existing_card = self._card_repository.find_by_name_from_cube(self._cube.get_id(), cardname)
         if kks.check_if_card_exists(self._card):
             msg.setText('Nimi on jo käytössä')
             msg.exec_()
@@ -677,5 +674,3 @@ class EditCardView(Window):
         self._set_middle_layout()
         self._set_bottom_layout()
         self._set_layouts()
-
-        #self.setLayout(self._outer_layout)
