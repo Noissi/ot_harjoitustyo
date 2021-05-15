@@ -214,12 +214,10 @@ class CubeView(Window):
         """ Changes the cube image showed in main page on the cube button.
         """
 
-        fname = QFileDialog.getOpenFileName(self, 'Open file', 
+        fname_orig = QFileDialog.getOpenFileName(self, 'Open file', 
         				     USER_IMAGES_FILE_PATH, "Image files (*.jpg *.png *.jpeg)")
-        if fname[0] != "":
-            fname = list(fname)[0]
-            fname = fname.split("/")
-            fname = USER_IMAGES_FILE_PATH + fname[-1]
+        fname = kks.find_image_from_computer(fname_orig)
+        if fname != "":
             kks.update_cube(fname, "image")
 
     def _search_by_name(self, text):

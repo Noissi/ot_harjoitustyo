@@ -346,25 +346,23 @@ class EditCardView(Window):
         """ Changes the image of the card to one that the user selects.
         """
 
-        fname = QFileDialog.getOpenFileName(self, 'Open file', 
+        fname_orig = QFileDialog.getOpenFileName(self, 'Open file', 
         				     USER_IMAGES_FILE_PATH, "Image files (*.jpg *.png *.jpeg)")
-        fname = list(fname)[0]
-        fname = fname.split("/")
-        fname = USER_IMAGES_FILE_PATH + fname[-1]
-        kks.update_card(self._card, fname, "image")
-        self._update_card_layout()
+        fname = kks.find_image_from_computer(fname_orig)
+        if fname != "":
+            kks.update_card(self._card, fname, "image")
+            self._update_card_layout()
 
     def _change_seticon(self):
         """ Changes the seticon of the card to one that the user selects.
         """
 
-        fname = QFileDialog.getOpenFileName(self, 'Open file', 
+        fname_orig = QFileDialog.getOpenFileName(self, 'Open file', 
         				     USER_IMAGES_FILE_PATH, "Image files (*.jpg *.png *.jpeg)")
-        fname = list(fname)[0]
-        fname = fname.split("/")
-        fname = USER_IMAGES_FILE_PATH + fname[-1]
-        kks.update_card(self._card, fname, "seticon")
-        self._update_card_layout()
+        fname = kks.find_image_from_computer(fname_orig)
+        if fname != "":
+            kks.update_card(self._card, fname, "seticon")
+            self._update_card_layout()
 
     def _change_rarity(self):
         """ Changes the rarity of the card.

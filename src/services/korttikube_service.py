@@ -1,5 +1,6 @@
 import os
 import csv
+from shutil import copyfile
 
 from entities.user import User
 from entities.cube import Cube
@@ -19,7 +20,8 @@ from repositories.user_repository import user_repository as default_user_reposit
 from repositories.cube_repository import cube_repository as default_cube_repository
 from repositories.card_repository import card_repository as default_card_repository
 
-from config import IMAGES_FILE_PATH, USER_FILES_FILE_PATH, CARD_IMAGES_FILE_PATH
+from config import IMAGES_FILE_PATH, USER_FILES_FILE_PATH
+from config import CARD_IMAGES_FILE_PATH, USER_IMAGES_FILE_PATH
 
 class KorttikubeService:
     """ Class responsible for application logic.
@@ -515,6 +517,25 @@ class KorttikubeService:
         if not os.path.exists(filepath):
             os.makedirs(filepath)
         picture.save(filepath + '/' + filename)
+
+    def find_image_from_computer(self, fname_orig):
+        """ Find imgae from computer, copy it to USER_IMAGES_FILE_PATH and
+        return the new path.
+        Args:
+            fname_orig: Path to the original image.
+        Return:
+            fname: Path to the image in user images file.
+        """
+
+        if fname_orig[0] != "":
+            fname_orig = list(fname_orig)[0]
+            fname = fname_orig.split("/")
+            fname = USER_IMAGES_FILE_PATH + fname[-1]
+
+            if fname_orig != fname:
+                copyfile(fname_orig, fname)
+            return fname
+        return ""
 
     def save_to_database(self, obj, obj_type):
         """ Save an object to the database.
