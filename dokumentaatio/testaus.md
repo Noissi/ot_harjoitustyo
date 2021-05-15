@@ -22,6 +22,8 @@ Sovelluksen haarautumakattavuus on 96% (poislukien käyttöliittymä).
 
 ![](./kuvat/coverage_report.png)
 
+Korttikuvien tallentamista ei ole testattu automaattisesti, mikä laskee kattavuutta. Tämä on kuitenkin testattu manuaalisesti tarkistamalla tallennuksen toiminta.
+
 ## Järjestelmätestaus
 
 Ohjelmaa on testattu manuaalisesti ongelmien havaitsemiseksi.
