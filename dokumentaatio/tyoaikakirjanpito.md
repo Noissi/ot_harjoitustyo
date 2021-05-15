@@ -27,4 +27,5 @@
 | 13.5  | 1    | Dokumentaation päivitys    |
 | 13.5  | 4    | Testien lisäystä           |
 | 14.5  | 3    | Arkkitehtuuridokumentaatio |
-| yht   | 75   | |
+| 15.5  | 4    | Bugien korjausta           |
+| yht   | 79   | |
