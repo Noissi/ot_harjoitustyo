@@ -21,7 +21,7 @@ HUOM! Ohjelma vaatii toimiakseen vähintään Ubuntu 20 -käyttöjärjestelmää
 
 Lataa projektin viimeisin [release](https://github.com/Noissi/ot_harjoitustyo/releases): _Assets_ -> _Source code_.
 
-1. Riippuvuuksien asenntaminen
+1. Riippuvuuksien asentaminen
 ```
 poetry install
 ```
