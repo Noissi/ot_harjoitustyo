@@ -90,6 +90,12 @@ class EditCardView(Window):
         self._middle_layout.addLayout(self._card_layout, 0, 1)
         self._middle_layout.addLayout(self._right_layout, 0, 3)
         
+    def _update_middle_layout(self):
+        """ Updates the middle layout elements.
+        """
+
+        self._middle_layout.addLayout(self._card_layout, 0, 1)
+        
     def _set_bottom_layout(self):
         """ Sets the bottom layout elements.
         """
@@ -237,8 +243,8 @@ class EditCardView(Window):
         """
 
         self._set_card_layout()
-        self._set_middle_layout()
-        self._set_layouts()
+        self._update_middle_layout()
+        #self._set_layouts()
         #self.setLayout(self._outer_layout)
 
     # Save to card
@@ -567,10 +573,17 @@ class EditCardView(Window):
             returns to the card view.
         """
 
-        filename = self._card_image.save_image()
-        kks.update_card(self._card, filename, "picture")
-        kks.save_to_database(self._card, "card")
-        self._handle_show_card_view()
+        msg = QMessageBox()
+
+        #existing_card = self._card_repository.find_by_name_from_cube(self._cube.get_id(), cardname)
+        if kks.check_if_card_exists(self._card):
+            msg.setText('Nimi on jo käytössä')
+            msg.exec_()
+        else:
+            p = self._card_image.save_image()
+            kks.save_image(p, self._card)
+            kks.save_to_database(self._card, "card")
+            self._handle_show_card_view()
 
     def _return(self):
         """ Returns to the card view. If the card was just created (but not saved),

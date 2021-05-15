@@ -96,6 +96,7 @@ class CardView(Window):
         card_image = CardImage()
         card_image.set_card(self._card)
         self._card_layout.addWidget(card_image, 0, Qt.AlignCenter)
+        
 
     def _set_leftpanel_layout(self):
         """ Sets the left side panel elements.

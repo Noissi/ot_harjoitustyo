@@ -80,15 +80,14 @@ class TestCardRepository(unittest.TestCase):
         self.assertEqual(cards[0][1], self.card1.get_name())
         self.assertEqual(cards[1][1], self.card2.get_name())
 
-    def test_find_by_name_that_contains(self):
+    def test_find_by_name_from_cube(self):
         card_repository.create(self.card1)
         card_repository.create(self.card2)
         card_repository.create(self.card3)
-        cards = card_repository.find_by_name_that_contains("r")
+        cards = card_repository.find_by_name_from_cube("id1", "kana")
 
-        self.assertEqual(len(cards), 2)
-        self.assertEqual(cards[0][1], self.card1.get_name())
-        self.assertEqual(cards[1][1], self.card3.get_name())
+        self.assertEqual(len(cards), 1)
+        self.assertEqual(cards[0][1], self.card2.get_name())
 
     def test_find_cards_from_cube_that_contains(self):
         card_repository.create(self.card1)

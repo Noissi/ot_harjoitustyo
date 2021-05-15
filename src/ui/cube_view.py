@@ -5,6 +5,7 @@ from ui.window import Window
 from entities.card_creature import Creature
 from services.korttikube_service import korttikube_service as kks
 from config import CARD_RATIO, IMAGES_FILE_PATH, USER_IMAGES_FILE_PATH
+import urllib.parse
 
 class CubeView(Window):
     """ Class responsible for cube ui.
@@ -160,7 +161,7 @@ class CubeView(Window):
             card_picture = card[18]
             hover_image = IMAGES_FILE_PATH + "colourlesscard.png"
             btn_card.setFont(QFont('Times', 10))
-            btn_card.setStyleSheet("QPushButton{border-image: url("+card_picture+")}"
+            btn_card.setStyleSheet("QPushButton{border-image: url(\""+card_picture+"\")}"
                                    "QPushButton:hover{image: url("+hover_image+")}"
                                    "QPushButton{text-align: top left}")
             btn_card.clicked.connect(lambda checked=False, a=card: self._handle_show_card_view(a))

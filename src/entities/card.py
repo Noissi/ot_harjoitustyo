@@ -235,7 +235,7 @@ class Card:
                      string of card features (from database)
         """
 
-        if self._feature is not None and feature is not None:
+        if self._feature is not None and feature is not None and feature != "":
             if not isinstance(feature, list):
                 feature = feature.split(", ")
             if self._feature2:

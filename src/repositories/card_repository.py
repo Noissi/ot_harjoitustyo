@@ -141,20 +141,21 @@ class CardRepository:
         rows = cursor.fetchall()
         return rows
 
-    def find_by_name_that_contains(self, text):
-        """ Selects the cards containing -text- in the name.
+    def find_by_name_from_cube(self, cube_id, name):
+        """ Selects the card with given cube id and name.
         Args:
-            text: [String] String to be matched with the name.
+            cube_id: [String] The id of the cube.
+            name: [String] The name of the card.
         Return:
-            rows: [List Tuple] List of tuples including the cards.
+            row: [Tuple] Card tuple.
         """
 
-        text_sql = ('%'+text+'%',)
-        sql = """ SELECT * FROM cards WHERE name LIKE ? COLLATE NOCASE; """
+        text_sql = (cube_id, name)
+        sql = """ SELECT * FROM cards WHERE cube_id = ? AND lower(name) = ?; """
         cursor = self._connection.cursor()
         cursor.execute(sql, text_sql)
-        rows = cursor.fetchall()
-        return rows
+        row = cursor.fetchall()
+        return row
 
     def find_cards_from_cube_that_contains(self, cube_id, name_part, maintype, colour, order):
         """ Selects the cards belonging to the given cube that has given

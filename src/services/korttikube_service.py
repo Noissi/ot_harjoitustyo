@@ -19,7 +19,7 @@ from repositories.user_repository import user_repository as default_user_reposit
 from repositories.cube_repository import cube_repository as default_cube_repository
 from repositories.card_repository import card_repository as default_card_repository
 
-from config import IMAGES_FILE_PATH, USER_FILES_FILE_PATH
+from config import IMAGES_FILE_PATH, USER_FILES_FILE_PATH, CARD_IMAGES_FILE_PATH
 
 class KorttikubeService:
     """ Class responsible for application logic.
@@ -498,6 +498,24 @@ class KorttikubeService:
         if os.path.exists(self._card.get_picture()):
             os.remove(self._card.get_picture())
 
+    def save_image(self, picture, card):
+        """ Creates and saves a png-file from QPixmap picture. Creates a new folder for the
+            cube if it does not exist.
+        Args:
+            picture: [QPixmap] Picture widget of the image.
+            card: [Card] Card which image is saved.
+        """
+
+        filename = card.get_name().replace(" ", "_") + ".png"
+        filename = filename.lower()
+        filepath = CARD_IMAGES_FILE_PATH + self._cube.get_name() + \
+                   self._cube.get_id()[:3] + self._cube.get_id()[-3:]
+        self.update_card(card, filepath + '/' + filename, "picture")
+
+        if not os.path.exists(filepath):
+            os.makedirs(filepath)
+        picture.save(filepath + '/' + filename)
+
     def save_to_database(self, obj, obj_type):
         """ Save an object to the database.
         Args:
@@ -514,5 +532,21 @@ class KorttikubeService:
         elif obj_type == "user":
             self._user = obj
             self._user_repository.save(obj)
+
+    def check_if_card_exists(self, card):
+        """ Check if a card with given name but different id already exists in the database.
+        Args:
+            card: Card.
+        Returns:
+            [Boolean] Whether the card exists or not.
+        """
+
+        searched_card = self._card_repository.find_by_name_from_cube(self._cube.get_id(),
+                                                                     card.get_name().lower())
+        if not searched_card:
+            return False
+        if searched_card[0][0] == card.get_id():
+            return False
+        return True
 
 korttikube_service = KorttikubeService()

@@ -57,7 +57,14 @@ class FakeCardRepository():
                     if name_part in card.get_name():
                         found.append(card)
         return found
-        
+
+    def find_by_name_from_cube(self, cube_id, name):
+        found = []
+        for card in self.cards:
+            if cube_id in card.get_cubes() and name.lower() == card.get_name().lower():
+                found.append((card.get_id(),))
+        return found
+
 class FakeCubeRepository():
     def __init__(self, cubes=[]):
         self.cubes = cubes
@@ -542,5 +549,17 @@ class TestKorttikubeService(unittest.TestCase):
         card = self.kks.create_card_entity("uusikortti")
         self.kks.set_card(card)
         self.assertEqual(self.kks.get_card().get_name(), "uusikortti")
-        
+
+    def test_creating_card_with_existing_name(self):
+        self.set_user_and_cube()
+        card = self.kks.create_card_entity("Testikortti")
+        self.kks.save_to_database(card, "card")
+        card2 = self.kks.create_card_entity("testikortti")
+        exists = self.kks.check_if_card_exists(card2)
+        self.assertTrue(exists)
+        exists = self.kks.check_if_card_exists(card)
+        self.assertFalse(exists)
+        card3 = self.kks.create_card_entity("EiKortti")
+        exists = self.kks.check_if_card_exists(card3)
+        self.assertFalse(exists)
         

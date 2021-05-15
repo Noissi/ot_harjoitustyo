@@ -2,7 +2,7 @@ from PySide6.QtWidgets import *
 from PySide6.QtGui import *
 from PySide6.QtCore import *
 from services.korttikube_service import korttikube_service as kks
-from config import CARD_RATIO, CARD_IMAGES_FILE_PATH
+from config import CARD_RATIO
 
 class CardImage(QWidget):
     """ Class responsible for drawing and saving the card image. """
@@ -92,17 +92,11 @@ class CardImage(QWidget):
         painter.end()
 
     def save_image(self):
-        """ Creates and saves a png-file from this widget.
-        Returns:
-            [String] Path to the saved image.
+        """ Creates and returns a QPixmap of the image.
+            p: [QPixmap] Picture widget of the image.
         """
-        
-        filename = self._card.get_name().replace(" ", "_") + ".png"
-        filename = filename.lower()
-        filepath = CARD_IMAGES_FILE_PATH
-        
+
         p = QPixmap(self.size())
         self.render(p)
-        p.save(filepath + filename)
 
-        return filepath + filename
+        return p
