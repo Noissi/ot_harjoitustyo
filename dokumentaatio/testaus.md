@@ -26,7 +26,7 @@ Korttikuvien tallentamista ei ole testattu automaattisesti, mikä laskee kattavu
 
 ## Järjestelmätestaus
 
-Ohjelmaa on testattu manuaalisesti ongelmien havaitsemiseksi.
+Ohjelmaa on testattu manuaalisesti ongelmien havaitsemiseksi. Käyttöohje ja vaatimusmäärittely on otettu huomioon testauksessa.
 
 Ohjelmaa on testattu usealla eri koneella Linux-pohjaisella käyttöjärjestelmällä.
 
